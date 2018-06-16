@@ -10,6 +10,8 @@ import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -23,7 +25,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.border.MatteBorder;
 
+import GUI.SprintsTM;
 import clases.Proyecto;
+import clases.SprintNoValido;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -63,7 +67,7 @@ public class ABMSprints extends JPanel {
 	private JRadioButton rdbtnEnCurso;
 	private JRadioButton rdbtnFinalizado;
 	private JScrollPane scrollPane_Sprints;
-	//private JTable table;
+	private JTable table;
 	
 	private JButton btnSAgregar;
 	private JButton btnSModificar;
@@ -77,7 +81,7 @@ public class ABMSprints extends JPanel {
 	private JLabel lblTareasEnBacklog;
 	private JButton btnSEstadoTarea;
 	private JLabel lblNombreSprint;
-	private JTextField textField;
+	private JTextField txtSNombre;
 	private JButton btnIniciar;
 
 	/**
@@ -161,9 +165,9 @@ public class ABMSprints extends JPanel {
 				}
 			});
 			
-			textField = new JTextField();
-			textField.setColumns(10);
-			add(textField, "cell 0 11 4 1,growx");
+			txtSNombre = new JTextField();
+			txtSNombre.setColumns(10);
+			add(txtSNombre, "cell 0 11 4 1,growx,aligny top");
 			add(rdbtnPlanificado, "cell 2 14");
 			
 			rdbtnFinalizado = new JRadioButton("Finalizado");
@@ -214,13 +218,34 @@ public class ABMSprints extends JPanel {
 			
 			
 			btnSAgregar = new JButton("Agregar");
+			btnSAgregar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Proyecto.getInstance().altaSprint(txtSID.getText(), txtSNombre.getText());
+					JOptionPane.showMessageDialog(null, "Sprint agregado con exito.");
+					Proyecto.getInstance().corrersp();
+				}
+			});
 			add(btnSAgregar, "cell 1 28,alignx center,aligny center");
 			
 			btnSModificar = new JButton("Modificar");
+			btnSModificar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					/*table.setEnabled(true);
+					txtSID.setEnabled(true);
+					Proyecto.getInstance().modificacionSprint(txtSID.getText(), txtSNombre.getText());
+					JOptionPane.showMessageDialog(null, "Sprint modificado con exito.");*/
+				}
+			});
 			add(btnSModificar, "cell 2 28,alignx center,aligny center");
 			
 			
-			scrollPane_Sprints = new JScrollPane();
+			table = new JTable();
+			add(table);
+			table.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
+			table.setAutoscrolls(true);
+			
+			scrollPane_Sprints = new JScrollPane(table);
+			table.setFillsViewportHeight(true);
 			add(scrollPane_Sprints, "cell 5 2 3 17,grow");
 			
 			btnSQuitaTarea = new JButton("\u00BB");
@@ -231,6 +256,21 @@ public class ABMSprints extends JPanel {
 			add(btnSEstadoTarea, "cell 6 26,alignx center");
 			
 			btnSEliminar = new JButton("Eliminar");
+			btnSEliminar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					/*try{
+						Proyecto.getInstance().bajaSprint(table.getModel().getValueAt(table.getSelectedRow(), 0).toString());
+						}
+						catch(ArrayIndexOutOfBoundsException e){
+							JOptionPane.showMessageDialog(null, "Debe existir seleccionar un Sprint a eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+						} catch (SprintNoValido snv) {
+							JOptionPane.showMessageDialog(null, "No se pueden eliminar los Sprints EN CURSO o FINALIZADO.", "Error", JOptionPane.ERROR_MESSAGE);
+							snv.printStackTrace();
+						}
+						table.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
+					}*/
+				}
+			});
 			add(btnSEliminar, "cell 3 28,alignx center,aligny center");
 			
 

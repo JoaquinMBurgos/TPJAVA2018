@@ -47,9 +47,9 @@ public class ABMTareas extends JPanel {
 	private JLabel lblTarea;
 	private JSeparator separatorTarea;
 	private JLabel lblTId;
-	private JTextField txtTID;
-	private JLabel lblTnomb;
 	private JTextField txtTNombre;
+	private JLabel lblTnomb;
+	private JTextField txtTID;
 	private JLabel lblSTipo;
 	private JComboBox<String> comboBoxTTipo;
 	private JLabel lblTDescripcion;
@@ -132,16 +132,16 @@ public class ABMTareas extends JPanel {
 			lblTId = new JLabel("ID:");
 			add(lblTId, "cell 1 7,alignx center,aligny center");
 			
-			txtTNombre = new JTextField();
-			add(txtTNombre, "cell 3 7 3 1,growx");
-			txtTNombre.setColumns(10);
+			txtTID = new JTextField();
+			add(txtTID, "cell 3 7 3 1,growx");
+			txtTID.setColumns(10);
 			
 			lblTnomb = new JLabel("Nombre:");
 			add(lblTnomb, "cell 1 9,alignx center");
 			
-			txtTID = new JTextField();
-			add(txtTID, "cell 3 9 3 1,growx");
-			txtTID.setColumns(10);
+			txtTNombre = new JTextField();
+			add(txtTNombre, "cell 3 9 3 1,growx");
+			txtTNombre.setColumns(10);
 			
 			lblTEstado = new JLabel("Estado:");
 			add(lblTEstado, "cell 1 11,alignx center");
@@ -189,12 +189,43 @@ public class ABMTareas extends JPanel {
 			
 			
 			btnTAgregar = new JButton("Agregar");
+			btnTAgregar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					txtTID.setEnabled(true);
+					Proyecto.getInstance().getBlog().altaTarea(comboBoxTTipo.getSelectedItem().toString(),txtTID.getText(),txtTNombre.getText(),txtTDescp.getText(),EstadoTarea.DONE,null,Integer.parseInt(spinnerTComp.toString()));
+					
+					//table.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
+				}
+			});
 			add(btnTAgregar, "cell 1 21");
 			
 			btnTModificar = new JButton("Modificar");
+			btnTModificar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try{
+						/*Tarea tar = Proyecto.getInstance().getBlog().getTarea(table.getValueAt(table.getSelectedRow(), 0).toString());
+						txtTID.setText(tar.getId());
+						txtTNombre.setText(tar.getNombre());
+						txtTDescp.setText(tar.getDescripcion());
+						spinnerTComp.setValue(tar.getComplejidad()-1);
+						
+						txtId.setEnabled(false);
+						btnModificar.setEnabled(false);
+						Proyecto.getInstance().getBlog().bajaTarea(tar.getId());*/
+					}catch(ArrayIndexOutOfBoundsException ex){
+						JOptionPane.showMessageDialog(null, "Debe seleccionarse una tarea a modificar.", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			});
 			add(btnTModificar, "cell 3 21");
 		
 			btnTEliminar = new JButton("Eliminar");
+			btnTEliminar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					/*Proyecto.getInstance().bajaTareaBackLog(table.getValueAt(table.getSelectedRow(), 0).toString());
+					table.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));*/
+				}
+			});
 			add(btnTEliminar, "cell 5 21");
 			
 			
