@@ -68,10 +68,13 @@ public class ABMTareas extends JPanel {
 	
 	private JLabel lblTSubtareasDependencias;			
 	private JScrollPane scrollPane_TSD;
+	private JTable table_TSD;
 	private JButton btnTAgregarSD;
 	private JButton btnTQuitarSD;
-	private JScrollPane scrollPane;
+	private JScrollPane scrollPane_TD;
+	private JTable table_TD;
 	private JLabel lblTareasDisponibles;
+	private JTable table_Tareas;
 
 	/**
 	 * Create the panel.
@@ -117,6 +120,10 @@ public class ABMTareas extends JPanel {
 			
 			scrollPane_Tareas = new JScrollPane();
 			add(scrollPane_Tareas, "cell 7 2 3 12,grow");
+			
+			table_Tareas = new JTable();
+			scrollPane_Tareas.setViewportView(table_Tareas);
+			table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
 			
 			separatorTarea = new JSeparator();
 			separatorTarea.setForeground(Color.BLACK);
@@ -168,13 +175,19 @@ public class ABMTareas extends JPanel {
 			lblTareasDisponibles.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			add(lblTareasDisponibles, "cell 9 15,alignx left");
 			
-			scrollPane = new JScrollPane();
-			add(scrollPane, "cell 9 16 1 6,grow");
+			scrollPane_TD = new JScrollPane();
+			add(scrollPane_TD, "cell 9 16 1 6,grow");
+			
+			JTable table_TD = new JTable();
+			scrollPane_TD.setViewportView(table_TD);
 			
 			btnTSubtareas = new JButton("Sub Tareas");
 			btnTSubtareas.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
 					lblTSubtareasDependencias.setText("Sub Tareas");
+					table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getListaSubtareas()));
+					table_TD.setModel(new TareasTM(Proyecto.getInstance().getSubTareas()));
 				}
 			});
 			add(btnTSubtareas, "cell 1 17 5 1,alignx center,aligny center");
@@ -182,8 +195,11 @@ public class ABMTareas extends JPanel {
 			btnTDependencias = new JButton("Dependencias");
 			btnTDependencias.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
 					lblTSubtareasDependencias.setText("Dependencias");
-				}
+					table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));
+					table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getDependencias(id)));
+					}
 			});
 			add(btnTDependencias, "cell 1 19 5 1,alignx center,aligny center");
 			
@@ -192,9 +208,9 @@ public class ABMTareas extends JPanel {
 			btnTAgregar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					txtTID.setEnabled(true);
-					Proyecto.getInstance().getBlog().altaTarea(comboBoxTTipo.getSelectedItem().toString(),txtTID.getText(),txtTNombre.getText(),txtTDescp.getText(),EstadoTarea.DONE,null,Integer.parseInt(spinnerTComp.toString()));
+					Proyecto.getInstance().getBlog().altaTarea(comboBoxTTipo.getSelectedItem().toString(),txtTID.getText(),txtTNombre.getText(),txtTDescp.getText(),EstadoTarea.DONE,null,(int)spinnerTComp.getValue());
 					
-					//table.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
+					table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
 				}
 			});
 			add(btnTAgregar, "cell 1 21");
@@ -203,15 +219,15 @@ public class ABMTareas extends JPanel {
 			btnTModificar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try{
-						/*Tarea tar = Proyecto.getInstance().getBlog().getTarea(table.getValueAt(table.getSelectedRow(), 0).toString());
+						Tarea tar = Proyecto.getInstance().getBlog().getTarea(table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString());
 						txtTID.setText(tar.getId());
 						txtTNombre.setText(tar.getNombre());
 						txtTDescp.setText(tar.getDescripcion());
 						spinnerTComp.setValue(tar.getComplejidad()-1);
 						
-						txtId.setEnabled(false);
-						btnModificar.setEnabled(false);
-						Proyecto.getInstance().getBlog().bajaTarea(tar.getId());*/
+						txtTID.setEnabled(false);
+						
+						Proyecto.getInstance().getBlog().bajaTarea(tar.getId());
 					}catch(ArrayIndexOutOfBoundsException ex){
 						JOptionPane.showMessageDialog(null, "Debe seleccionarse una tarea a modificar.", "Error", JOptionPane.ERROR_MESSAGE);
 					}
@@ -235,8 +251,21 @@ public class ABMTareas extends JPanel {
 			
 			scrollPane_TSD = new JScrollPane();
 			add(scrollPane_TSD, "cell 7 16 1 6,grow");
+			
+			table_TSD = new JTable();
+			scrollPane_TSD.setViewportView(table_TSD);
+			
 
 			btnTAgregarSD = new JButton("\u00AB");
+			btnTAgregarSD.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
+					Proyecto.getInstance().agregarDependencias(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
+					table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));
+					table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
+					table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getDependencias(id)));
+				}
+			});
 			btnTAgregarSD.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			add(btnTAgregarSD, "cell 8 17,growx,aligny center");
 

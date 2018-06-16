@@ -16,6 +16,7 @@ import Tareas.EstadoTarea;
 import Tareas.Historia;
 import Tareas.Mejora;
 import Tareas.Tarea;
+import sun.reflect.generics.tree.Tree;
 
 public class Backlog {
 	private TreeSet<Tarea> LTareasP = new TreeSet<Tarea>();
@@ -133,6 +134,11 @@ public class Backlog {
 			return null;
 	}
 	
+	public TreeSet<Tarea> getLDependencias(String id){
+		Tarea tar = getTarea(id);
+		return tar.getLdependencias();
+	}
+	
 	/**
 	 * 
 	 * @param clave
@@ -246,6 +252,18 @@ public class Backlog {
 			t.muestraDependencias();
 			t.muestraSubTareas();
 		}
+	}
+	
+	public TreeSet<Tarea> getDependencias(String id){
+		TreeSet<Tarea>lista=new TreeSet<Tarea>(); 
+		lista =LTareasP;
+		
+		Tarea t=getTarea(id);
+		TreeSet<Tarea>listaD=t.getLdependencias();
+		for(Tarea dep :listaD)
+			lista.remove(dep);
+		lista.remove(t);
+		return lista;
 	}
 	
 	public void agregaDependencia(String idT,String idDep){

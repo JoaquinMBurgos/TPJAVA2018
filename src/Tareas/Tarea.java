@@ -40,8 +40,8 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 		Ldependencias=new TreeSet<Tarea>();
 		LSubtareas=new TreeSet<Tarea>();
 	}
-	public TreeSet<Tarea> getListaS() {
-		return LSTareas;
+	public TreeSet<Tarea> getListaSubtareas() {
+		return LSubtareas;
 	}
 	public void aBacklogTarea(Tarea tare) {
 		LSTareas.add(tare);

@@ -93,6 +93,21 @@ public final class Proyecto {
 	}
 	
 	/**
+	 * Retorna las tareas de complejidad 0 (Subtareas).
+	 * @return Lista de Subtareas del Backlog.
+	 */
+	public TreeSet<Tarea> getSubTareas(){
+		TreeSet<Tarea> LSubTareas = blog.getLTareasP();
+		TreeSet<Tarea> lista = new TreeSet<Tarea>();
+		for (Tarea tar : LSubTareas){
+			if(tar.getComplejidad() == 0)
+				lista.add(tar);
+		}
+		return lista;
+		
+	}
+	
+	/**
 	 * Da de baja un Sprint de la lista con la clave indicada
 	 * @param clave Clave del Sprint a buscar para dar de baja
 	 * @throws SprintNoValido cuando el Sprint es ENCURSO o FINALIZADO, los cuales no pueden ser dados de baja

@@ -81,10 +81,10 @@ public class Historia extends Tarea implements Serializable{
 	}
 	public void agregarDep(Tarea tar){
 		String subString=tar.getId().substring(0, 3);
-		if(subString.equals("TAR") || subString.equals("HIS"))
+		//if(subString.equals("TAR") || subString.equals("HIS"))
 			getLdependencias().add(tar);
-		else
-			System.out.println("Las dependencias de historia pueden ser tareas o historias");
+		/*else
+			System.out.println("Las dependencias de historia pueden ser tareas o historias");*/
 	}
 	
 	public void agregaFlujoPaso(String descripcion,int pasos){
