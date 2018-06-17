@@ -41,7 +41,10 @@ public class Backlog {
 
 	
 
-	
+	/**
+	 * Retorna la lista de Tareas pendientes.
+	 * @return Lista de Tareas pendientes.
+	 */
 	public TreeSet<Tarea> getLTareasP() {
 		return LTareasP;
 	}
