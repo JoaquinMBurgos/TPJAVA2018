@@ -22,24 +22,6 @@ public class Backlog {
 	private TreeSet<Tarea> LTareasP = new TreeSet<Tarea>();
 
 	
-	/**
-	 * SE AGREGA UN BACKLOGS  ( ES UNA TREESET DE TAREA ) 
-	 */
-	public void agrega() {
-		/*Tarea t= new Tarea("45Julia", null, null, null, 0);
-		Tarea t2= new Tarea("45Maria", null, null, null, 0);
-		Tarea t3= new Tarea("16Julia", null, null, null, 0);
-		LTareasP = new TreeSet<Tarea>();
-		LTareasP.add(t);
-		LTareasP.add(t2);
-		LTareasP.add(t3);*/
-		
-		for(Tarea lt : LTareasP) {
-			System.out.println(lt.getId());
-		}
-	}
-
-	
 
 	/**
 	 * Retorna la lista de Tareas pendientes.
@@ -265,7 +247,7 @@ public class Backlog {
 		TreeSet<Tarea>listaD=t.getLdependencias();
 		for(Tarea dep :listaD)
 			lista.remove(dep);
-		lista.remove(t);
+		//lista.remove(t);
 		return lista;
 	}
 	
@@ -311,6 +293,7 @@ public class Backlog {
 				bandera=false;
 			}
 		}
+		t.getLdependencias().remove(subT);
 	}
 	
 	

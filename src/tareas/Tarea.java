@@ -17,13 +17,12 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 	private String id, nombre, descripcion;
 	private LocalDate fFin;
 	private EstadoTarea estado;
-	private ArrayList<Historial> Lhist; //Podria ser un Treeset para ordenarlos por fecha?
+	private ArrayList<Historial> Lhist;
 	private int complejidad;
 	private TreeSet<Tarea> LSTareas;
-	private int estimacion; //Conviene sacar valor en Constructor o en otra funcion?
+	private int estimacion;
 	private TreeSet<Tarea> Ldependencias;
 	private TreeSet<Tarea> LSubtareas;
-	//private Historial historialEstados;
 	
 	public Tarea(String id, String nombre, String descripcion,EstadoTarea e, LocalDate finalizacion,
 			int complejidad) {

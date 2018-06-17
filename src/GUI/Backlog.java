@@ -2,8 +2,10 @@ package GUI;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
+import clases.Proyecto;
 import net.miginfocom.swing.MigLayout;
 
 import java.awt.Color;
@@ -24,7 +26,8 @@ public class Backlog extends JPanel {
 		private JMenuItem mntmBTareas;
 		private JMenuItem mntmBBacklog;
 		private JMenuItem mntmBReportes;	
-	private JScrollPane scrollPane_Backlog;
+		private JScrollPane scrollPane_Backlog;
+		private JTable table;
 
 
 	
@@ -69,6 +72,10 @@ public class Backlog extends JPanel {
 			
 			scrollPane_Backlog = new JScrollPane();
 			add(scrollPane_Backlog, "cell 0 2,grow");
+			
+			table = new JTable();
+			scrollPane_Backlog.setViewportView(table);
+			table.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
 			
 			revalidate();
 			repaint();

@@ -76,6 +76,9 @@ public class ABMTareas extends JPanel {
 	private JTable table_TD;
 	private JLabel lblTareasDisponibles;
 	private JTable table_Tareas;
+	
+	char modo = 'd';
+	
 
 	/**
 	 * Create the panel.
@@ -185,6 +188,7 @@ public class ABMTareas extends JPanel {
 			btnTSubtareas = new JButton("Sub Tareas");
 			btnTSubtareas.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					modo = 's';
 					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
 					lblTSubtareasDependencias.setText("Sub Tareas");
 					table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getListaSubtareas()));
@@ -196,6 +200,7 @@ public class ABMTareas extends JPanel {
 			btnTDependencias = new JButton("Dependencias");
 			btnTDependencias.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					modo = 'd';
 					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
 					lblTSubtareasDependencias.setText("Dependencias");
 					table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));
@@ -261,16 +266,41 @@ public class ABMTareas extends JPanel {
 			btnTAgregarSD.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
-					Proyecto.getInstance().agregarDependencias(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
-					table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));
-					table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
-					table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getDependencias(id)));
+					if(modo == 'd'){
+						Proyecto.getInstance().agregarDependencias(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
+						table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));
+						table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
+						table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getDependencias(id)));	
+					}
+					else{
+						Proyecto.getInstance().agregaSubT(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
+						table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getListaSubtareas()));
+						table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
+						table_TD.setModel(new TareasTM(Proyecto.getInstance().getSubTareas()));
+					}
 				}
 			});
 			btnTAgregarSD.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			add(btnTAgregarSD, "cell 8 17,growx,aligny center");
 
 			btnTQuitarSD = new JButton("\u00BB");
+			btnTQuitarSD.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
+					if(modo == 'd'){
+						Proyecto.getInstance().eliminarDependencia(id, table_TSD.getValueAt(table_TSD.getSelectedRow(), 0).toString());
+						table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));
+						table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
+						table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getDependencias(id)));	
+					}
+					else{
+						Proyecto.getInstance().agregaSubT(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
+						table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getListaSubtareas()));
+						table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
+						table_TD.setModel(new TareasTM(Proyecto.getInstance().getSubTareas()));
+					}
+				}
+			});
 			btnTQuitarSD.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			add(btnTQuitarSD, "cell 8 19,growx,aligny center");
 
