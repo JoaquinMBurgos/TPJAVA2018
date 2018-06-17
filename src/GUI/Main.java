@@ -94,7 +94,7 @@ public class Main {
 		proy.sprintEnCurso("SPR002", fi, ff);
 		System.out.println("Duracion:"+proy.calcularDuracion("SPR002"));
 		//System.out.println("Avance:"+);
-		
+
 		proy.avance("SPR002");
 		proy.avance("SPR002");
 		proy.avance("SPR002");

@@ -10,12 +10,15 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.TreeSet;
 
+import javax.swing.JLabel;
 import javax.swing.plaf.OptionPaneUI;
 
+import GUI.AdminSprints;
 import backLogs.Backlog;
 import estadosTareas.Estado;
 import tareas.Tarea;
 
+import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -24,7 +27,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-
 /**
  * @author jose_
  *
@@ -248,6 +250,36 @@ public final class Proyecto {
 		else
 			return sp.getListaT();
 	}
+	
+	
+	/**
+	 * Devuelve los datos del Sprint que se encuentra ENCURSO
+	 * 
+	 */
+	public void setAdmSprintEnCurso(String clave, String descripcion, String estado, String avance, String duracion) {
+		Sprint sp = null;
+		boolean bandera = true;
+		Iterator<Sprint> it = LSprints.iterator();
+		while(it.hasNext() && bandera)
+			sp = it.next();
+			if(sp.getEstado() == EstadoSprint.ENCURSO)
+				bandera = false;
+		if (bandera) {
+			clave = "ID Sprint";
+			descripcion = "Nombre Sprint";
+			estado = "Estado Actual";
+			avance = "0";
+			duracion = "0";
+		}
+		else {
+			clave = sp.getClave();
+			descripcion = sp.getDescripcion();
+			estado = "EN CURSO";
+			avance.valueOf(sp.getAvance());
+			duracion = "0";
+		}
+	}
+	
 	
 	/**
 	 * Calcula la estimacion del Sprint indicado

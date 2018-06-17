@@ -5,9 +5,14 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.CardLayout;
 import javax.swing.JScrollPane;
+
+import clases.EstadoSprint;
+import clases.Sprint;
+
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.awt.event.ActionEvent;
 import net.miginfocom.swing.MigLayout;
 
@@ -46,7 +51,6 @@ public final class InterfazGrafica {
 		frmScrum.getContentPane().add(panel);		
 		frmScrum.revalidate();
 		frmScrum.repaint();
-		//admins.cargarTablas();
 	}
 	
 	public void abrirABMSprint(){

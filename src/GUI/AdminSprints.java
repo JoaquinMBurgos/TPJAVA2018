@@ -24,6 +24,7 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JSeparator;
 import javax.swing.JScrollPane;
 
+
 public class AdminSprints extends JPanel {
 	
 	private JMenuBar asmenuBar;	
@@ -33,19 +34,20 @@ public class AdminSprints extends JPanel {
 		private JMenuItem mntmASBacklog;
 		private JMenuItem mntmASReportes;
 		private JLabel lblIdSprint;
+		private JLabel lblNombreSprint;
 		private JLabel lblEstado;
 		private JLabel lblEstadoActual;
 		private JLabel lblDaActual;
-		private JLabel lblDaActual_1;
+		private JLabel lblDaActual_Actual;
 		private JLabel lblCompletitudDeHistorias;
 		private JLabel lblCompletitudTotal;
 		private JLabel lblDuracin;
-		private JLabel lblDuracin_1;
+		private JLabel lblDuracin_Actual;
 		private JLabel lblAvance;
-		private JLabel lblAvance_1;
+		private JLabel lblAvance_Actual;
 		private JSeparator separator;
-		private JLabel label;
-		private JLabel label_1;
+		private JLabel lblCompletitudDeHistorias_Actual;
+		private JLabel lblCompletitudTotal_Actual;
 		private JScrollPane scrollPane;
 		private JScrollPane scrollPane_1;
 		private JLabel lblToDo;
@@ -74,6 +76,8 @@ public class AdminSprints extends JPanel {
 	 */
 	public AdminSprints() {
 		setLayout(new MigLayout("", "[135.00][15][98][10][84][15][62.00][88][10][4][15][72.00,grow][30][15][72][30][10][5][74.00,grow][30.00][15][105][10][5][][30]", "[24:24][10px][25px][25px][26][36.00,center][215][][36][215][]"));
+		
+	
 		
 		asmenuBar = new JMenuBar();
 		asmenuBar.setMargin(new Insets(0, 15, 0, 15));
@@ -113,7 +117,7 @@ public class AdminSprints extends JPanel {
 		lblIdSprint.setFont(new Font("Tahoma", Font.BOLD, 16));
 		add(lblIdSprint, "cell 0 2 1 2,alignx center,aligny center");
 		
-		JLabel lblNombreSprint = new JLabel("Nombre Sprint");
+		lblNombreSprint = new JLabel("Nombre Sprint");
 		lblNombreSprint.setFont(new Font("Tahoma", Font.BOLD, 16));
 		add(lblNombreSprint, "cell 2 2 3 2,alignx center,aligny center");
 		
@@ -129,25 +133,25 @@ public class AdminSprints extends JPanel {
 		lblDuracin.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblDuracin, "cell 11 2 1 2,alignx center,aligny center");
 		
-		lblDuracin_1 = new JLabel("0");
-		lblDuracin_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		add(lblDuracin_1, "cell 12 2 1 2,alignx center,aligny center");
+		lblDuracin_Actual = new JLabel("0");
+		lblDuracin_Actual.setFont(new Font("Tahoma", Font.BOLD, 12));
+		add(lblDuracin_Actual, "cell 12 2 1 2,alignx center,aligny center");
 		
 		lblAvance = new JLabel("Avance:");
 		lblAvance.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblAvance, "cell 14 2 1 2,alignx center,aligny center");
 		
-		lblAvance_1 = new JLabel("0");
-		lblAvance_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		add(lblAvance_1, "cell 15 2 1 2,alignx center,aligny center");
+		lblAvance_Actual = new JLabel("0");
+		lblAvance_Actual.setFont(new Font("Tahoma", Font.BOLD, 12));
+		add(lblAvance_Actual, "cell 15 2 1 2,alignx center,aligny center");
 		
 		lblDaActual = new JLabel("D\u00EDa Actual:");
 		lblDaActual.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblDaActual, "cell 18 2 1 2,alignx center,aligny center");
 		
-		lblDaActual_1 = new JLabel("0");
-		lblDaActual_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		add(lblDaActual_1, "cell 19 2 1 2,alignx center,aligny center");
+		lblDaActual_Actual = new JLabel("0");
+		lblDaActual_Actual.setFont(new Font("Tahoma", Font.BOLD, 12));
+		add(lblDaActual_Actual, "cell 19 2 1 2,alignx center,aligny center");
 		
 		JButton btnDiaSiguiente = new JButton("Dia Siguiente");
 		add(btnDiaSiguiente, "cell 21 2 1 2,alignx center,aligny center");
@@ -156,17 +160,17 @@ public class AdminSprints extends JPanel {
 		lblCompletitudDeHistorias.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblCompletitudDeHistorias, "cell 24 2,alignx center,aligny center");
 		
-		label = new JLabel("0");
-		label.setFont(new Font("Tahoma", Font.BOLD, 12));
-		add(label, "cell 25 2,alignx center,aligny center");
+		lblCompletitudDeHistorias_Actual = new JLabel("0");
+		lblCompletitudDeHistorias_Actual.setFont(new Font("Tahoma", Font.BOLD, 12));
+		add(lblCompletitudDeHistorias_Actual, "cell 25 2,alignx center,aligny center");
 		
 		lblCompletitudTotal = new JLabel("Completitud total:");
 		lblCompletitudTotal.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblCompletitudTotal, "cell 24 3,alignx center,aligny center");
 		
-		label_1 = new JLabel("0");
-		label_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		add(label_1, "cell 25 3,alignx center,aligny center");
+		lblCompletitudTotal_Actual = new JLabel("0");
+		lblCompletitudTotal_Actual.setFont(new Font("Tahoma", Font.BOLD, 12));
+		add(lblCompletitudTotal_Actual, "cell 25 3,alignx center,aligny center");
 		
 		separator = new JSeparator();
 		add(separator, "cell 0 4 26 1,growx,aligny center");
@@ -248,6 +252,26 @@ public class AdminSprints extends JPanel {
 		add(btnFinalizaSprint, "cell 24 10 2 1,alignx right,aligny center");
 
 	}
+
+	
+	
+	/*public void setlbls(){
+	String clave;
+	String descripcion; 
+	String estado; 
+	String avance;
+	String duracion;
+	Proyecto proy = Proyecto.getInstance();
+	
+	proy.setAdmSprintEnCurso(clave,descripcion,estado,avance,duracion); 
+	
+	lblIdSprint.setText(clave);
+	lblNombreSprint.setText(descripcion);
+	lblEstadoActual.setText(estado);
+	lblDaActual_Actual.setText(duracion);
+	lblAvance_Actual.setText(avance);
+
+	}
 	
 	/*public void cargarTablas(){
 		try{
@@ -256,4 +280,6 @@ public class AdminSprints extends JPanel {
 			JOptionPane.showMessageDialog(null, "Deben cargarse Sprints que administrar.");
 		}
 	}*/
+	
+	
 }
