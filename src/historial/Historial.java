@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import Tareas.EstadoTarea;
+import tareas.EstadoTarea;
 
 public class Historial implements Serializable{
 	private LocalDate fecha;

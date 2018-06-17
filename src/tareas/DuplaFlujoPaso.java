@@ -1,7 +1,7 @@
 /**
  * 
  */
-package Tareas;
+package tareas;
 
 /**
  * @author jose

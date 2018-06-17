@@ -16,8 +16,6 @@ import java.awt.Insets;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import Tareas.EstadoTarea;
-import Tareas.Tarea;
 import backLogs.Backlog;
 import clases.Proyecto;
 
@@ -33,6 +31,9 @@ import javax.swing.JSpinner;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import net.miginfocom.swing.MigLayout;
+import tareas.EstadoTarea;
+import tareas.Tarea;
+
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 

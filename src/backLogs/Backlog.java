@@ -11,12 +11,12 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.TreeSet;
 
-import Tareas.Bug;
-import Tareas.EstadoTarea;
-import Tareas.Historia;
-import Tareas.Mejora;
-import Tareas.Tarea;
 import sun.reflect.generics.tree.Tree;
+import tareas.Bug;
+import tareas.EstadoTarea;
+import tareas.Historia;
+import tareas.Mejora;
+import tareas.Tarea;
 
 public class Backlog {
 	private TreeSet<Tarea> LTareasP = new TreeSet<Tarea>();

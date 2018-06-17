@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
-import Tareas.Tarea;
+import tareas.Tarea;
 
 /**
  * @author tomi_

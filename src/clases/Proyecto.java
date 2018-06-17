@@ -12,10 +12,9 @@ import java.util.TreeSet;
 
 import javax.swing.plaf.OptionPaneUI;
 
-import Tareas.Tarea;
-
 import backLogs.Backlog;
 import estadosTareas.Estado;
+import tareas.Tarea;
 
 import java.io.File;
 import java.io.FileInputStream;

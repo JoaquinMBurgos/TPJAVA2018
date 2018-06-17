@@ -1,4 +1,4 @@
-package Tareas;
+package tareas;
 
 import java.io.Serializable;
 import java.time.LocalDate;

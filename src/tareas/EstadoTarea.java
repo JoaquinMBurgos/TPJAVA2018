@@ -1,4 +1,4 @@
-package Tareas;
+package tareas;
 
 public enum EstadoTarea {
 	TODO,

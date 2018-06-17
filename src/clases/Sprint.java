@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import Tareas.Tarea;
+import tareas.Tarea;
 
 import java.io.Serializable;
 import java.time.LocalDate;
