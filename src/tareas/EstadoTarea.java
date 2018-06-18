@@ -40,16 +40,22 @@ public enum EstadoTarea {
 		switch (this){
 		case TODO:
 			estado = INPROGRESS;
+			break;
 		case INPROGRESS:
 			estado = PENDINGTOBUILD;
+			break;
 		case PENDINGTOBUILD:
 			estado = READYTOTEST;
+			break;
 		case READYTOTEST:
 			estado = TESTING;
+			break;
 		case TESTING:
 			estado = DONE;
+			break;
 		case DONE:
 			estado = null;
+			break;
 		default:
 			estado = null;
 		}

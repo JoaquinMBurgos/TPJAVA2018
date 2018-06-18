@@ -53,9 +53,10 @@ public class Main {
 		proy.agregaSubT("HIS001", "TAR004");
 		proy.agregaSubT("HIS001", "TAR005");
 		//proy.agregaSubT("HIS001", "TAR001");
+		proy.agregaSubT("HIS002", "TAR006");
 	
 		proy.altaSprint("SPR001", "Sprint 1");
-		/*//proy.agregarTareasSprint("SPR001","HIS001");
+		/*proy.agregarTareasSprint("SPR001","HIS001");
 		proy.agregarTareasSprint("SPR001","TAR004");
 		proy.agregarTareasSprint("SPR001","TAR005");
 		proy.agregarTareasSprint("SPR001","TAR003");
@@ -64,14 +65,14 @@ public class Main {
 		proy.agregarTareasSprint("SPR001","TAR009");*/
 		
 		proy.altaSprint("SPR002", "Sprint 2");
-		/*proy.agregarTareasSprint("SPR002", "TAR001");
-		//proy.agregarTareasSprint("SPR002", "HIS002");
+		proy.agregarTareasSprint("SPR002", "TAR001");
+		proy.agregarTareasSprint("SPR002", "HIS002");
 		proy.agregarTareasSprint("SPR002", "TAR006");
 		proy.agregarTareasSprint("SPR002", "HIS005");
 		proy.agregarTareasSprint("SPR002", "TAR002");
 		proy.agregarTareasSprint("SPR002", "TAR010");
-		//proy.agregarTareasSprint("SPR002","MEJ002");
-		//proy.agregarTareasSprint("SPR002","TAR012");*/
+		proy.agregarTareasSprint("SPR002","MEJ002");
+		proy.agregarTareasSprint("SPR002","TAR012");
 		
 		//TAR001, HIS002, TAR006, HIS005, TAR002, TAR010, MEJ002, TAR012
 		
@@ -98,24 +99,28 @@ public class Main {
 		proy.avance("SPR002");
 		proy.avance("SPR002");
 		proy.avance("SPR002");
+		proy.cambiarEstadoTarea("SPR002", "HIS005","TODO");
 		proy.avance("SPR002");
 		proy.avance("SPR002");
 		proy.avance("SPR002");
 		proy.avance("SPR002");
 		proy.avance("SPR002");
 		proy.avance("SPR002");
-		proy.avance("SPR002");
-		proy.avance("SPR002");
-		proy.avance("SPR002");
+		//proy.avance("SPR002");
+		//proy.avance("SPR002");
+		//proy.avance("SPR002");
 		//proy.avance("SPR002");
 		//proy.avance("SPR002");
 		System.out.println(proy.cantAvance("SPR002"));
 		//proy.cambiarEstadoSprint("SPR001", "en curso");
 		//proy.bajaSprint("SPR002");
 		proy.corrersp();
-		System.out.println(proy.getBlog().getTarea("HIS002").getLdependencias().toString());
-		System.out.println(proy.getBlog().getLDependencias("HIS002"));
+		//System.out.println(proy.getBlog().getTarea("HIS002").getLdependencias().toString());
+		//System.out.println(proy.getBlog().getLDependencias("HIS002"));
+		//proy.eliminarDependencia("HIS002", "TAR003");
+		proy.eliminarDependencia("HIS006", "HIS004");
 		proy.mostrarTareas();
+		System.out.println(proy.getListaEstados("SPR002","INPROGRESS").toString());
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

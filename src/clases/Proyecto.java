@@ -430,17 +430,26 @@ public final class Proyecto {
 			avance = (int)s.getfInicio().until(fecha, ChronoUnit.DAYS);
 			s.setAvance();
 			s.setfAvance(fecha);
-			System.out.println(s.getfAvance());
+			/*System.out.println(s.getfAvance());
 			if(fecha.equals(s.getFechaFin())){
 				s.cambiarEstado("finalizado");
 				System.out.println(s.estimacionSprint());
 				System.out.println(s.estimacionHistoriaSprint());
-			}
+			}*/
 		}
 		else
 			System.out.println("El sprint ya esta finalizado");
 	}
 	
+	public boolean finalizaSprint(String idSprint){
+		Sprint s=getSprint(idSprint);
+		if(s.getfAvance().equals(s.getFechaFin())){
+			s.setEstadoSprint(EstadoSprint.FINALIZADO);
+			return true;
+		}
+		else
+			return false;
+	}
 
 	public int cantAvance(String id){
 		Sprint s=getSprint(id);
@@ -505,6 +514,40 @@ public final class Proyecto {
 			System.out.println(s.tareasNoCompletadas().toString()+" "+est);
 		}
 	}
+	public Sprint getSprintEnCurso(){
+		Iterator<Sprint>it=LSprints.iterator();
+		boolean bandera=false;
+		Sprint s=null;
+		while(it.hasNext()&& !bandera){
+			s=it.next();
+			if(s.getEstado().toString().equals("ENCURSO"))
+				bandera=true;
+		}
+		if(bandera)
+			return s;
+		else
+			return null;
+	}
+	/*public boolean existeSprintEncurso(){
+		Iterator<Sprint>it=LSprints.iterator();
+		boolean bandera=false;
+		Sprint s;
+		while(it.hasNext()&& !bandera){
+			s=it.next();
+			if(s.getEstado().equals("ENCURSO"))
+				bandera=true;
+		}
+		if(bandera)
+			return true;
+		else
+			return false;
+	}*/
+	
+	public TreeSet<Tarea>getListaEstados(String idSprint,String estado){
+		Sprint s=getSprint(idSprint);
+		return s.getListaEstado(estado);
+	}
+	
 	/**
 	 * Serializa
 	 * @param obj Object a serializar

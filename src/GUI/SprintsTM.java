@@ -22,7 +22,7 @@ public class SprintsTM extends AbstractTableModel{
 	
 	@Override
 	public int getColumnCount() {
-		return 3;
+		return 10;
 	}
 
 	@Override
@@ -47,7 +47,30 @@ public class SprintsTM extends AbstractTableModel{
 			break;
 		case 2:
 			ob = sp.getEstado();
+			break;
+		case 3:
+			ob=sp.getfInicio();
+			break;
+		case 4:
+			ob=sp.getFechaFin();
+			break;
+		case 5:
+			ob=sp.getDuracion();
+			break;
+		case 6:
+			ob=sp.getAvance();
+			break;
+		case 7:
+			ob=sp.getListaT();
+			break;
+		case 8:
+			ob=sp.estimacionHistoriaSprint();
+			break;
+		case 9:
+			ob=sp.estimacionSprint();
+			break;
 		}
+		
 		return ob;
 	}
 	

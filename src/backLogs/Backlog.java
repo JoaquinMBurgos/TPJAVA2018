@@ -277,15 +277,17 @@ public class Backlog {
 		Iterator<Tarea>it=LTareasP.iterator();
 		Tarea t=null; 
 		Tarea subT=null;
-		boolean bandera=true;
+		/*boolean bandera=true;
 		while(it.hasNext() && bandera){
 			t=it.next();
 			if(t.getId().equals(idT)){
 				bandera=false;
 			}
-		}
+		}*/
+		t=getTarea(idT);
+		//t.bajaDependencia(idDep);
 		Iterator<Tarea>it2=LTareasP.iterator();
-		bandera=true;
+		boolean bandera=true;
 		while(it2.hasNext() && bandera){
 			subT=it2.next();
 			if(subT.getId().equals(idDep)){

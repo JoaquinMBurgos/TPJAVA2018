@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeSet;
 
+import tareas.EstadoTarea;
 import tareas.Tarea;
 
 import java.io.Serializable;
@@ -178,7 +179,8 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 	public int estimacionSprint(){
 		int est=0;
 		for(Tarea tar : LTareas)
-			est+=tar.estimacion();
+			if(tar.getEstado().toString().equals("DONE"))
+				est+=tar.estimacion();
 		return est;
 	}
 	
@@ -189,7 +191,7 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 	public int estimacionHistoriaSprint(){
 		int est=0;
 		for(Tarea tar : LTareas)
-			if(tar.getId().substring(0,3).equals("HIS"))
+			if(tar.getId().substring(0,3).equals("HIS") && tar.getEstado().toString().equals("DONE"))
 				est+=tar.estimacion();
 		return est;
 	}
@@ -311,6 +313,15 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 		return clave+" "+estimacionHistoriaSprint();
 	}
 	
+	public TreeSet<Tarea>getListaEstado(String estado){
+		TreeSet<Tarea>lista=new TreeSet<Tarea>();
+		for(Tarea tar:LTareas){
+			if(tar.getEstado().toString().equals(estado))
+				lista.add(tar);
+		}
+		return lista;
+	}
+	
 	/**
 	 * Retorna un ArrayList con todas las Tareas completadas.
 	 * @return ArrayList con todas las Tareas completadas.
@@ -337,6 +348,10 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 				LNoCompletadas.add(t);	
 		}
 		return LNoCompletadas;
+	}
+	
+	public int getDuracion(){
+		return duracion;
 	}
 	
 }

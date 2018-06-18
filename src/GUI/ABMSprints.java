@@ -237,16 +237,26 @@ public class ABMSprints extends JPanel {
 				}
 			});
 			add(btnSModificar, "cell 2 28,alignx center,aligny center");
-			
+			/*scrollPane_3 = new JScrollPane();
+		add(scrollPane_3, "cell 17 6 5 1,grow");
+		
+		table_RTT = new JTable();
+		scrollPane_3.setViewportView(table_RTT);
+			*/
+			scrollPane_Sprints=new JScrollPane();
+			add(scrollPane_Sprints, "cell 5 2 3 17,grow");
 			
 			table = new JTable();
+			scrollPane_Sprints.setViewportView(table);
+			table.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
+			/*table = new JTable();
 			add(table);
 			table.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
 			table.setAutoscrolls(true);
 			
 			scrollPane_Sprints = new JScrollPane(table);
 			table.setFillsViewportHeight(true);
-			add(scrollPane_Sprints, "cell 5 2 3 17,grow");
+			add(scrollPane_Sprints, "cell 5 2 3 17,grow");*/
 			
 			btnSQuitaTarea = new JButton("\u00BB");
 			btnSQuitaTarea.setFont(new Font("Tahoma", Font.PLAIN, 14));
