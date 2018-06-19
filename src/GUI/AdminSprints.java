@@ -35,50 +35,50 @@ public class AdminSprints extends JPanel {
 		private JMenuItem mntmASSprints;	
 		private JMenuItem mntmASTareas;
 		private JMenuItem mntmASBacklog;
+		private JMenuItem mntmASHistorico;
 		private JMenuItem mntmASReportes;
-		private JLabel lblIdSprint;
-		private JLabel lblNombreSprint;
-		private JLabel lblEstado;
-		private JLabel lblEstadoActual;
-		private JLabel lblDaActual;
-		private JLabel lblDaActual_Actual;
-		private JLabel lblCompletitudDeHistorias;
-		private JLabel lblCompletitudTotal;
-		private JLabel lblDuracin;
-		private JLabel lblDuracin_Actual;
-		private JLabel lblAvance;
-		private JLabel lblAvance_Actual;
-		private JSeparator separator;
-		private JLabel lblCompletitudDeHistorias_Actual;
-		private JLabel lblCompletitudTotal_Actual;
-		private JScrollPane scrollPane;
-		private JScrollPane scrollPane_1;
-		private JLabel lblToDo;
-		private JLabel lblInprogress;
-		private JScrollPane scrollPane_2;
-		private JLabel lblPendingtobuild;
-		private JScrollPane scrollPane_3;
-		private JScrollPane scrollPane_4;
-		private JScrollPane scrollPane_5;
-		private JLabel lblReadytotest;
-		private JLabel lblTesting;
-		private JLabel lblDone;
-		private JButton btnSiguiente;
-		private JButton button;
-		private JButton button_1;
-		private JButton button_2;
-		private JButton button_3;
-		private JButton btnFinalizaSprint;
-		private JButton btnAnterior;
-		private JButton button_4;
-		private JButton button_5;
-		private JButton button_6;
-		private JTable table_TD;
-		private JTable table_IP;
-		private JTable table_PTB;
-		private JTable table_RTT;
-		private JTable table_T;
-		private JTable table_D;
+	
+	private JLabel lblIdSprint;
+	private JLabel lblNombreSprint;
+	private JLabel lblEstado;
+	private JLabel lblEstadoActual;
+	private JLabel lblDaActual;
+	private JLabel lblDaActual_Actual;
+	private JLabel lblCompletitudDeHistorias;
+	private JLabel lblCompletitudTotal;
+	private JLabel lblDuracin;
+	private JLabel lblDuracin_Actual;
+	private JLabel lblAvance;
+	private JLabel lblAvance_Actual;
+	private JSeparator separator;
+	private JLabel lblCompletitudDeHistorias_Actual;
+	private JLabel lblCompletitudTotal_Actual;
+	private JScrollPane scrollPane_ToDo;
+	private JScrollPane scrollPane_Inprogress;
+	private JLabel lblToDo;
+	private JLabel lblInprogress;
+	private JScrollPane scrollPane_Pendingtobuild;
+	private JLabel lblPendingtobuild;
+	private JScrollPane scrollPane_Readytotest;
+	private JScrollPane scrollPane_Testing;
+	private JScrollPane scrollPane_Done;
+	private JLabel lblReadytotest;
+	private JLabel lblTesting;
+	private JLabel lblDone;
+	private JButton btnToDoSiguiente;
+	private JButton btnInProgressSiguiente;
+	private JButton btnPendingToBouildSiguiente;
+	private JButton btnTestingSiguiente;
+	private JButton btnReadyToTestSiguiente;
+	private JButton btnFinalizaSprint;
+	private JButton btnPendingToBouildAnterior;
+	private JButton btnTestingAnterior;
+	private JTable table_TD;
+	private JTable table_IP;
+	private JTable table_PTB;
+	private JTable table_RTT;
+	private JTable table_T;
+	private JTable table_D;
 		
 
 	/**
@@ -115,6 +115,12 @@ public class AdminSprints extends JPanel {
 				public void mouseClicked(MouseEvent e) {	
 					InterfazGrafica.getInstance().abrirBacklog();}});
 			asmenuBar.add(mntmASBacklog);
+			mntmASHistorico = new JMenuItem("Historico");
+			mntmASHistorico.setHorizontalAlignment(SwingConstants.CENTER);
+			mntmASHistorico.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {	
+					InterfazGrafica.getInstance().abrirHistorico();}});
+			asmenuBar.add(mntmASHistorico);
 			mntmASReportes = new JMenuItem("Reportes");
 			mntmASReportes.setHorizontalAlignment(SwingConstants.CENTER);
 			mntmASReportes.addMouseListener(new MouseAdapter() {
@@ -141,6 +147,8 @@ public class AdminSprints extends JPanel {
 			lblAvance_Actual = new JLabel("0");
 			lblDaActual_Actual = new JLabel("0");
 		}
+		
+		
 		//lblIdSprint = new JLabel("ID Sprint");
 		lblIdSprint.setFont(new Font("Tahoma", Font.BOLD, 16));
 		add(lblIdSprint, "cell 0 2 1 2,alignx center,aligny center");
@@ -224,6 +232,7 @@ public class AdminSprints extends JPanel {
 		separator = new JSeparator();
 		add(separator, "cell 0 4 26 1,growx,aligny center");
 		
+		
 		lblToDo = new JLabel("To Do");
 		lblToDo.setFont(new Font("Tahoma", Font.BOLD, 16));
 		add(lblToDo, "cell 0 5 3 1,alignx center,aligny center");
@@ -240,70 +249,50 @@ public class AdminSprints extends JPanel {
 		lblReadytotest.setFont(new Font("Tahoma", Font.BOLD, 16));
 		add(lblReadytotest, "cell 18 5 4 1,alignx center,aligny center");
 		
-		lblDone = new JLabel("Done");
-		lblDone.setFont(new Font("Tahoma", Font.BOLD, 16));
-		add(lblDone, "cell 23 5 3 1,alignx center,aligny center");
-		
-		scrollPane = new JScrollPane();
-		add(scrollPane, "cell 0 6 3 4,grow");
-		
-		table_TD = new JTable();
-		scrollPane.setViewportView(table_TD);
-		
-		scrollPane_1 = new JScrollPane();
-		add(scrollPane_1, "cell 4 6 4 4,grow");
-		
-		table_IP = new JTable();
-		scrollPane_1.setViewportView(table_IP);
-		
-		scrollPane_2 = new JScrollPane();
-		add(scrollPane_2, "cell 9 6 7 4,grow");
-		
-		table_PTB = new JTable();
-		scrollPane_2.setViewportView(table_PTB);
-		
-		scrollPane_3 = new JScrollPane();
-		add(scrollPane_3, "cell 17 6 5 1,grow");
-		
-		table_RTT = new JTable();
-		scrollPane_3.setViewportView(table_RTT);
-		
-		scrollPane_5 = new JScrollPane();
-		add(scrollPane_5, "cell 23 6 3 4,grow");
-		
-		table_D = new JTable();
-		scrollPane_5.setViewportView(table_D);
-		
-		button_6 = new JButton("\u00AB Anterior");
-		button_6.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		add(button_6, "cell 17 7 2 1,alignx left,aligny center");
-		
-		button_3 = new JButton("Siguiente \u00BB");
-		button_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Sprint s=Proyecto.getInstance().getSprintEnCurso();
-				String id=table_RTT.getValueAt(table_RTT.getSelectedRow(), 0).toString();
-				EstadoTarea e1=EstadoTarea.valueOf("READYTOTEST");
-				s.cambiarEstadoTarea(id,e1.next().toString());
-				table_RTT.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"READYTOTEST")));
-				table_T.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TESTING")));
-			}
-		});
-		add(button_3, "cell 21 7,alignx right,aligny center");
-		
 		lblTesting = new JLabel("Testing");
 		lblTesting.setFont(new Font("Tahoma", Font.BOLD, 16));
 		add(lblTesting, "cell 17 8 5 1,alignx center,aligny center");
 		
-		scrollPane_4 = new JScrollPane();
-		add(scrollPane_4, "cell 17 9 5 1,grow");
+		lblDone = new JLabel("Done");
+		lblDone.setFont(new Font("Tahoma", Font.BOLD, 16));
+		add(lblDone, "cell 23 5 3 1,alignx center,aligny center");
+		
+		
+		scrollPane_ToDo = new JScrollPane();
+		add(scrollPane_ToDo, "cell 0 6 3 4,grow");
+		
+		table_TD = new JTable();
+		scrollPane_ToDo.setViewportView(table_TD);
+		
+		scrollPane_Inprogress = new JScrollPane();
+		add(scrollPane_Inprogress, "cell 4 6 4 4,grow");
+		
+		table_IP = new JTable();
+		scrollPane_Inprogress.setViewportView(table_IP);
+		
+		scrollPane_Pendingtobuild = new JScrollPane();
+		add(scrollPane_Pendingtobuild, "cell 9 6 7 4,grow");
+		
+		table_PTB = new JTable();
+		scrollPane_Pendingtobuild.setViewportView(table_PTB);
+		
+		scrollPane_Readytotest = new JScrollPane();
+		add(scrollPane_Readytotest, "cell 17 6 5 1,grow");
+		
+		table_RTT = new JTable();
+		scrollPane_Readytotest.setViewportView(table_RTT);
+		
+		scrollPane_Done = new JScrollPane();
+		add(scrollPane_Done, "cell 23 6 3 4,grow");
+		
+		table_D = new JTable();
+		scrollPane_Done.setViewportView(table_D);
+		
+		scrollPane_Testing = new JScrollPane();
+		add(scrollPane_Testing, "cell 17 9 5 1,grow");
 		
 		table_T = new JTable();
-		scrollPane_4.setViewportView(table_T);
+		scrollPane_Testing.setViewportView(table_T);
 		
 		
 		if(Proyecto.getInstance().getSprintEnCurso()!=null){
@@ -316,8 +305,21 @@ public class AdminSprints extends JPanel {
 			table_D.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"DONE")));
 		}
 		
-		btnSiguiente = new JButton("Siguiente \u00BB");
-		btnSiguiente.addActionListener(new ActionListener() {
+		btnReadyToTestSiguiente = new JButton("Siguiente \u00BB");
+		btnReadyToTestSiguiente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Sprint s=Proyecto.getInstance().getSprintEnCurso();
+				String id=table_RTT.getValueAt(table_RTT.getSelectedRow(), 0).toString();
+				EstadoTarea e1=EstadoTarea.valueOf("READYTOTEST");
+				s.cambiarEstadoTarea(id,e1.next().toString());
+				table_RTT.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"READYTOTEST")));
+				table_T.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TESTING")));
+			}
+		});
+		add(btnReadyToTestSiguiente, "cell 21 7,alignx right,aligny center");
+		
+		btnToDoSiguiente = new JButton("Siguiente \u00BB");
+		btnToDoSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//Proyecto.getInstance().cambiarEstadoTarea(idSprint, idT, est);
 				Sprint s=Proyecto.getInstance().getSprintEnCurso();
@@ -328,23 +330,10 @@ public class AdminSprints extends JPanel {
 				table_IP.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"INPROGRESS")));
 			}
 		});
-		add(btnSiguiente, "cell 2 10,alignx right,aligny center");
+		add(btnToDoSiguiente, "cell 2 10,alignx right,aligny center");
 		
-		btnAnterior = new JButton("\u00AB Anterior");
-		btnAnterior.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Sprint s=Proyecto.getInstance().getSprintEnCurso();
-				String id=table_IP.getValueAt(table_IP.getSelectedRow(), 0).toString();
-				EstadoTarea e=EstadoTarea.valueOf("INPROGRESS");
-				s.cambiarEstadoTarea(id,e.previous().toString());
-				table_IP.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"INPROGRESS")));
-				//System.out.println(e.previous().toString());
-			}
-		});
-		add(btnAnterior, "cell 4 10 2 1,alignx left,aligny center");
-		
-		button = new JButton("Siguiente \u00BB");
-		button.addActionListener(new ActionListener() {
+		btnInProgressSiguiente = new JButton("Siguiente \u00BB");
+		btnInProgressSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Sprint s=Proyecto.getInstance().getSprintEnCurso();
 				String id=table_IP.getValueAt(table_IP.getSelectedRow(), 0).toString();
@@ -354,10 +343,10 @@ public class AdminSprints extends JPanel {
 				table_PTB.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"PENDINGTOBUILD")));
 			}
 		});
-		add(button, "cell 7 10,alignx right,aligny center");
+		add(btnInProgressSiguiente, "cell 7 10,alignx right,aligny center");
 		
-		button_4 = new JButton("\u00AB Anterior");
-		button_4.addActionListener(new ActionListener() {
+		btnPendingToBouildAnterior = new JButton("\u00AB Anterior");
+		btnPendingToBouildAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Sprint s=Proyecto.getInstance().getSprintEnCurso();
 				String id=table_PTB.getValueAt(table_PTB.getSelectedRow(), 0).toString();
@@ -367,10 +356,10 @@ public class AdminSprints extends JPanel {
 				table_TD.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TODO")));
 			}
 		});
-		add(button_4, "cell 10 10 2 1,alignx left,aligny center");
+		add(btnPendingToBouildAnterior, "cell 10 10 2 1,alignx left,aligny center");
 		
-		button_1 = new JButton("Siguiente \u00BB");
-		button_1.addActionListener(new ActionListener() {
+		btnPendingToBouildSiguiente = new JButton("Siguiente \u00BB");
+		btnPendingToBouildSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Sprint s=Proyecto.getInstance().getSprintEnCurso();
 				String id=table_PTB.getValueAt(table_PTB.getSelectedRow(), 0).toString();
@@ -380,10 +369,10 @@ public class AdminSprints extends JPanel {
 				table_RTT.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"READYTOTEST")));
 			}
 		});
-		add(button_1, "cell 14 10 2 1,alignx right,aligny center");
+		add(btnPendingToBouildSiguiente, "cell 14 10 2 1,alignx right,aligny center");
 		
-		button_5 = new JButton("\u00AB Anterior");
-		button_5.addActionListener(new ActionListener() {
+		btnTestingAnterior = new JButton("\u00AB Anterior");
+		btnTestingAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Sprint s=Proyecto.getInstance().getSprintEnCurso();
 				String id=table_T.getValueAt(table_T.getSelectedRow(), 0).toString();
@@ -393,10 +382,10 @@ public class AdminSprints extends JPanel {
 				table_TD.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TODO")));
 			}
 		});
-		add(button_5, "cell 17 10 2 1,alignx left,aligny center");
+		add(btnTestingAnterior, "cell 17 10 2 1,alignx left,aligny center");
 		
-		button_2 = new JButton("Siguiente \u00BB");
-		button_2.addActionListener(new ActionListener() {
+		btnTestingSiguiente = new JButton("Siguiente \u00BB");
+		btnTestingSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Sprint s=Proyecto.getInstance().getSprintEnCurso();
 				String id=table_T.getValueAt(table_T.getSelectedRow(), 0).toString();
@@ -406,7 +395,7 @@ public class AdminSprints extends JPanel {
 				table_D.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"DONE")));
 			}
 		});
-		add(button_2, "cell 21 10,alignx right,aligny center");
+		add(btnTestingSiguiente, "cell 21 10,alignx right,aligny center");
 		
 		btnFinalizaSprint = new JButton("Finaliza Sprint");
 		add(btnFinalizaSprint, "cell 24 10 2 1,alignx right,aligny center");

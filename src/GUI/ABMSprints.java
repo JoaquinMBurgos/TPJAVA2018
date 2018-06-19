@@ -58,6 +58,7 @@ public class ABMSprints extends JPanel {
 		private JMenuItem mntmSSprints;	
 		private JMenuItem mntmSTareas;
 		private JMenuItem mntmSBacklog;
+		private JMenuItem mntmSHistorico;
 		private JMenuItem mntmSReportes;
 	
 	private JLabel lblSprint;
@@ -122,6 +123,12 @@ public class ABMSprints extends JPanel {
 				public void mouseClicked(MouseEvent e) {	
 					InterfazGrafica.getInstance().abrirBacklog();}});
 			smenuBar.add(mntmSBacklog);
+			mntmSHistorico = new JMenuItem("Historico");
+			mntmSHistorico.setHorizontalAlignment(SwingConstants.CENTER);
+			mntmSHistorico.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {	
+					InterfazGrafica.getInstance().abrirHistorico();}});
+			smenuBar.add(mntmSHistorico);
 			mntmSReportes = new JMenuItem("Reportes");
 			mntmSReportes.setHorizontalAlignment(SwingConstants.CENTER);
 			mntmSReportes.addMouseListener(new MouseAdapter() {
@@ -277,14 +284,38 @@ public class ABMSprints extends JPanel {
 				
 				@Override
 				public void mouseClicked(MouseEvent e) {
+					
+					String estado;
+					
 					table_STareas.setModel(new TareasTM(Proyecto.getInstance().getSprint(table.getValueAt(table.getSelectedRow(), 0).toString()).getListaT()));
-				}
+					txtSID.setText(Proyecto.getInstance().getSprint(table.getValueAt(table.getSelectedRow(), 0).toString()).getClave());
+					txtSNombre.setText(Proyecto.getInstance().getSprint(table.getValueAt(table.getSelectedRow(), 0).toString()).getDescripcion());
+					estado = Proyecto.getInstance().getSprint(table.getValueAt(table.getSelectedRow(), 0).toString()).getEstado().toString();
+					
+					if (estado == "PLANIFICADO") {
+						rdbtnPlanificado.setSelected(true);
+						rdbtnEnCurso.setSelected(false);
+						rdbtnFinalizado.setSelected(false);
+						}
+					else {
+						if (estado == "ENCURSO") {
+							rdbtnPlanificado.setSelected(false);
+							rdbtnEnCurso.setSelected(true);
+							rdbtnFinalizado.setSelected(false);
+						}
+						else {
+							rdbtnPlanificado.setSelected(false);
+							rdbtnEnCurso.setSelected(false);
+							rdbtnFinalizado.setSelected(true);
+						}
+					}
+				};
 
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					// TODO Auto-generated method stub
 					
-				}
+				};
 
 				@Override
 				public void mouseExited(MouseEvent e) {
@@ -303,7 +334,7 @@ public class ABMSprints extends JPanel {
 					// TODO Auto-generated method stub
 					
 				}
-			});
+				});
 			
 			
 			/*table = new JTable();

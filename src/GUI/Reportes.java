@@ -25,6 +25,7 @@ public class Reportes extends JPanel {
 		private JMenuItem mntmRSprints;	
 		private JMenuItem mntmRTareas;
 		private JMenuItem mntmRBacklog;
+		private JMenuItem mntmRHistorico;
 		private JMenuItem mntmRReportes;
 		
 	private JButton btnRankingSprings;
@@ -64,6 +65,12 @@ public class Reportes extends JPanel {
 					public void mouseClicked(MouseEvent e) {	
 						InterfazGrafica.getInstance().abrirBacklog();}});
 				rmenuBar.add(mntmRBacklog);
+				mntmRHistorico = new JMenuItem("Historico");
+				mntmRHistorico.setHorizontalAlignment(SwingConstants.CENTER);
+				mntmRHistorico.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {	
+						InterfazGrafica.getInstance().abrirHistorico();}});
+				rmenuBar.add(mntmRHistorico);
 				mntmRReportes = new JMenuItem("Reportes");
 				mntmRReportes.setSelected(true);
 				mntmRReportes.setForeground(Color.BLACK);

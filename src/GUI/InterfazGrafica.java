@@ -15,17 +15,19 @@ import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.awt.event.ActionEvent;
 import net.miginfocom.swing.MigLayout;
+import java.awt.Toolkit;
 
 public final class InterfazGrafica {
 
 	private JFrame frmScrum = new JFrame();
 	private JPanel panel = new JPanel();
 
+	private AdminSprints admins = new AdminSprints();
 	private ABMSprints abms = new ABMSprints();
 	private ABMTareas abmt = new ABMTareas();
 	private Backlog abmb = new Backlog();
+	private Historico hist = new Historico();
 	private Reportes rep = new Reportes();
-	private AdminSprints admins = new AdminSprints();
 	
 	private static InterfazGrafica instance = null;
 
@@ -83,6 +85,16 @@ public final class InterfazGrafica {
 		frmScrum.repaint();
 	}
 	
+	public void abrirHistorico(){
+
+		frmScrum.remove(panel);
+		panel = hist;
+		
+		frmScrum.getContentPane().add(panel);
+		frmScrum.revalidate();
+		frmScrum.repaint();
+	}
+	
 	public void abrirReportes(){
 		 	
 		frmScrum.remove(panel);
@@ -117,7 +129,8 @@ public final class InterfazGrafica {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmScrum.setTitle("Scrum");
+		frmScrum.setTitle("Sprint Administration System");
+		frmScrum.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Usuario\\GitHub\\TPJAVA2018\\resources\\run.png"));
 		frmScrum.setBounds(100, 100, 1280, 720);
 		frmScrum.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmScrum.getContentPane().setLayout(new MigLayout());

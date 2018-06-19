@@ -25,7 +25,9 @@ public class Backlog extends JPanel {
 		private JMenuItem mntmBSprints;	
 		private JMenuItem mntmBTareas;
 		private JMenuItem mntmBBacklog;
+		private JMenuItem mntmBHistorico;	
 		private JMenuItem mntmBReportes;	
+		
 		private JScrollPane scrollPane_Backlog;
 		private JTable table;
 
@@ -62,6 +64,12 @@ public class Backlog extends JPanel {
 			mntmBBacklog.setHorizontalAlignment(SwingConstants.CENTER);
 			mntmBBacklog.setFont(new Font("Segoe UI", Font.BOLD, 13));
 			bmenuBar.add(mntmBBacklog);
+			mntmBHistorico = new JMenuItem("Historico");
+			mntmBHistorico.setHorizontalAlignment(SwingConstants.CENTER);
+			mntmBHistorico.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {	
+					InterfazGrafica.getInstance().abrirHistorico();}});
+			bmenuBar.add(mntmBHistorico);
 			mntmBReportes = new JMenuItem("Reportes");
 			mntmBReportes.setHorizontalAlignment(SwingConstants.CENTER);
 			mntmBReportes.addMouseListener(new MouseAdapter() {
