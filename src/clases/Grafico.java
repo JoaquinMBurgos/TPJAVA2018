@@ -34,22 +34,22 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.RectangleInsets;
 
+import tareas.Tarea;
+
 public class Grafico {
 
-public void graf(){
-    XYSeries series = new XYSeries("Producto A");
+public void graficar(Sprint s){
+    XYSeries series = new XYSeries("Burndown");
     XYPlot plot=new XYPlot();
+    int suma=0;
     // Introduccion de datos
-
-    series.add(1, 1);
-    series.add(2, 6);
-    series.add(3, 3);
-    series.add(4, 10);
+    
+    
+    for(int day = 0;day<s.duracion();day++)
+    	series.add(day, s.estimacionEstadoDia("DONE", day));
     //XYPlotCollection dataset=new XYPlotCollection();
     XYSeriesCollection dataset = new XYSeriesCollection();
     dataset.addSeries(series);
-    
-    
 
    JFreeChart chart = ChartFactory.createXYLineChart(
 

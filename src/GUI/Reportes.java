@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
@@ -28,7 +29,7 @@ public class Reportes extends JPanel {
 	private JButton btnReporteBurndown;
 		
 	private JScrollPane scrollPane_RankingSprings;
-
+	private JTable table;
 		/**
 		 * Create the panel.
 		 */
@@ -82,6 +83,9 @@ public class Reportes extends JPanel {
 				
 				scrollPane_RankingSprings = new JScrollPane();
 				add(scrollPane_RankingSprings, "cell 3 2 1 8,grow");
+				
+				table=new JTable();
+				scrollPane_RankingSprings.setViewportView(table);
 
 		}
 	}

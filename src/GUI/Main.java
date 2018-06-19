@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.Month;
 
 import backLogs.Backlog;
+import clases.Grafico;
 import clases.Proyecto;
 import clases.Sprint;
 import clases.SprintNoValido;
@@ -99,9 +100,10 @@ public class Main {
 		proy.avance("SPR002");
 		proy.avance("SPR002");
 		proy.avance("SPR002");
-		proy.cambiarEstadoTarea("SPR002", "HIS005","TODO");
+		proy.cambiarEstadoTarea("SPR002", "HIS005","PENDINGTOBUILD");
 		proy.avance("SPR002");
 		proy.avance("SPR002");
+		proy.cambiarEstadoTarea("SPR002", "TAR001","DONE");
 		proy.avance("SPR002");
 		proy.avance("SPR002");
 		proy.avance("SPR002");
@@ -119,6 +121,8 @@ public class Main {
 		//System.out.println(proy.getBlog().getLDependencias("HIS002"));
 		//proy.eliminarDependencia("HIS002", "TAR003");
 		proy.eliminarDependencia("HIS006", "HIS004");
+		Grafico g = new Grafico();
+		g.graficar(proy.getSprintEnCurso());
 		proy.mostrarTareas();
 		System.out.println(proy.getListaEstados("SPR002","INPROGRESS").toString());
 

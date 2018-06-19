@@ -83,6 +83,8 @@ public class ABMSprints extends JPanel {
 	private JLabel lblNombreSprint;
 	private JTextField txtSNombre;
 	private JButton btnIniciar;
+	
+	private JTable table_STareas;
 
 	/**
 	 * Create the panel.
@@ -206,6 +208,14 @@ public class ABMSprints extends JPanel {
 			scrollPane_STareas = new JScrollPane();
 			add(scrollPane_STareas, "cell 5 21 1 8,grow");
 			
+			table_STareas = new JTable();
+			scrollPane_STareas.setViewportView(table_STareas);
+			/*try{
+				table_STareas.setModel(new TareasTM(Proyecto.getInstance().getSprint(table.getValueAt(table.getSelectedRow(), 0).toString()).getListaT()));
+			}catch(NullPointerException npe){
+				
+			}*/
+			
 			scrollPane_STareasBacklog = new JScrollPane();
 			add(scrollPane_STareasBacklog, "cell 7 21 1 8,grow");
 			
@@ -221,8 +231,9 @@ public class ABMSprints extends JPanel {
 			btnSAgregar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Proyecto.getInstance().altaSprint(txtSID.getText(), txtSNombre.getText());
+					table.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
 					JOptionPane.showMessageDialog(null, "Sprint agregado con exito.");
-					Proyecto.getInstance().corrersp();
+					//Proyecto.getInstance().corrersp();
 				}
 			});
 			add(btnSAgregar, "cell 1 28,alignx center,aligny center");
@@ -244,11 +255,19 @@ public class ABMSprints extends JPanel {
 		scrollPane_3.setViewportView(table_RTT);
 			*/
 			scrollPane_Sprints=new JScrollPane();
+			scrollPane_Sprints.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					table_STareas.setModel(new TareasTM(Proyecto.getInstance().getSprint(table.getValueAt(table.getSelectedRow(), 0).toString()).getListaT()));
+				}
+			});
 			add(scrollPane_Sprints, "cell 5 2 3 17,grow");
 			
 			table = new JTable();
 			scrollPane_Sprints.setViewportView(table);
 			table.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
+			
+			
 			/*table = new JTable();
 			add(table);
 			table.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
@@ -268,17 +287,17 @@ public class ABMSprints extends JPanel {
 			btnSEliminar = new JButton("Eliminar");
 			btnSEliminar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					/*try{
+					
+					try{
 						Proyecto.getInstance().bajaSprint(table.getModel().getValueAt(table.getSelectedRow(), 0).toString());
 						}
-						catch(ArrayIndexOutOfBoundsException e){
+						catch(ArrayIndexOutOfBoundsException e1){
 							JOptionPane.showMessageDialog(null, "Debe existir seleccionar un Sprint a eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
 						} catch (SprintNoValido snv) {
 							JOptionPane.showMessageDialog(null, "No se pueden eliminar los Sprints EN CURSO o FINALIZADO.", "Error", JOptionPane.ERROR_MESSAGE);
-							snv.printStackTrace();
 						}
 						table.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
-					}*/
+				
 				}
 			});
 			add(btnSEliminar, "cell 3 28,alignx center,aligny center");

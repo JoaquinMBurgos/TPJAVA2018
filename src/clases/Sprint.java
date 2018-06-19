@@ -354,4 +354,16 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 		return duracion;
 	}
 	
+	public int estimacionEstadoDia(String estado, int day){
+		int suma=0;
+		LocalDate fecha = fInicio.plusDays(day);
+		for(Tarea tar:LTareas){
+			if(!tar.getEstado().toString().equals(estado)){
+				if(tar.getfFin()==fecha)
+					suma+=tar.estimacion();
+			}
+		}
+		return suma;
+	}
+	
 }
