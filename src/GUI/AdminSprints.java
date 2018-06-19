@@ -203,7 +203,6 @@ public class AdminSprints extends JPanel {
 				if(Proyecto.getInstance().finalizaSprint(s.getClave())){
 					lblCompletitudDeHistorias_Actual.setText(String.valueOf(s.estimacionHistoriaSprint()));
 					lblCompletitudTotal_Actual.setText(String.valueOf(s.estimacionSprint()));
-					s.muestraHistorial();
 				}
 					
 				
@@ -398,6 +397,17 @@ public class AdminSprints extends JPanel {
 		add(btnTestingSiguiente, "cell 21 10,alignx right,aligny center");
 		
 		btnFinalizaSprint = new JButton("Finaliza Sprint");
+		btnFinalizaSprint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Proyecto.getInstance().getSprintEnCurso().finalizar();
+				table_D.removeAll();
+				table_IP.removeAll();
+				table_PTB.removeAll();
+				table_RTT.removeAll();
+				table_T.removeAll();
+				table_TD.removeAll();
+			}
+		});
 		add(btnFinalizaSprint, "cell 24 10 2 1,alignx right,aligny center");
 
 	}

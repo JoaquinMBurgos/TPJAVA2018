@@ -11,7 +11,9 @@ import java.util.Iterator;
 import java.util.TreeSet;
 
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.plaf.OptionPaneUI;
+import javax.swing.table.DefaultTableModel;
 
 import GUI.AdminSprints;
 import backLogs.Backlog;
@@ -329,15 +331,32 @@ public final class Proyecto {
 	public void bajaTareaSprint(String idSprint,String idTarea){
 		Iterator<Sprint>it=LSprints.iterator();
 		Sprint sp=null;
+		Tarea tar=null;
 		boolean bandera=true;
 		while(it.hasNext() && bandera){
 			sp=it.next();
 			if(sp.getClave().compareTo(idSprint)==0){
 				sp.bajaTarea(idTarea);
+				tar=sp.getTarea(idTarea);
+				blog.agregarTarea(tar);
 				bandera=false;
 			}
 				
 		}
+	}
+	
+	public TreeSet<Tarea> TareasEnSprint(){
+		TreeSet<Tarea> lista = new TreeSet<Tarea>();
+		for(Sprint sp : LSprints){
+			for (Tarea tar : sp.getListaT()){
+				lista.add(tar);
+			}
+		}
+		for (Tarea tar : blog.getLTareasP()){
+			lista.add(tar);
+		}
+		return lista;
+		
 	}
 	
 	/**

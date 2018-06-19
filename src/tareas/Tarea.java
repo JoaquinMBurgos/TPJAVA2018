@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeSet;
 
@@ -257,6 +259,9 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 		
 	}
 	
+	public HashMap<String, Integer> getFlujoPasos() {
+		return null;
+	}	
 	/*public void agregarSubTarea(Tarea tar){
 		if(tar.getId().substring(0, 3).equals("TAR") && tar.getComplejidad()!=0)
 			LSubtareas.add(tar);

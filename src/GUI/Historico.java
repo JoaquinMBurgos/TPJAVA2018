@@ -45,17 +45,19 @@ public class Historico extends JPanel {
 		
 	private JScrollPane scrollPane_Sprints;
 	private JTable table_Sprint;
-	private JScrollPane scrollPane_Historico;
-	private JTable table_Historico;
+	private JScrollPane scrollPane_Tareas;
+	private JTable table_Tareas;
 	private JSeparator separator_0;
 	private JSeparator separator_1;
+	private JScrollPane scrollPane_Historico;
+	private JTable table_Historico;
 	
 	/**
 	 * Create the panel.
 	 */
 	public Historico() {
 
-		setLayout(new MigLayout("", "[101.00][][115.00][][115][][115][762.00,grow]", "[24px:24px][10][179.00][15][24.00][15][424.00,grow]"));
+		setLayout(new MigLayout("", "[101.00][][115.00][][115][][115,grow][762.00,grow]", "[24px:24px][10][179.00][15][24.00][15][424.00,grow]"));
 		
 		hmenuBar = new JMenuBar();
 			mntmHAdmSprints = new JMenuItem("Administración");
@@ -122,6 +124,38 @@ public class Historico extends JPanel {
 			scrollPane_Sprints.setViewportView(table_Sprint);
 			table_Sprint.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
 			
+			table_Sprint.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getSprint(table_Sprint.getValueAt(table_Sprint.getSelectedRow(), 0).toString()).getListaT()));
+				}
+			});
+			
 			separator_0 = new JSeparator();
 			separator_0.setForeground(Color.BLACK);
 			add(separator_0, "cell 0 3 8 1,growx,aligny center");
@@ -149,37 +183,6 @@ public class Historico extends JPanel {
 			lblSep_3 = new JLabel(" - ");
 			lblSep_3.setFont(new Font("Tahoma", Font.BOLD, 12));
 			add(lblSep_3, "cell 5 4,alignx center,aligny center");
-			/*table_Sprint.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				table_Historico.setModel(new TareasTM(Proyecto.getInstance().getSprint(table_Sprint.getValueAt(table_Sprint.getSelectedRow(), 0).toString()).getListaT()));
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			});*/
 			
 			lblFfin = new JLabel("Fecha de Finalizacion");
 			lblFfin.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -190,12 +193,52 @@ public class Historico extends JPanel {
 			add(separator_1, "cell 0 5 8 1,growx,aligny center");
 					
 						
-						scrollPane_Historico = new JScrollPane();
-						add(scrollPane_Historico, "cell 0 6 8 1,grow");
+			scrollPane_Tareas = new JScrollPane();
+			add(scrollPane_Tareas, "cell 0 6 6 1,grow");
+			
+			table_Tareas = new JTable();
+			scrollPane_Tareas.setViewportView(table_Tareas);
+			
 						
-						table_Historico = new JTable();
-						scrollPane_Historico.setViewportView(table_Historico);
-			//table_Historico.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
+						
+						
+			scrollPane_Historico = new JScrollPane();
+			add(scrollPane_Historico, "cell 6 6 2 1,grow");
+			
+			table_Historico = new JTable();
+			scrollPane_Historico.setViewportView(table_Historico);
+			table_Tareas.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					table_Historico.setModel(new HistoricoTM(Proyecto.getInstance().getSprint(table_Sprint.getValueAt(table_Sprint.getSelectedRow(), 0).toString()).getTarea(table_Tareas.getValueAt(table_Tareas.getSelectedRow(),0).toString()).getLhist()));
+					
+				}
+			});
 			
 			revalidate();
 			repaint();

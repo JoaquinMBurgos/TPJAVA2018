@@ -24,6 +24,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
@@ -143,6 +144,82 @@ public class ABMTareas extends JPanel {
 			table_Tareas = new JTable();
 			scrollPane_Tareas.setViewportView(table_Tareas);
 			table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
+			table_Tareas.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					String tarea = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString().substring(0, 3);
+					switch (tarea) {
+					case "TAR":
+						txtTID.setText("TAR");
+						lblTSubtareasDependenciasFlujos.setText("Sub Tareas");
+						btnFlujopasos.setVisible(false);
+						lblPasos.setVisible(false);
+						spinner_FPasos.setVisible(false);
+						lblFlujo.setVisible(false);
+						textField_Flujo.setVisible(false);
+						btnFCancelar.setVisible(false);
+						btnFAgregar.setVisible(false);
+						break;
+					case "BUG":
+						txtTID.setText("BUG");
+						lblTSubtareasDependenciasFlujos.setText("Sub Tareas");
+						btnFlujopasos.setVisible(false);
+						lblPasos.setVisible(false);
+						spinner_FPasos.setVisible(false);
+						lblFlujo.setVisible(false);
+						textField_Flujo.setVisible(false);
+						btnFCancelar.setVisible(false);
+						btnFAgregar.setVisible(false);
+					break;
+					case "HIS":
+						txtTID.setText("HIS");
+						lblTSubtareasDependenciasFlujos.setText("Flujo-Pasos");
+						btnFlujopasos.setVisible(true);
+						lblPasos.setVisible(true);
+						spinner_FPasos.setVisible(true);
+						lblFlujo.setVisible(true);
+						textField_Flujo.setVisible(true);
+						btnFCancelar.setVisible(true);
+						btnFAgregar.setVisible(true);
+						break;
+					case "MEJ":
+						txtTID.setText("MEJ");
+						lblTSubtareasDependenciasFlujos.setText("Sub Tareas");
+						btnFlujopasos.setVisible(false);
+						lblPasos.setVisible(false);
+						spinner_FPasos.setVisible(false);
+						lblFlujo.setVisible(false);
+						textField_Flujo.setVisible(false);
+						btnFCancelar.setVisible(false);
+						btnFAgregar.setVisible(false);
+					}
+				}
+		});
 			
 			separatorTarea = new JSeparator();
 			separatorTarea.setForeground(Color.BLACK);
@@ -166,6 +243,7 @@ public class ABMTareas extends JPanel {
 						textField_Flujo.setVisible(false);
 						btnFCancelar.setVisible(false);
 						btnFAgregar.setVisible(false);
+						break;
 					case "Bug":
 						txtTID.setText("BUG");
 						lblTSubtareasDependenciasFlujos.setText("Sub Tareas");
@@ -176,6 +254,7 @@ public class ABMTareas extends JPanel {
 						textField_Flujo.setVisible(false);
 						btnFCancelar.setVisible(false);
 						btnFAgregar.setVisible(false);
+						break;
 					case "Historia":
 						txtTID.setText("HIS");
 						lblTSubtareasDependenciasFlujos.setText("Flujo-Pasos");
@@ -186,6 +265,7 @@ public class ABMTareas extends JPanel {
 						textField_Flujo.setVisible(true);
 						btnFCancelar.setVisible(true);
 						btnFAgregar.setVisible(true);
+						break;
 					case "Mejora":
 						txtTID.setText("MEJ");
 						lblTSubtareasDependenciasFlujos.setText("Sub Tareas");
@@ -234,7 +314,7 @@ public class ABMTareas extends JPanel {
 			add(lblTComplejidad, "cell 1 15,alignx center");
 			
 			spinnerTComp = new JSpinner();
-			spinnerTComp.setModel(new SpinnerNumberModel(1, 1, 10, 1));
+			spinnerTComp.setModel(new SpinnerNumberModel(0, 0, 10, 1));
 			add(spinnerTComp, "cell 3 15 3 1,growx");
 			
 			lblTareasDisponibles = new JLabel("Tareas Disponibles");
@@ -266,7 +346,7 @@ public class ABMTareas extends JPanel {
 					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
 					lblTSubtareasDependenciasFlujos.setText("Dependencias");
 					table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));
-					table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getDependencias(id)));
+					table_TD.setModel(new TareasTM(Proyecto.getInstance().TareasEnSprint()));
 					}
 			});
 			add(btnTDependencias, "cell 1 19 5 1,alignx center,aligny center");
@@ -356,6 +436,16 @@ public class ABMTareas extends JPanel {
 			add(btnFCancelar, "cell 1 24 3 1,alignx right,aligny center");
 			
 			btnFAgregar = new JButton("Agregar");
+			btnFAgregar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					String id=table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
+					Proyecto.getInstance().agregarFlujoPaso(id,textField_Flujo.getText() ,(int) spinner_FPasos.getValue());
+					table_TSD.setModel(new FlujoPasoTM(Proyecto.getInstance().getBlog().getTarea(table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString()).getFlujoPasos()));
+					System.out.println(id);
+					System.out.println(table_Tareas.getSelectedRow());
+					System.out.println(Proyecto.getInstance().getBlog().getTarea(table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString()).getFlujoPasos());
+				}
+			});
 			btnFAgregar.setVisible(false);
 			add(btnFAgregar, "cell 5 24,alignx center,aligny center");
 			add(btnTAgregar, "cell 1 25,aligny bottom");

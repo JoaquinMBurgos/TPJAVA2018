@@ -355,5 +355,9 @@ public class Backlog {
 			}
 		}
 	}
+
+	public void agregarTarea(Tarea tar) {
+		LTareasP.add(tar);
+	}
 	
 }
