@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Toolkit;
@@ -78,6 +80,7 @@ public class ABMSprints extends JPanel {
 	private JButton btnSAgregarTarea;
 	private JButton btnSQuitaTarea;
 	private JScrollPane scrollPane_STareasBacklog;
+	private JTable table_STareasBacklog;
 	private JLabel lblTareasEnBacklog;
 	private JButton btnSEstadoTarea;
 	private JLabel lblNombreSprint;
@@ -201,9 +204,9 @@ public class ABMSprints extends JPanel {
 			lblSTareas.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			add(lblSTareas, "cell 5 20,alignx left,aligny center");
 			
-						lblTareasEnBacklog = new JLabel("Tareas en Backlog");
-						lblTareasEnBacklog.setFont(new Font("Tahoma", Font.PLAIN, 16));
-						add(lblTareasEnBacklog, "cell 7 20");
+			lblTareasEnBacklog = new JLabel("Tareas en Backlog");
+			lblTareasEnBacklog.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			add(lblTareasEnBacklog, "cell 7 20");
 			
 			scrollPane_STareas = new JScrollPane();
 			add(scrollPane_STareas, "cell 5 21 1 8,grow");
@@ -219,9 +222,19 @@ public class ABMSprints extends JPanel {
 			scrollPane_STareasBacklog = new JScrollPane();
 			add(scrollPane_STareasBacklog, "cell 7 21 1 8,grow");
 			
+			table_STareasBacklog = new JTable();
+			scrollPane_STareasBacklog.setViewportView(table_STareasBacklog);
+			table_STareasBacklog.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
 			
 			
 			btnSAgregarTarea = new JButton("\u00AB");
+			btnSAgregarTarea.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Proyecto.getInstance().agregarTareasSprint(table.getValueAt(table.getSelectedRow(), 0).toString(), table_STareasBacklog.getValueAt(table_STareasBacklog.getSelectedRow(), 0).toString());
+					table_STareasBacklog.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
+					table_STareas.setModel(new TareasTM(Proyecto.getInstance().getSprint(table.getValueAt(table.getSelectedRow(), 0).toString()).getListaT()));
+				}
+			});
 			btnSAgregarTarea.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			add(btnSAgregarTarea, "cell 6 22,growx,aligny center");
 			
@@ -255,17 +268,42 @@ public class ABMSprints extends JPanel {
 		scrollPane_3.setViewportView(table_RTT);
 			*/
 			scrollPane_Sprints=new JScrollPane();
-			scrollPane_Sprints.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					table_STareas.setModel(new TareasTM(Proyecto.getInstance().getSprint(table.getValueAt(table.getSelectedRow(), 0).toString()).getListaT()));
-				}
-			});
 			add(scrollPane_Sprints, "cell 5 2 3 17,grow");
 			
 			table = new JTable();
 			scrollPane_Sprints.setViewportView(table);
 			table.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
+			table.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					table_STareas.setModel(new TareasTM(Proyecto.getInstance().getSprint(table.getValueAt(table.getSelectedRow(), 0).toString()).getListaT()));
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
 			
 			
 			/*table = new JTable();
@@ -278,6 +316,13 @@ public class ABMSprints extends JPanel {
 			add(scrollPane_Sprints, "cell 5 2 3 17,grow");*/
 			
 			btnSQuitaTarea = new JButton("\u00BB");
+			btnSQuitaTarea.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Proyecto.getInstance().bajaTareaSprint(table.getValueAt(table.getSelectedRow(), 0).toString(), table_STareas.getValueAt(table_STareas.getSelectedRow(), 0).toString());
+					table_STareasBacklog.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
+					table_STareas.setModel(new TareasTM(Proyecto.getInstance().getSprint(table.getValueAt(table.getSelectedRow(), 0).toString()).getListaT()));
+				}
+			});
 			btnSQuitaTarea.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			add(btnSQuitaTarea, "cell 6 24,growx,aligny center");
 			

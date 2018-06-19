@@ -20,6 +20,10 @@ public class SprintsTM extends AbstractTableModel{
 		aSprints = new ArrayList<>(lista);
 	}
 	
+	public SprintsTM(ArrayList<Sprint> lista) {
+		aSprints = new ArrayList<>(lista);
+	}
+	
 	@Override
 	public int getColumnCount() {
 		return 10;

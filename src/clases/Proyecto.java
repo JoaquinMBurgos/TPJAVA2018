@@ -160,7 +160,7 @@ public final class Proyecto {
 	}
 	
 	/**
-	 * Agrega una Tarea a un String
+	 * Agrega una Tarea a un Sprint
 	 * @param idS Sprint al cual se le agregara una Tarea
 	 * @param idT Tarea que sera agregada al Sprint
 	 */
@@ -173,7 +173,7 @@ public final class Proyecto {
 		while(its.hasNext() && bandera){
 			sp=its.next();
 			if(sp.getClave().equals(idS)){
-				//sp.aSprintTarea(t);
+				//sp.aSprintTarea(tar);
 				bandera=false;
 			}
 		}

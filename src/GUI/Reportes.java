@@ -14,7 +14,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
+import clases.Proyecto;
 import net.miginfocom.swing.MigLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Reportes extends JPanel {
 	private JMenuBar rmenuBar;	
@@ -72,7 +75,12 @@ public class Reportes extends JPanel {
 				
 				
 
-				btnRankingSprings = new JButton("Ranking Springs");
+				btnRankingSprings = new JButton("Ranking Sprints");
+				btnRankingSprings.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						table.setModel(new SprintsTM(Proyecto.getInstance().RankingEstimacion()));
+					}
+				});
 				add(btnRankingSprings, "cell 1 3,growx,aligny center");
 				
 				btnReporteSprint = new JButton("Reporte Sprint ");
