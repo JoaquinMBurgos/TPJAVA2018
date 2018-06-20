@@ -8,7 +8,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.TreeSet;
+import java.util.Map.Entry;
 
 import estadosTareas.Estado;
 import estadosTareas.ToDo;
@@ -290,6 +292,10 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 	
 	 public String toString(){
 		 return id;
+	 }
+	 
+	 public ArrayList<Entry<String,Integer>>getHashMap(){
+		 return null;
 	 }
 	
 

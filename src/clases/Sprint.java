@@ -331,8 +331,8 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 	 * Retorna un ArrayList con todas las Tareas completadas.
 	 * @return ArrayList con todas las Tareas completadas.
 	 */
-	public ArrayList<Tarea> tareasCompletadas(){
-		ArrayList<Tarea>LCompletadas=new ArrayList<Tarea>();
+	public TreeSet<Tarea> tareasCompletadas(){
+		TreeSet<Tarea>LCompletadas=new TreeSet<Tarea>();
 		
 		for(Tarea t:LTareas){
 			if(t.getEstado().equals("DONE"))
@@ -345,14 +345,31 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 	 * Retorna un ArrayList con todas las Tareas sin completar.
 	 * @return ArrayList con todas las Tareas sin completar.
 	 */
-	public ArrayList<Tarea> tareasNoCompletadas(){
-		ArrayList<Tarea>LNoCompletadas=new ArrayList<Tarea>();
+	public TreeSet<Tarea> tareasNoCompletadas(){
+		TreeSet<Tarea>LNoCompletadas=new TreeSet<Tarea>();
 		
 		for(Tarea t:LTareas){
 			if(!t.getEstado().equals("DONE"))
 				LNoCompletadas.add(t);	
 		}
 		return LNoCompletadas;
+	}
+	/**
+	 * Retorna la estimacion de la lista de las tareas completadas o no completadas
+	 * @param tipoLista tipo de la lista que se  va a retornar, tareasCompletadas o no completadas
+	 * @return lista lista de la estimacion de la lista de las tareas completadas o no completadas
+	 */
+	public int estimacionTareasReporte(String tipoLista){
+		int est=0;
+		if(tipoLista.equals("completadas")){
+		for(Tarea tar:tareasCompletadas())
+			est+=tar.estimacion();
+		}
+		else{
+			for(Tarea tar:tareasNoCompletadas())
+				est+=tar.estimacion();
+		}
+		return est;
 	}
 	
 	/**

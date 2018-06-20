@@ -347,7 +347,7 @@ public class ABMTareas extends JPanel {
 					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
 					lblTSubtareasDependenciasFlujos.setText("Dependencias");
 					table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));
-					table_TD.setModel(new TareasTM(Proyecto.getInstance().TareasEnSprint()));
+					table_TD.setModel(new TareasTM(Proyecto.getInstance().TareasEnSprint(id)));
 					}
 			});
 			add(btnTDependencias, "cell 1 19 5 1,alignx center,aligny center");
@@ -446,10 +446,11 @@ public class ABMTareas extends JPanel {
 				public void actionPerformed(ActionEvent arg0) {
 					String id=table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
 					Proyecto.getInstance().agregarFlujoPaso(id,textField_Flujo.getText() ,(int) spinner_FPasos.getValue());
-					table_TSD.setModel(new FlujoPasoTM(Proyecto.getInstance().getBlog().getTarea(table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString()).getFlujoPasos()));
-					System.out.println(id);
-					System.out.println(table_Tareas.getSelectedRow());
-					System.out.println(Proyecto.getInstance().getBlog().getTarea(table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString()).getFlujoPasos());
+					table_TSD.setModel(new FlujoPasoTM(Proyecto.getInstance().getBlog().getTarea(table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString()).getHashMap()));
+					//System.out.println(Proyecto.getInstance().getBlog().getTarea(table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString()).getHashMap());
+					//System.out.println(id);
+					//System.out.println(table_Tareas.getSelectedRow());
+					//System.out.println(Proyecto.getInstance().getBlog().getTarea(table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString()).getFlujoPasos());
 				}
 			});
 			btnFAgregar.setVisible(false);

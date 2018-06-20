@@ -15,7 +15,7 @@ import tareas.Tarea;
 public class FlujoPasoTM extends AbstractTableModel {
 
 	//private HashMap<String, Integer> map;
-	private Map<String, Integer> map = new HashMap<String, Integer>();
+	/*private Map<String, Integer> map = new HashMap<String, Integer>();
 
 	public FlujoPasoTM(HashMap<String, Integer> map) {
 		map = new HashMap<String, Integer>(map);
@@ -59,6 +59,41 @@ public class FlujoPasoTM extends AbstractTableModel {
 			break;
 		case 1:
 			ob = desc;
+			break;
+		}
+		return ob;
+	}*/
+	private ArrayList<Map.Entry<String,Integer>> aTareas;
+
+	public FlujoPasoTM(ArrayList<Map.Entry<String,Integer>> lista) {
+		aTareas = new ArrayList<Map.Entry<String,Integer>>(lista);
+	}
+
+	@Override
+	public int getColumnCount() {
+		return 2;
+	}
+
+	@Override
+	public int getRowCount() {
+		return aTareas.size();
+	}
+	
+	public void setaTareas(ArrayList<Map.Entry<String,Integer>> aTareas) {
+		this.aTareas = new ArrayList<Map.Entry<String,Integer>>(aTareas);
+	}
+
+	@Override
+	public Object getValueAt(int row, int column) throws ArrayIndexOutOfBoundsException {
+		//Tarea tar = aTareas.get(row);
+		Entry e=aTareas.get(row);
+		Object ob = null;
+		switch (column) {
+		case 0:
+			ob = e.getKey();
+			break;
+		case 1:
+			ob = e.getValue();
 			break;
 		}
 		return ob;
