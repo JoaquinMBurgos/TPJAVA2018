@@ -66,14 +66,14 @@ public class Main {
 		proy.agregarTareasSprint("SPR001","TAR009");*/
 		
 		proy.altaSprint("SPR002", "Sprint 2");
-		proy.agregarTareasSprint("SPR002", "TAR001");
+		/*proy.agregarTareasSprint("SPR002", "TAR001");
 		proy.agregarTareasSprint("SPR002", "HIS002");
 		proy.agregarTareasSprint("SPR002", "TAR006");
 		proy.agregarTareasSprint("SPR002", "HIS005");
 		proy.agregarTareasSprint("SPR002", "TAR002");
 		proy.agregarTareasSprint("SPR002", "TAR010");
 		proy.agregarTareasSprint("SPR002","MEJ002");
-		proy.agregarTareasSprint("SPR002","TAR012");
+		proy.agregarTareasSprint("SPR002","TAR012");*/
 		
 		//TAR001, HIS002, TAR006, HIS005, TAR002, TAR010, MEJ002, TAR012
 		
@@ -97,7 +97,7 @@ public class Main {
 		System.out.println("Duracion:"+proy.calcularDuracion("SPR002"));
 		//System.out.println("Avance:"+);
 
-		proy.avance("SPR002");
+		/*proy.avance("SPR002");
 		proy.avance("SPR002");
 		proy.avance("SPR002");
 		proy.cambiarEstadoTarea("SPR002", "HIS005","PENDINGTOBUILD");
@@ -120,18 +120,19 @@ public class Main {
 		//System.out.println(proy.getBlog().getTarea("HIS002").getLdependencias().toString());
 		//System.out.println(proy.getBlog().getLDependencias("HIS002"));
 		//proy.eliminarDependencia("HIS002", "TAR003");
-		proy.eliminarDependencia("HIS006", "HIS004");
+		//proy.eliminarDependencia("HIS006", "HIS004");
 		Grafico g = new Grafico();
 		//g.graficar(proy.getSprintEnCurso());
 		proy.mostrarTareas();
-		System.out.println(proy.getListaEstados("SPR002","INPROGRESS").toString());
-
+		System.out.println(proy.getListaEstados("SPR002","INPROGRESS").toString());*/
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					Sprint s= new Sprint("hola","mundoo");
 					//s.addDay();
-					
+					Proyecto.getInstance().cargaListas();
+					Proyecto.getInstance().Leer("LSprints.ser");
+					Proyecto.getInstance().Leer("LTareas.ser");
 					InterfazGrafica window = InterfazGrafica.getInstance();
 					window.start();
 				} catch (Exception e) {

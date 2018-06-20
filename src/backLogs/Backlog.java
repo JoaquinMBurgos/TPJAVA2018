@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.TreeSet;
 
+import clases.Proyecto;
 import sun.reflect.generics.tree.Tree;
 import tareas.Bug;
 import tareas.EstadoTarea;
@@ -407,6 +408,15 @@ public class Backlog {
 
 	public void agregarTarea(Tarea tar) {
 		LTareasP.add(tar);
+	}
+
+	public void setListaTareas() {
+		try {
+			LTareasP = (TreeSet<Tarea>) Proyecto.getInstance().Leer("LTareas.ser");
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 	
 }

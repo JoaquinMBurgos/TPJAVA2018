@@ -351,7 +351,7 @@ public final class Proyecto {
 	 * @return lista de todas las tareas que se encuentran en Sprints y BackLog
 	 */
 	
-	public TreeSet<Tarea> TareasEnSprint(){
+	public TreeSet<Tarea> TareasEnSprint(String id){
 		TreeSet<Tarea> lista = new TreeSet<Tarea>();
 		for(Sprint sp : LSprints){
 			for (Tarea tar : sp.getListaT()){
@@ -361,6 +361,9 @@ public final class Proyecto {
 		for (Tarea tar : blog.getLTareasP()){
 			lista.add(tar);
 		}
+		TreeSet<Tarea> lista1 =blog.getTarea(id).getLdependencias();
+		for(Tarea tar:lista1)
+			lista.remove(tar);
 		return lista;
 		
 	}
@@ -615,6 +618,14 @@ public final class Proyecto {
 		return s.getListaEstado(estado);
 	}
 	
+	public TreeSet<Sprint> getSprintsFinalizados(){
+		TreeSet<Sprint> lista = new TreeSet<Sprint>();
+		for (Sprint sp : LSprints)
+			if(sp.getEstado() == EstadoSprint.FINALIZADO)
+				lista.add(sp);
+		return lista;
+	}
+	
 	/**
 	 * Serializa
 	 * @param obj Object a serializar
@@ -646,6 +657,19 @@ public final class Proyecto {
 		ois.close();
 		
 		return obj;
+	}
+
+	public void cargaListas() {
+		try {
+			LSprints = (TreeSet<Sprint>) Leer("LSprints.ser");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		blog.setListaTareas();
 	}
 	
 	

@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.TreeSet;
 
 import javax.swing.JOptionPane;
@@ -22,7 +24,7 @@ import estadosTareas.Estado;
  */
 public class Historia extends Tarea implements Serializable{
 	private ArrayList<DuplaFlujoPaso> ListaDuplafp ;
-	private Map<String, Integer> flujoPasos = new HashMap<String, Integer>();
+	private HashMap<String, Integer> flujoPasos = new HashMap<String, Integer>();
 	
 	public Historia(String id, String nombre, String descripcion,EstadoTarea est, LocalDate finalizacion, int complejidad) {
 		super(id, nombre, descripcion, est,finalizacion, complejidad);
@@ -109,6 +111,14 @@ public class Historia extends Tarea implements Serializable{
 		return (HashMap<String, Integer>) flujoPasos;
 	}
 	
+	public ArrayList<Entry<String,Integer>>getHashMap(){
+		//Getting the Set of entries
+		Set<Entry<String, Integer>> entrySet = flujoPasos.entrySet();
+		         
+		//Creating an ArrayList Of Entry objects
+		ArrayList<Entry<String, Integer>> listOfEntry = new ArrayList<Entry<String,Integer>>(entrySet);
+		return listOfEntry;
+	}
 	
 
 }
