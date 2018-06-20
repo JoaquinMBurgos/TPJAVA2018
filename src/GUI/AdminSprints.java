@@ -409,12 +409,12 @@ public class AdminSprints extends JPanel {
 					table_RTT.removeAll();
 					table_T.removeAll();
 					table_TD.removeAll();
-					lblIdSprint = new JLabel("ID Sprint");
-					lblNombreSprint = new JLabel("Nombre Sprint");
-					lblEstadoActual = new JLabel("Estado Actual");
-					lblDuracin_Actual = new JLabel("0");
-					lblAvance_Actual = new JLabel("0");
-					lblDaActual_Actual = new JLabel("0");
+					lblIdSprint.setText("ID Sprint");
+					lblNombreSprint.setText("Nombre Sprint");
+					lblEstadoActual.setText("Estado Actual");
+					lblDuracin_Actual.setText("0");
+					lblAvance_Actual.setText("0");
+					lblDaActual_Actual.setText("0");
 					Proyecto.getInstance().pasaTareasaBacklog();
 					Proyecto.getInstance().getSprintEnCurso().finalizar();
 					

@@ -208,13 +208,13 @@ public class ABMSprints extends JPanel {
 			btnIniciar = new JButton("Inicia Sprint");
 			add(btnIniciar, "cell 1 20 3 1,alignx center,aligny center");
 			
-			if(table.getValueAt(table.getSelectedRow(), 0) !=null){
-				lblSprintSeleccionado = new JLabel((table.getValueAt(table.getSelectedRow(), 0).toString()));
+			try {
+			lblSprintSeleccionado = new JLabel((table.getValueAt(table.getSelectedRow(), 0)).toString());
 			}
-			else{
+			catch(NullPointerException npe) {
 				lblSprintSeleccionado = new JLabel("Sprint Seleccionado");
 			}
-			
+
 			lblSTareas = new JLabel("Tareas en Sprint -");
 			lblSTareas.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			add(lblSTareas, "cell 5 20,alignx right,aligny center");
@@ -299,6 +299,7 @@ public class ABMSprints extends JPanel {
 					
 					String estado;
 					
+					lblSprintSeleccionado.setText((table.getValueAt(table.getSelectedRow(), 0)).toString());
 					table_STareas.setModel(new TareasTM(Proyecto.getInstance().getSprint(table.getValueAt(table.getSelectedRow(), 0).toString()).getListaT()));
 					txtSID.setText(Proyecto.getInstance().getSprint(table.getValueAt(table.getSelectedRow(), 0).toString()).getClave());
 					txtSNombre.setText(Proyecto.getInstance().getSprint(table.getValueAt(table.getSelectedRow(), 0).toString()).getDescripcion());
