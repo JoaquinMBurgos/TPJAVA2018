@@ -86,10 +86,10 @@ public class Backlog {
 	 * @param clave clave es de tipo string que contentiene el identificador de una tarea dentro de un backlog
 	 * @param tare
 	 * Modifica el valor de la clave del backglog.
-	 * FALTA EL ESTADO :o !!! 
+	 * esta funcion no se esta utilizando 
 	 */
 	
-/*	public void mBacklogTarea(String clave , Tarea tare) {
+	public void mBacklogTarea(String clave , Tarea tare) {
 		for(Tarea c:LTareasP ){
 			if(c.getId().equals(clave)){
 				if(c.getEstado() != "finalizado" )
@@ -98,12 +98,12 @@ public class Backlog {
 			}
 		}
 	}
-	*/
+	
 	
 	/**
 	 * Retorna la tarea con el id inicado por parametro
-	 * @param id
-	 * @return
+	 * @param id id es de tipo string que contentiene el identificador de la tarea a devolver 
+	 * @return retorna una tarea que coincida con el id que pasamos por parametros
 	 */
 	public Tarea getTarea(String id){
 		boolean bandera = false;
@@ -132,8 +132,8 @@ public class Backlog {
 	
 	/**
 	 * 
-	 * @param clave
-	 * elimina un nodo del treeset que concida con la clave enviada 
+	 * @param clave clave es de tipo string que contentiene el identificador de la tarea a eliminar
+	 * @return elimina un nodo del treeset que concida con la clave enviada 
 	 */
 	
 	public void bajaTarea(String clave) {
@@ -236,7 +236,6 @@ public class Backlog {
 		
 		
 	}
-	
 	public void muestraTareas(){
 		for(Tarea t:LTareasP){
 			t.muestra();
@@ -433,12 +432,12 @@ public class Backlog {
 	}
 
 	public void setListaTareas() {
-		try {
+		try{
 			LTareasP = (TreeSet<Tarea>) Proyecto.getInstance().Leer("LTareas.ser");
-		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
+		} catch(ClassNotFoundException | IOException e){
 			e.printStackTrace();
-		}		
+		}
+		
 	}
 	
 }
