@@ -3,15 +3,22 @@ package GUI;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import java.awt.CardLayout;
 import javax.swing.JScrollPane;
 
 import clases.EstadoSprint;
+import clases.Proyecto;
 import clases.Sprint;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
+import java.io.IOException;
 import java.util.Iterator;
 import java.awt.event.ActionEvent;
 import net.miginfocom.swing.MigLayout;
@@ -39,6 +46,17 @@ public final class InterfazGrafica {
 			frmScrum.setVisible(true);
 			panel.setVisible(true);
 			frmScrum.setLocationRelativeTo(null);
+			frmScrum.addWindowListener(new WindowAdapter() {
+			public void windowClosing( WindowEvent evt ) { 
+					try {
+						Proyecto.getInstance().Escribir(Proyecto.getInstance().getLSprints(), "LSprints.ser");
+						Proyecto.getInstance().Escribir(Proyecto.getInstance().getBlog().getLTareasP(), "LTareas.ser");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} 
+			});
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -123,6 +141,7 @@ public final class InterfazGrafica {
 		return instance; 
 		
 	}
+
 	
 	
 	/**
@@ -143,7 +162,7 @@ public final class InterfazGrafica {
 		panel.add(abms);*/
 		
 		//index.setVisible(true);
-		
+	
 	}
 
 
