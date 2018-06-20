@@ -261,10 +261,10 @@ public class ABMSprints extends JPanel {
 			btnSModificar = new JButton("Modificar");
 			btnSModificar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					/*table.setEnabled(true);
-					txtSID.setEnabled(true);
-					Proyecto.getInstance().modificacionSprint(txtSID.getText(), txtSNombre.getText());
-					JOptionPane.showMessageDialog(null, "Sprint modificado con exito.");*/
+					Proyecto.getInstance().getSprint(table.getValueAt(table.getSelectedRow(), 0).toString()).actualizar(txtSID.getText(), txtSNombre.getText()); 
+					//Proyecto.getInstance().modificacionSprint(txtSID.getText(), txtSNombre.getText());
+					table.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
+					JOptionPane.showMessageDialog(null, "Sprint modificado con exito.");
 				}
 			});
 			add(btnSModificar, "cell 2 28,alignx center,aligny center");
