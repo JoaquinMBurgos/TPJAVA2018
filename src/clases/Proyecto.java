@@ -344,6 +344,17 @@ public final class Proyecto {
 				
 		}
 	}
+	
+	/**
+	 * Agrega las Tareas del Sprint en curso al Backlog.
+	 */
+	public void pasaTareasaBacklog(){
+		Sprint sp = getSprintEnCurso();
+		for(Tarea tar : sp.tareasNoCompletadas()){
+			blog.agregarTarea(tar);
+		}		
+	}
+	
 	/**
 	 * 
 	 * @return lista de todas las tareas que se encuentran en Sprints y BackLog

@@ -260,6 +260,9 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 		
 	}
 	
+	public void setfFin(LocalDate fFin) {
+		this.fFin = fFin;
+	}
 	public HashMap<String, Integer> getFlujoPasos() {
 		return null;
 	}	

@@ -390,6 +390,7 @@ public class AdminSprints extends JPanel {
 				Sprint s=Proyecto.getInstance().getSprintEnCurso();
 				String id=table_T.getValueAt(table_T.getSelectedRow(), 0).toString();
 				EstadoTarea e1=EstadoTarea.valueOf("TESTING");
+				s.getTarea(id).setfFin(s.getfAvance());
 				s.cambiarEstadoTarea(id,e1.next().toString());
 				table_T.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TESTING")));
 				table_D.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"DONE")));
@@ -414,6 +415,7 @@ public class AdminSprints extends JPanel {
 					lblDuracin_Actual = new JLabel("0");
 					lblAvance_Actual = new JLabel("0");
 					lblDaActual_Actual = new JLabel("0");
+					Proyecto.getInstance().pasaTareasaBacklog();
 					Proyecto.getInstance().getSprintEnCurso().finalizar();
 					
 				}

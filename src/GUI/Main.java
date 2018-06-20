@@ -103,7 +103,7 @@ public class Main {
 		proy.cambiarEstadoTarea("SPR002", "HIS005","PENDINGTOBUILD");
 		proy.avance("SPR002");
 		proy.avance("SPR002");
-		proy.cambiarEstadoTarea("SPR002", "TAR001","DONE");
+		//proy.cambiarEstadoTarea("SPR002", "TAR001","DONE");
 		proy.avance("SPR002");
 		proy.avance("SPR002");
 		proy.avance("SPR002");
