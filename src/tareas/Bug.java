@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
+
 import com.sun.org.apache.bcel.internal.generic.LSUB;
 
 import estadosTareas.Estado;
@@ -29,13 +31,18 @@ public class Bug extends Tarea implements Serializable{
 		
 	}*/
 	public void agregarSubT(String idTarea){
-		System.out.println("Bug no puede tener tareas");
+		try{
+			
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Bug no puede tener subtareas");
+		}
+		
 	}
 	public void agregarDep(Tarea tar){
 		if(!getLdependencias().isEmpty())
 			getLdependencias().add(tar);
 		else
-			System.out.println("Bug puede tener una sola dependencia");
+			JOptionPane.showMessageDialog(null, "Bug puede tener una sola dependencia");
 	}
 	public int estimacion(){
 		double estimacion = 0;

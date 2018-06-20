@@ -344,6 +344,10 @@ public final class Proyecto {
 				
 		}
 	}
+	/**
+	 * 
+	 * @return lista de todas las tareas que se encuentran en Sprints y BackLog
+	 */
 	
 	public TreeSet<Tarea> TareasEnSprint(){
 		TreeSet<Tarea> lista = new TreeSet<Tarea>();
@@ -463,43 +467,70 @@ public final class Proyecto {
 	public boolean finalizaSprint(String idSprint){
 		Sprint s=getSprint(idSprint);
 		if(s.getfAvance().equals(s.getFechaFin())){
-			s.setEstadoSprint(EstadoSprint.FINALIZADO);
+			//s.setEstadoSprint(EstadoSprint.FINALIZADO);
 			return true;
 		}
 		else
 			return false;
 	}
-
+	/**
+	 * Devuelve la cantidad de dias que va avanzando el sprint
+	 * @param id ID del sprint
+	 * @return cantidad de dias que va avanzando el sprint
+	 */
 	public int cantAvance(String id){
 		Sprint s=getSprint(id);
 		return s.getAvance();
 	}
-	
+	/**
+	 * Calcula la duracion de un sprint
+	 * @param idSprint ID del sprint al cual se le va a calcular la duracion, fechaFin-fechaInicio
+	 * @return cantidad de dias que dura el sprint
+	 */
 	public int calcularDuracion(String idSprint){
 		Sprint s=getSprint(idSprint);
 		return s.duracion();
 	}
 	
+	/**
+	 * Cambia el estado de una tarea en un Sprint
+	 * @param idSprint ID del sprint al cual se le va a modificar el estado de una tarea
+	 * @param idT ID de la tarea a la cual se le va a cambiar el estado
+	 * @param est Estado que se le va a asignar a la tarea
+	 */
 	public void cambiarEstadoTarea(String idSprint,String idT,String est){
 		Sprint s=getSprint(idSprint);
 		s.cambiarEstadoTarea(idT, est);
 	}
+	/**
+	 * Obtiene la fecha en la que se encuentra el Sprint
+	 * @param idSprint ID del sprint 
+	 * @return fechaAvance
+	 */
 	public LocalDate getFechaAvanceSprint(String idSprint){
 		LocalDate fecha;
 		Sprint s=getSprint(idSprint);
 		fecha=s.getfAvance();
 		return fecha;
 	}
+	/**
+	 * Muestra el historial de un sprint
+	 * @param idSprint
+	 */
 	public void historial(String idSprint){
 		Sprint s=getSprint(idSprint);
 		s.muestraHistorial();
 	}
 	
+	/**
+	 * Ranking de los sprints respecto a cantidad de puntos estimacion completados(estado Done) en tareas de tipo Historia, ordenado de mayor a menor
+	 * @return lista de ranking ordenada de mayor a menor
+	 */
 	public ArrayList<Sprint> RankingEstimacion(){
 		ArrayList<Sprint>listaEsti = new ArrayList<Sprint>() ; 
 		for(Sprint s:LSprints){
-			//s.estimacionHistoriaSprint();
-			listaEsti.add(s);
+			if (s.getEstado().equals("FINALIZADO"))
+				listaEsti.add(s);
 		}
 		Collections.sort(listaEsti,new Comparator<Sprint>(){
 			public int compare(Sprint s1, Sprint s2) {
@@ -516,6 +547,10 @@ public final class Proyecto {
 		});
 		return listaEsti;	
 	}
+	
+	/**
+	 * Listado de Sprint de tareas completadas y no completadas, con estimacion total para cada lista
+	 */
 	public void reporteListado(){
 		for(Sprint s:LSprints){
 			System.out.println(s.getClave());
@@ -533,6 +568,11 @@ public final class Proyecto {
 			System.out.println(s.tareasNoCompletadas().toString()+" "+est);
 		}
 	}
+	
+	/**
+	 * Busca si hay algun Sprint en curso
+	 * @return sprint en curso
+	 */
 	public Sprint getSprintEnCurso(){
 		Iterator<Sprint>it=LSprints.iterator();
 		boolean bandera=false;
@@ -562,6 +602,12 @@ public final class Proyecto {
 			return false;
 	}*/
 	
+	/**
+	 * Devuelve la lista de tareas que se encuentren en un estado. Se utiliza para cargar las tablas en la administracion del Sprint en curso
+	 * @param idSprint id del sprint
+	 * @param estado Estado en el que se encuentren las tareas
+	 * @return lista de tareas 
+	 */
 	public TreeSet<Tarea>getListaEstados(String idSprint,String estado){
 		Sprint s=getSprint(idSprint);
 		return s.getListaEstado(estado);

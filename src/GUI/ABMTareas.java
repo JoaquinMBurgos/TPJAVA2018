@@ -334,7 +334,8 @@ public class ABMTareas extends JPanel {
 					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
 					lblTSubtareasDependenciasFlujos.setText("Sub Tareas");
 					table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getListaSubtareas()));
-					table_TD.setModel(new TareasTM(Proyecto.getInstance().getSubTareas()));
+					//table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getSubTareas(id)));
+					table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getSubTareas(id)));
 				}
 			});
 			add(btnTSubtareas, "cell 1 17 5 1,alignx center,aligny bottom");
@@ -371,13 +372,14 @@ public class ABMTareas extends JPanel {
 						Proyecto.getInstance().agregarDependencias(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
 						table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));
 						table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
-						table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getDependencias(id)));	
+						table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getDependencias(id)));
+						
 					}
 					else{
 						Proyecto.getInstance().agregaSubT(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
 						table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getListaSubtareas()));
 						table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
-						table_TD.setModel(new TareasTM(Proyecto.getInstance().getSubTareas()));
+						table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getSubTareas(id)));
 					}
 				}
 			});
@@ -388,17 +390,21 @@ public class ABMTareas extends JPanel {
 			btnTQuitarSD.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 				String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
-						if(modo == 'd'){
-								Proyecto.getInstance().eliminarDependencia(id, table_TSD.getValueAt(table_TSD.getSelectedRow(), 0).toString());
-								table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));
-								table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
-								table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getDependencias(id)));	
+						if(modo == 'd'){	
+							Proyecto.getInstance().eliminarDependencia(id, table_TSD.getValueAt(table_TSD.getSelectedRow(), 0).toString());
+							//table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
+							table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getDependencias(id)));
+							table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));								
+							//System.out.println(Proyecto.getInstance().getBlog().getDependencias(id));
+							//Proyecto.getInstance().mostrarTareas();
+							//System.out.println(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias());
 						}
 						else{
-								Proyecto.getInstance().agregaSubT(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
-								table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getListaSubtareas()));
-								table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
-								table_TD.setModel(new TareasTM(Proyecto.getInstance().getSubTareas()));
+							Proyecto.getInstance().eliminarSubT(id, table_TSD.getValueAt(table_TSD.getSelectedRow(), 0).toString());
+							table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getSubTareas(id)));
+							table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getListaSubtareas()));
+							//table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
+								
 							}
 						}
 				});
@@ -473,8 +479,8 @@ public class ABMTareas extends JPanel {
 			btnTEliminar = new JButton("Eliminar");
 			btnTEliminar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					/*Proyecto.getInstance().bajaTareaBackLog(table.getValueAt(table.getSelectedRow(), 0).toString());
-					table.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));*/
+					Proyecto.getInstance().bajaTareaBackLog(table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString());
+					table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
 				}
 			});
 			add(btnTEliminar, "cell 5 25,aligny bottom");

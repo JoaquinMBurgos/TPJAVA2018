@@ -313,6 +313,11 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 		return clave+" "+estimacionHistoriaSprint();
 	}
 	
+	/**
+	 * Devuelve la lista de tareas que se encuentren en un estado. Se utiliza para cargar las tablas en la administracion del Sprint en curso
+	 * @param estado Estado en el que se encuentren las tareas
+	 * @return lista de tareas
+	 */
 	public TreeSet<Tarea>getListaEstado(String estado){
 		TreeSet<Tarea>lista=new TreeSet<Tarea>();
 		for(Tarea tar:LTareas){
@@ -350,6 +355,10 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 		return LNoCompletadas;
 	}
 	
+	/**
+	 * 
+	 * @return duracion de un sprint
+	 */
 	public int getDuracion(){
 		return duracion;
 	}

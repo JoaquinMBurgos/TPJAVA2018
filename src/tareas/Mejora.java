@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
+
 import estadosTareas.Estado;
 
 /**
@@ -29,7 +31,7 @@ public class Mejora extends Tarea implements Serializable{
 		if(getLdependencias().isEmpty())
 			getLdependencias().add(tar);
 		else
-			System.out.println("Mejora puede tener una sola dependencia");
+			JOptionPane.showMessageDialog(null, "Mejora puede tener una sola dependencia");
 	}
 	public int estimacion(){
 		Tarea t=null;

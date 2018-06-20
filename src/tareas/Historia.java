@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeSet;
 
+import javax.swing.JOptionPane;
+
 import estadosTareas.Estado;
 
 /**
@@ -84,7 +86,7 @@ public class Historia extends Tarea implements Serializable{
 		if(subString.equals("TAR") || subString.equals("HIS"))
 			getLdependencias().add(tar);
 		else
-			System.out.println("Las dependencias de historia pueden ser tareas o historias");
+			JOptionPane.showMessageDialog(null, "Las dependencias de historia pueden ser tareas o historias");
 	}
 	
 	public void agregaFlujoPaso(String descripcion,int pasos){

@@ -122,7 +122,7 @@ public class Main {
 		//proy.eliminarDependencia("HIS002", "TAR003");
 		proy.eliminarDependencia("HIS006", "HIS004");
 		Grafico g = new Grafico();
-		g.graficar(proy.getSprintEnCurso());
+		//g.graficar(proy.getSprintEnCurso());
 		proy.mostrarTareas();
 		System.out.println(proy.getListaEstados("SPR002","INPROGRESS").toString());
 

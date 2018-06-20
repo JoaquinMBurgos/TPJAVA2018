@@ -119,6 +119,11 @@ public class Backlog {
 			return null;
 	}
 	
+	/**
+	 * Devuelve la lista de dependencias de una tarea
+	 * @param id de la tarea para la cual se quiere obtener la lista de dependencias
+	 * @return lista de dependencias de una tarea
+	 */
 	public TreeSet<Tarea> getLDependencias(String id){
 		Tarea tar = getTarea(id);
 		return tar.getLdependencias();
@@ -239,6 +244,11 @@ public class Backlog {
 		}
 	}
 	
+	/**
+	 * Devuelve una lista con las tareas menos las tareas que se encuentren en la lista de dependencias de una tarea
+	 * @param id de la tarea 
+	 * @return lista de tareas
+	 */
 	public TreeSet<Tarea> getDependencias(String id){
 		TreeSet<Tarea>lista=new TreeSet<Tarea>(); 
 		lista =LTareasP;
@@ -250,19 +260,48 @@ public class Backlog {
 		//lista.remove(t);
 		return lista;
 	}
+	/**
+	 * Retorna una lista con las tareas menos las tareas que se encuentren en la lista de dependencias de una tarea y las tareas de complejidad 0 (Subtareas).
+	 * @param id ID de la tarea
+	 * @return lista con todas las tareas excepto las que estan en la lista de subtareas de la tarea
+	 */
+	public TreeSet<Tarea> getSubTareas(String id){
+		TreeSet<Tarea>lista=new TreeSet<Tarea>(); 
+		//lista =LTareasP;
+		TreeSet<Tarea> LSubTareas = LTareasP;
+		//TreeSet<Tarea> lista1 = new TreeSet<Tarea>();
+		for (Tarea tar : LSubTareas){
+			if(tar.getComplejidad() == 0 && tar.getId().substring(0,3).equals("TAR"))
+				lista.add(tar);
+		}
+		Tarea t=getTarea(id);
+		TreeSet<Tarea>listaST=t.getListaSubtareas();
+		for(Tarea sub :listaST)
+			lista.remove(sub);
+		//lista.remove(t);
+		return lista;
+	}
 	
+	/**
+	 * Agrega una dependencia a una tarea
+	 * @param idT id de la tarea a la que se le agrega la dependencia
+	 * @param idDep id de la dependencia que se va a agregar 
+	 */
 	public void agregaDependencia(String idT,String idDep){
 		Iterator<Tarea>it=LTareasP.iterator();
 		Tarea t=null; //tarea a la que hay que agregarle la dependencia
 		Tarea tDep=null;//dependencia que hay que agregar
 		boolean bandera=true;
-		while(it.hasNext() && bandera){
+		/*while(it.hasNext() && bandera){
 			t=it.next();
 			if(t.getId().equals(idT)){
 				bandera=false;
 			}
-		}
-		Iterator<Tarea>it2=LTareasP.iterator();
+		}*/
+		t=getTarea(idT);
+		tDep=getTarea(idDep);
+		t.agregarDep(tDep);
+		/*Iterator<Tarea>it2=LTareasP.iterator();
 		bandera=true;
 		while(it2.hasNext() && bandera){
 			tDep=it2.next();
@@ -270,13 +309,17 @@ public class Backlog {
 				t.agregarDep(tDep);
 				bandera=false;
 			}
-		}
+		}*/
 	}
-	
+	/**
+	 * Elimina una dependencia de una tarea
+	 * @param idT id de la tarea a la que se le elimina la dependencia
+	 * @param idDep id de la dependencia que sera eliminada
+	 */
 	public void bajaDependencia(String idT, String idDep){
 		Iterator<Tarea>it=LTareasP.iterator();
 		Tarea t=null; 
-		Tarea subT=null;
+		Tarea dep=null;
 		/*boolean bandera=true;
 		while(it.hasNext() && bandera){
 			t=it.next();
@@ -285,8 +328,10 @@ public class Backlog {
 			}
 		}*/
 		t=getTarea(idT);
+		//dep=getTarea(idDep);
+		t.bajaDependencia(idDep);
 		//t.bajaDependencia(idDep);
-		Iterator<Tarea>it2=LTareasP.iterator();
+		/*Iterator<Tarea>it2=LTareasP.iterator();
 		boolean bandera=true;
 		while(it2.hasNext() && bandera){
 			subT=it2.next();
@@ -294,8 +339,8 @@ public class Backlog {
 				t.bajaDependencia(idDep);
 				bandera=false;
 			}
-		}
-		t.getLdependencias().remove(subT);
+		}*/
+		//t.getLdependencias().remove(subT);
 	}
 	
 	
@@ -317,13 +362,16 @@ public class Backlog {
 		Tarea t=null; 
 		Tarea subT=null;
 		boolean bandera=true;
-		while(it.hasNext() && bandera){
+		/*while(it.hasNext() && bandera){
 			t=it.next();
 			if(t.getId().equals(idT)){
 				bandera=false;
 			}
-		}
-		Iterator<Tarea>it2=LTareasP.iterator();
+		}*/
+		t=getTarea(idT);
+		subT=getTarea(idSubT);
+		t.agregarSubT(subT);
+		/*Iterator<Tarea>it2=LTareasP.iterator();
 		bandera=true;
 		while(it2.hasNext() && bandera){
 			subT=it2.next();
@@ -331,7 +379,7 @@ public class Backlog {
 				t.agregarSubT(subT);
 				bandera=false;
 			}
-		}
+		}*/
 	}
 	
 	public void bajaSubTarea(String idT, String idSubT){
@@ -342,10 +390,11 @@ public class Backlog {
 		while(it.hasNext() && bandera){
 			t=it.next();
 			if(t.getId().equals(idT)){
+				t.bajaSubT(idSubT);
 				bandera=false;
 			}
 		}
-		Iterator<Tarea>it2=LTareasP.iterator();
+		/*Iterator<Tarea>it2=LTareasP.iterator();
 		bandera=true;
 		while(it2.hasNext() && bandera){
 			subT=it2.next();
@@ -353,7 +402,7 @@ public class Backlog {
 				t.bajaSubT(idSubT);
 				bandera=false;
 			}
-		}
+		}*/
 	}
 
 	public void agregarTarea(Tarea tar) {

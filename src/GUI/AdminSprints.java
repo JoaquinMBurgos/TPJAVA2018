@@ -3,6 +3,7 @@ package GUI;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 import clases.Proyecto;
 import clases.Sprint;
@@ -200,10 +201,10 @@ public class AdminSprints extends JPanel {
 				}
 				else
 					JOptionPane.showMessageDialog(null, "El sprint ya esta finalizado");
-				if(Proyecto.getInstance().finalizaSprint(s.getClave())){
+				/*if(Proyecto.getInstance().finalizaSprint(s.getClave())){
 					lblCompletitudDeHistorias_Actual.setText(String.valueOf(s.estimacionHistoriaSprint()));
 					lblCompletitudTotal_Actual.setText(String.valueOf(s.estimacionSprint()));
-				}
+				}*/
 					
 				
 				//lblAvance_Actual = new JLabel(String.valueOf(s.getAvance()));
@@ -399,20 +400,37 @@ public class AdminSprints extends JPanel {
 		btnFinalizaSprint = new JButton("Finaliza Sprint");
 		btnFinalizaSprint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Proyecto.getInstance().getSprintEnCurso().finalizar();
-				table_D.removeAll();
-				table_IP.removeAll();
-				table_PTB.removeAll();
-				table_RTT.removeAll();
-				table_T.removeAll();
-				table_TD.removeAll();
+				//Proyecto.getInstance().getSprintEnCurso().finalizar();
+				if(Proyecto.getInstance().finalizaSprint(Proyecto.getInstance().getSprintEnCurso().getClave())){
+					table_D.removeAll();
+					table_IP.removeAll();
+					table_PTB.removeAll();
+					table_RTT.removeAll();
+					table_T.removeAll();
+					table_TD.removeAll();
+					lblIdSprint = new JLabel("ID Sprint");
+					lblNombreSprint = new JLabel("Nombre Sprint");
+					lblEstadoActual = new JLabel("Estado Actual");
+					lblDuracin_Actual = new JLabel("0");
+					lblAvance_Actual = new JLabel("0");
+					lblDaActual_Actual = new JLabel("0");
+					Proyecto.getInstance().getSprintEnCurso().finalizar();
+					
+				}
+				else
+					JOptionPane.showMessageDialog(null, "El sprint no finalizo");
+				
 			}
 		});
 		add(btnFinalizaSprint, "cell 24 10 2 1,alignx right,aligny center");
-
+		
+		
 	}
 
-	
+	public void vaciaTabla(DefaultTableModel dtm){
+		while(0<dtm.getRowCount())
+			dtm.removeRow(0);
+	}
 	
 	/*public void setlbls(){
 	String clave;

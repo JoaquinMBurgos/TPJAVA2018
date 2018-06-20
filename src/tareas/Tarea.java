@@ -198,6 +198,7 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 				bandera=false;
 			}
 		}
+		//LSubtareas.remove(tar);
 	}
 	
 	public void agregarDep(Tarea tar){
