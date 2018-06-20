@@ -330,19 +330,10 @@ public final class Proyecto {
 	 */
 	public void bajaTareaSprint(String idSprint,String idTarea){
 		Iterator<Sprint>it=LSprints.iterator();
-		Sprint sp=null;
-		Tarea tar=null;
-		boolean bandera=true;
-		while(it.hasNext() && bandera){
-			sp=it.next();
-			if(sp.getClave().compareTo(idSprint)==0){
-				sp.bajaTarea(idTarea);
-				tar=sp.getTarea(idTarea);
-				blog.agregarTarea(tar);
-				bandera=false;
-			}
-				
-		}
+		Sprint sp=getSprint(idSprint);
+		Tarea tar=sp.getTarea(idTarea);
+		blog.agregarTarea(tar);
+		sp.bajaTarea(idTarea);
 	}
 	
 	/**
