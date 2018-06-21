@@ -80,6 +80,11 @@ public class AdminSprints extends JPanel {
 	private JTable table_RTT;
 	private JTable table_T;
 	private JTable table_D;
+	private JLabel lblTodoACT;
+	private JLabel lblInprogressACT;
+	private JLabel lblPendingtobuildACT;
+	private JLabel lblReadytotestACT;
+	private JLabel lblTestingACT;
 		
 
 	/**
@@ -131,6 +136,9 @@ public class AdminSprints extends JPanel {
 			add(asmenuBar, "cell 0 0 26 1,growx,aligny top");
 		
 		
+			
+			
+			
 		if(Proyecto.getInstance().getSprintEnCurso()!=null){
 			Sprint s=Proyecto.getInstance().getSprintEnCurso();
 			lblIdSprint = new JLabel(s.getClave());
@@ -200,7 +208,7 @@ public class AdminSprints extends JPanel {
 					lblDaActual_Actual.setText(s.getfAvance().toString());
 				}
 				else
-					JOptionPane.showMessageDialog(null, "El sprint ya esta finalizado");
+					JOptionPane.showMessageDialog(null, "Ya ha alcanzado la fecha límite del sprint");
 				/*if(Proyecto.getInstance().finalizaSprint(s.getClave())){
 					lblCompletitudDeHistorias_Actual.setText(String.valueOf(s.estimacionHistoriaSprint()));
 					lblCompletitudTotal_Actual.setText(String.valueOf(s.estimacionSprint()));
@@ -233,6 +241,8 @@ public class AdminSprints extends JPanel {
 		add(separator, "cell 0 4 26 1,growx,aligny center");
 		
 		
+		
+		
 		lblToDo = new JLabel("To Do");
 		lblToDo.setFont(new Font("Tahoma", Font.BOLD, 16));
 		add(lblToDo, "cell 0 5 3 1,alignx center,aligny center");
@@ -258,29 +268,129 @@ public class AdminSprints extends JPanel {
 		add(lblDone, "cell 23 5 3 1,alignx center,aligny center");
 		
 		
+		
+		
+		
+		try {
+			lblTodoACT = new JLabel((table_TD.getValueAt(table_TD.getSelectedRow(), 0)).toString());
+		}
+		catch(NullPointerException npe) {
+			lblTodoACT = new JLabel("ToDoACT");				
+		}
+		
+		//lblTodoACT = new JLabel("ToDoACT");
+		lblTodoACT.setFont(new Font("Tahoma", Font.PLAIN, 5));
+		add(lblTodoACT, "cell 2 1,alignx center,aligny center");
+		lblTodoACT.setVisible(false);
+		
+		try {
+			lblInprogressACT = new JLabel((table_IP.getValueAt(table_IP.getSelectedRow(), 0)).toString());
+			}
+		catch(NullPointerException npe) {
+			lblInprogressACT = new JLabel("InProgress");
+			}
+		//lblInprogressACT = new JLabel("InProgress");
+		lblInprogressACT.setFont(new Font("Tahoma", Font.PLAIN, 5));
+		add(lblInprogressACT, "cell 6 1 2 1,alignx center,growy");
+		lblInprogressACT.setVisible(false);
+		
+		try {
+			lblPendingtobuildACT = new JLabel((table_PTB.getValueAt(table_PTB.getSelectedRow(), 0)).toString());
+			}
+		catch(NullPointerException npe) {
+			lblPendingtobuildACT = new JLabel("PendingToBuildACT");
+			}
+		//lblPendingtobuildACT = new JLabel("PendingToBuildACT");
+		lblPendingtobuildACT.setFont(new Font("Tahoma", Font.PLAIN, 5));
+		add(lblPendingtobuildACT, "cell 11 1 4 1,alignx center,aligny center");
+		lblPendingtobuildACT.setVisible(false);
+		
+		try {
+			lblReadytotestACT = new JLabel((table_PTB.getValueAt(table_PTB.getSelectedRow(), 0)).toString());
+			}
+		catch(NullPointerException npe) {
+			lblReadytotestACT = new JLabel("ReadyToTestACT");
+			}
+		//lblReadytotestACT = new JLabel("ReadyToTestACT");
+		lblReadytotestACT.setFont(new Font("Tahoma", Font.PLAIN, 5));
+		add(lblReadytotestACT, "cell 18 1 4 1,alignx center,aligny center");
+		lblReadytotestACT.setVisible(false);
+		
+		try {
+			lblTestingACT = new JLabel((table_T.getValueAt(table_T.getSelectedRow(), 0)).toString());
+			}
+		catch(NullPointerException npe) {
+			lblTestingACT = new JLabel("TestingACT");
+			}
+		//lblTestingACT = new JLabel("TestingACT");
+		lblTestingACT.setFont(new Font("Tahoma", Font.PLAIN, 5));
+		add(lblTestingACT, "cell 24 1 2 1,alignx center,aligny center");
+		lblTestingACT.setVisible(false);
+		
+
+		
+		
+		
+		
 		scrollPane_ToDo = new JScrollPane();
 		add(scrollPane_ToDo, "cell 0 6 3 4,grow");
 		
 		table_TD = new JTable();
+		table_TD.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lblTodoACT.setText((table_TD.getValueAt(table_TD.getSelectedRow(), 0)).toString());
+			}
+		});
 		scrollPane_ToDo.setViewportView(table_TD);
 		
 		scrollPane_Inprogress = new JScrollPane();
 		add(scrollPane_Inprogress, "cell 4 6 4 4,grow");
 		
 		table_IP = new JTable();
+		table_IP.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lblInprogressACT.setText((table_IP.getValueAt(table_IP.getSelectedRow(), 0)).toString());
+			}
+		});
 		scrollPane_Inprogress.setViewportView(table_IP);
 		
 		scrollPane_Pendingtobuild = new JScrollPane();
 		add(scrollPane_Pendingtobuild, "cell 9 6 7 4,grow");
 		
 		table_PTB = new JTable();
+		table_PTB.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lblPendingtobuildACT.setText((table_PTB.getValueAt(table_PTB.getSelectedRow(), 0)).toString());
+			}
+		});
 		scrollPane_Pendingtobuild.setViewportView(table_PTB);
 		
 		scrollPane_Readytotest = new JScrollPane();
 		add(scrollPane_Readytotest, "cell 17 6 5 1,grow");
 		
 		table_RTT = new JTable();
+		table_RTT.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lblReadytotestACT.setText((table_RTT.getValueAt(table_RTT.getSelectedRow(), 0)).toString());
+			}
+		});
 		scrollPane_Readytotest.setViewportView(table_RTT);
+		
+		scrollPane_Testing = new JScrollPane();
+		add(scrollPane_Testing, "cell 17 9 5 1,grow");
+		
+		table_T = new JTable();
+		table_T.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lblTestingACT.setText((table_T.getValueAt(table_T.getSelectedRow(), 0)).toString());
+			}
+		});
+		scrollPane_Testing.setViewportView(table_T);
 		
 		scrollPane_Done = new JScrollPane();
 		add(scrollPane_Done, "cell 23 6 3 4,grow");
@@ -288,11 +398,8 @@ public class AdminSprints extends JPanel {
 		table_D = new JTable();
 		scrollPane_Done.setViewportView(table_D);
 		
-		scrollPane_Testing = new JScrollPane();
-		add(scrollPane_Testing, "cell 17 9 5 1,grow");
 		
-		table_T = new JTable();
-		scrollPane_Testing.setViewportView(table_T);
+		
 		
 		
 		if(Proyecto.getInstance().getSprintEnCurso()!=null){
@@ -305,29 +412,24 @@ public class AdminSprints extends JPanel {
 			table_D.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"DONE")));
 		}
 		
-		btnReadyToTestSiguiente = new JButton("Siguiente \u00BB");
-		btnReadyToTestSiguiente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Sprint s=Proyecto.getInstance().getSprintEnCurso();
-				String id=table_RTT.getValueAt(table_RTT.getSelectedRow(), 0).toString();
-				EstadoTarea e1=EstadoTarea.valueOf("READYTOTEST");
-				s.cambiarEstadoTarea(id,e1.next().toString());
-				table_RTT.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"READYTOTEST")));
-				table_T.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TESTING")));
-			}
-		});
-		add(btnReadyToTestSiguiente, "cell 21 7,alignx right,aligny center");
+		
+		
+		
+		
+
 		
 		btnToDoSiguiente = new JButton("Siguiente \u00BB");
 		btnToDoSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//Proyecto.getInstance().cambiarEstadoTarea(idSprint, idT, est);
-				Sprint s=Proyecto.getInstance().getSprintEnCurso();
-				String id=table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString();
-				EstadoTarea e=EstadoTarea.valueOf("TODO");
-				s.cambiarEstadoTarea(id,e.next().toString());
-				table_TD.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TODO")));
-				table_IP.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"INPROGRESS")));
+				if (lblTodoACT.getText() != "ToDoACT") {
+					Sprint s=Proyecto.getInstance().getSprintEnCurso();
+					String id=table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString();
+					EstadoTarea e=EstadoTarea.valueOf("TODO");
+					s.cambiarEstadoTarea(id,e.next().toString());
+					table_TD.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TODO")));
+					table_IP.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"INPROGRESS")));
+					lblTodoACT.setText("ToDoACT");
+				}
 			}
 		});
 		add(btnToDoSiguiente, "cell 2 10,alignx right,aligny center");
@@ -335,12 +437,15 @@ public class AdminSprints extends JPanel {
 		btnInProgressSiguiente = new JButton("Siguiente \u00BB");
 		btnInProgressSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Sprint s=Proyecto.getInstance().getSprintEnCurso();
-				String id=table_IP.getValueAt(table_IP.getSelectedRow(), 0).toString();
-				EstadoTarea e=EstadoTarea.valueOf("INPROGRESS");
-				s.cambiarEstadoTarea(id,e.next().toString());
-				table_IP.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"INPROGRESS")));
-				table_PTB.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"PENDINGTOBUILD")));
+				if (lblInprogressACT.getText() != "InProgress") {
+					Sprint s=Proyecto.getInstance().getSprintEnCurso();
+					String id=table_IP.getValueAt(table_IP.getSelectedRow(), 0).toString();
+					EstadoTarea e=EstadoTarea.valueOf("INPROGRESS");
+					s.cambiarEstadoTarea(id,e.next().toString());
+					table_IP.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"INPROGRESS")));
+					table_PTB.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"PENDINGTOBUILD")));
+					lblInprogressACT.setText("InProgress");
+				}
 			}
 		});
 		add(btnInProgressSiguiente, "cell 7 10,alignx right,aligny center");
@@ -348,12 +453,15 @@ public class AdminSprints extends JPanel {
 		btnPendingToBouildAnterior = new JButton("\u00AB Anterior");
 		btnPendingToBouildAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Sprint s=Proyecto.getInstance().getSprintEnCurso();
-				String id=table_PTB.getValueAt(table_PTB.getSelectedRow(), 0).toString();
-				EstadoTarea e1=EstadoTarea.valueOf("PENDINGTOBUILD");
-				s.cambiarEstadoTarea(id,e1.previous().toString());
-				table_PTB.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"PENDINGTOBUILD")));
-				table_TD.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TODO")));
+				if (lblPendingtobuildACT.getText() != "PendingToBuildACT") {
+					Sprint s=Proyecto.getInstance().getSprintEnCurso();
+					String id=table_PTB.getValueAt(table_PTB.getSelectedRow(), 0).toString();
+					EstadoTarea e1=EstadoTarea.valueOf("PENDINGTOBUILD");
+					s.cambiarEstadoTarea(id,e1.previous().toString());
+					table_PTB.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"PENDINGTOBUILD")));
+					table_TD.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TODO")));
+					lblPendingtobuildACT.setText("PendingToBuildACT");
+				}	
 			}
 		});
 		add(btnPendingToBouildAnterior, "cell 10 10 2 1,alignx left,aligny center");
@@ -361,25 +469,46 @@ public class AdminSprints extends JPanel {
 		btnPendingToBouildSiguiente = new JButton("Siguiente \u00BB");
 		btnPendingToBouildSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Sprint s=Proyecto.getInstance().getSprintEnCurso();
-				String id=table_PTB.getValueAt(table_PTB.getSelectedRow(), 0).toString();
-				EstadoTarea e1=EstadoTarea.valueOf("PENDINGTOBUILD");
-				s.cambiarEstadoTarea(id,e1.next().toString());
-				table_PTB.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"PENDINGTOBUILD")));
-				table_RTT.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"READYTOTEST")));
+				if (lblPendingtobuildACT.getText() != "PendingToBuildACT") {
+					Sprint s=Proyecto.getInstance().getSprintEnCurso();
+					String id=table_PTB.getValueAt(table_PTB.getSelectedRow(), 0).toString();
+					EstadoTarea e1=EstadoTarea.valueOf("PENDINGTOBUILD");
+					s.cambiarEstadoTarea(id,e1.next().toString());
+					table_PTB.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"PENDINGTOBUILD")));
+					table_RTT.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"READYTOTEST")));
+					lblPendingtobuildACT.setText("PendingToBuildACT");
+				}
 			}
 		});
 		add(btnPendingToBouildSiguiente, "cell 14 10 2 1,alignx right,aligny center");
 		
+		btnReadyToTestSiguiente = new JButton("Siguiente \u00BB");
+		btnReadyToTestSiguiente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (lblReadytotestACT.getText() != "ReadyToTestACT") {
+					Sprint s=Proyecto.getInstance().getSprintEnCurso();
+					String id=table_RTT.getValueAt(table_RTT.getSelectedRow(), 0).toString();
+					EstadoTarea e1=EstadoTarea.valueOf("READYTOTEST");
+					s.cambiarEstadoTarea(id,e1.next().toString());
+					table_RTT.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"READYTOTEST")));
+					table_T.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TESTING")));
+					lblReadytotestACT.setText("ReadyToTestACT");
+				}
+			}
+		});
+		add(btnReadyToTestSiguiente, "cell 21 7,alignx right,aligny center");
+		
 		btnTestingAnterior = new JButton("\u00AB Anterior");
 		btnTestingAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Sprint s=Proyecto.getInstance().getSprintEnCurso();
-				String id=table_T.getValueAt(table_T.getSelectedRow(), 0).toString();
-				EstadoTarea e1=EstadoTarea.valueOf("TESTING");
-				s.cambiarEstadoTarea(id,e1.previous().toString());
-				table_T.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TESTING")));
-				table_TD.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TODO")));
+				if (lblTestingACT.getText() != "TestingACT") {Sprint s=Proyecto.getInstance().getSprintEnCurso();
+					String id=table_T.getValueAt(table_T.getSelectedRow(), 0).toString();
+					EstadoTarea e1=EstadoTarea.valueOf("TESTING");
+					s.cambiarEstadoTarea(id,e1.previous().toString());
+					table_T.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TESTING")));
+					table_TD.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TODO")));
+					lblTestingACT.setText("TestingACT");
+				}
 			}
 		});
 		add(btnTestingAnterior, "cell 17 10 2 1,alignx left,aligny center");
@@ -387,13 +516,16 @@ public class AdminSprints extends JPanel {
 		btnTestingSiguiente = new JButton("Siguiente \u00BB");
 		btnTestingSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Sprint s=Proyecto.getInstance().getSprintEnCurso();
-				String id=table_T.getValueAt(table_T.getSelectedRow(), 0).toString();
-				EstadoTarea e1=EstadoTarea.valueOf("TESTING");
-				s.getTarea(id).setfFin(s.getfAvance());
-				s.cambiarEstadoTarea(id,e1.next().toString());
-				table_T.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TESTING")));
-				table_D.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"DONE")));
+				if (lblTestingACT.getText() != "TestingACT") {
+					Sprint s=Proyecto.getInstance().getSprintEnCurso();
+					String id=table_T.getValueAt(table_T.getSelectedRow(), 0).toString();
+					EstadoTarea e1=EstadoTarea.valueOf("TESTING");
+					s.getTarea(id).setfFin(s.getfAvance());
+					s.cambiarEstadoTarea(id,e1.next().toString());
+					table_T.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TESTING")));
+					table_D.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"DONE")));
+					lblTestingACT.setText("TestingACT");
+				}			
 			}
 		});
 		add(btnTestingSiguiente, "cell 21 10,alignx right,aligny center");
@@ -403,6 +535,11 @@ public class AdminSprints extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				//Proyecto.getInstance().getSprintEnCurso().finalizar();
 				if(Proyecto.getInstance().finalizaSprint(Proyecto.getInstance().getSprintEnCurso().getClave())){
+					lblTodoACT.setText("ToDoACT");
+					lblInprogressACT.setText("InProgress");
+					lblPendingtobuildACT.setText("PendingToBuildACT");
+					lblReadytotestACT.setText("ReadyToTestACT");
+					lblTestingACT.setText("TestingACT");
 					table_D.removeAll();
 					table_IP.removeAll();
 					table_PTB.removeAll();
@@ -434,23 +571,6 @@ public class AdminSprints extends JPanel {
 			dtm.removeRow(0);
 	}
 	
-	/*public void setlbls(){
-	String clave;
-	String descripcion; 
-	String estado; 
-	String avance;
-	String duracion;
-	Proyecto proy = Proyecto.getInstance();
-	
-	proy.setAdmSprintEnCurso(clave,descripcion,estado,avance,duracion); 
-	
-	lblIdSprint.setText(clave);
-	lblNombreSprint.setText(descripcion);
-	lblEstadoActual.setText(estado);
-	lblDaActual_Actual.setText(duracion);
-	lblAvance_Actual.setText(avance);
-
-	}
 	
 	/*public void cargarTablas(){
 		try{
