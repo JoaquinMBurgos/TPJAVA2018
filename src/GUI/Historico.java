@@ -248,4 +248,8 @@ public class Historico extends JPanel {
 
 		
 	}
+
+	public void cargaTabla() {
+		table_Sprint.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
+	}
 }

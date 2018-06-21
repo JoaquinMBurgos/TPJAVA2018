@@ -98,35 +98,12 @@ public final class Proyecto {
 	 * @throws SprintNoValido cuando el Sprint es ENCURSO o FINALIZADO, los cuales no pueden ser dados de baja
 	 */
 	public void bajaSprint(String clave) throws SprintNoValido{
-		boolean bandera = true;
-		Iterator<Sprint> it = LSprints.iterator();
 		Sprint sp = getSprint(clave);
 		if(sp.getEstado()==EstadoSprint.PLANIFICADO){
 			for(Tarea tar:sp.getListaT())
 				blog.agregarTarea(tar);
 			LSprints.remove(sp);
 		}
-		/*while(bandera && it.hasNext()){
-			sp = it.next();
-			if(sp.getClave().compareTo(clave)<=0){
-				if(sp.getClave().equals(clave)){
-					if(sp.getEstado()==EstadoSprint.PLANIFICADO){
-<<<<<<< HEAD
-						Proyecto.getInstance()
-=======
-	/*					for(Tarea p: c.getListaT()){                               TRABAJAR CON LAS TAREAS
-							blog.getListaTB().add(p);
-						}*/
-						Proyecto.getInstance();
->>>>>>> 0bed7b656b89fd514bd1adafd6393efc37d7df54
-						LSprints.remove(sp);
-						bandera = false;
-					}
-					else
-						throw new SprintNoValido();
-				}
-			}
-		}*/
 	}
 	
 	/**
@@ -183,13 +160,6 @@ public final class Proyecto {
 			}
 			
 		}
-	}
-	
-	/**
-	 * Carga las tareas de un txt
-	 */
-	public void cargarTareas(){
-		blog.cargaListaTareas();
 	}
 	
 	/**
@@ -321,7 +291,6 @@ public final class Proyecto {
 	 * @param idTarea Id de la Tarea que sera dada de baja.
 	 */
 	public void bajaTareaSprint(String idSprint,String idTarea){
-		Iterator<Sprint>it=LSprints.iterator();
 		Sprint sp=getSprint(idSprint);
 		if(sp.getEstado()!=EstadoSprint.FINALIZADO){
 			Tarea tar=sp.getTarea(idTarea);
@@ -569,7 +538,7 @@ public final class Proyecto {
 	public ArrayList<Sprint> RankingEstimacion(){
 		ArrayList<Sprint>listaEsti = new ArrayList<Sprint>() ; 
 		for(Sprint s:LSprints){
-			if (s.getEstado().equals("FINALIZADO"))
+			if (s.getEstado()== EstadoSprint.FINALIZADO)
 				listaEsti.add(s);
 		}
 		Collections.sort(listaEsti,new Comparator<Sprint>(){
@@ -716,9 +685,8 @@ public final class Proyecto {
 		Tarea tar = blog.getTarea(id);
 		Iterator<Sprint> its = LSprints.iterator();
 		Sprint sp;
-		boolean bandera;
+		boolean bandera = false;
 		if(tar == null){
-			bandera = false;
 			while(its.hasNext() && !bandera){
 				sp = its.next();
 				if(sp.getEstado() != EstadoSprint.FINALIZADO)
@@ -727,7 +695,10 @@ public final class Proyecto {
 					bandera = true;
 			}
 		}
-		return tar;
+		if(bandera)
+			return tar;
+		else
+			return null;
 	}
 	
 	public Sprint getTareaEnSprint(String id){

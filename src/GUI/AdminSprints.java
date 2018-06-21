@@ -45,15 +45,11 @@ public class AdminSprints extends JPanel {
 	private JLabel lblEstadoActual;
 	private JLabel lblDaActual;
 	private JLabel lblDaActual_Actual;
-	private JLabel lblCompletitudDeHistorias;
-	private JLabel lblCompletitudTotal;
 	private JLabel lblDuracin;
 	private JLabel lblDuracin_Actual;
 	private JLabel lblAvance;
 	private JLabel lblAvance_Actual;
 	private JSeparator separator;
-	private JLabel lblCompletitudDeHistorias_Actual;
-	private JLabel lblCompletitudTotal_Actual;
 	private JScrollPane scrollPane_ToDo;
 	private JScrollPane scrollPane_Inprogress;
 	private JLabel lblToDo;
@@ -204,22 +200,6 @@ public class AdminSprints extends JPanel {
 			}
 		});
 		add(btnDiaSiguiente, "cell 21 2 1 2,alignx center,aligny center");
-		
-		lblCompletitudDeHistorias = new JLabel("Completitud de historias:");
-		lblCompletitudDeHistorias.setFont(new Font("Tahoma", Font.BOLD, 12));
-		add(lblCompletitudDeHistorias, "cell 24 2,alignx center,aligny center");
-		
-		lblCompletitudDeHistorias_Actual = new JLabel("0");
-		lblCompletitudDeHistorias_Actual.setFont(new Font("Tahoma", Font.BOLD, 12));
-		add(lblCompletitudDeHistorias_Actual, "cell 25 2,alignx center,aligny center");
-		
-		lblCompletitudTotal = new JLabel("Completitud total:");
-		lblCompletitudTotal.setFont(new Font("Tahoma", Font.BOLD, 12));
-		add(lblCompletitudTotal, "cell 24 3,alignx center,aligny center");
-		
-		lblCompletitudTotal_Actual = new JLabel("0");
-		lblCompletitudTotal_Actual.setFont(new Font("Tahoma", Font.BOLD, 12));
-		add(lblCompletitudTotal_Actual, "cell 25 3,alignx center,aligny center");
 		
 		separator = new JSeparator();
 		add(separator, "cell 0 4 26 1,growx,aligny center");
@@ -524,6 +504,7 @@ public class AdminSprints extends JPanel {
 					Proyecto.getInstance().getSprintEnCurso().finalizar();
 					vaciaTablas();
 					InterfazGrafica.getInstance().abrirABMSprint();
+					InterfazGrafica.getInstance().cargaTablaBacklog();
 				}
 				else
 					JOptionPane.showMessageDialog(null, "El sprint no finalizo");

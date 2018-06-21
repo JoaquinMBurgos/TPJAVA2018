@@ -107,6 +107,7 @@ public final class InterfazGrafica {
 
 		frmScrum.remove(panel);
 		panel = hist;
+		hist.cargaTabla();
 		
 		frmScrum.getContentPane().add(panel);
 		frmScrum.revalidate();
@@ -167,6 +168,10 @@ public final class InterfazGrafica {
 
 	public void cargaDatosAdmin() {
 		admins.cargaDatos();
+	}
+	
+	public void cargaTablaBacklog() {
+		abmb.cargaTabla();
 	}
 
 

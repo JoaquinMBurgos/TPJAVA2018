@@ -90,4 +90,10 @@ public class Backlog extends JPanel {
 
 		
 	}
+
+
+
+	public void cargaTabla() {
+		table.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));		
+	}
 }

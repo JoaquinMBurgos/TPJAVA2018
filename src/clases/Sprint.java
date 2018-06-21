@@ -408,9 +408,7 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 	 */
 	public void agregaDependencia(String idT,String idDep) throws TareaNoValida{
 		Tarea t=getTarea(idT); //tarea a la que hay que agregarle la dependencia
-		Tarea tDep=null;//dependencia que hay que agregar
-		tDep=Proyecto.getInstance().getTareaBacklogYSprints(idDep);
-		//tDep=getTarea(idDep);
+		Tarea tDep=Proyecto.getInstance().getTareaBacklogYSprints(idDep); 	//dependencia que hay que agregar
 		t.agregarDep(tDep);
 	}
 	

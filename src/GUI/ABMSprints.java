@@ -105,10 +105,7 @@ public class ABMSprints extends JPanel {
 	private JDateChooser dateChooser_Ffin;
 	private JLabel lblFechaDeFin;
 	private JLabel lblFechaDeIni;
-<<<<<<< HEAD
 	private JDateChooser dateChooser_Fini;
-=======
->>>>>>> 0bed7b656b89fd514bd1adafd6393efc37d7df54
 
 	/**
 	 * Create the panel.
@@ -201,7 +198,6 @@ public class ABMSprints extends JPanel {
 			});
 			add(rdbtnPlanificado, "cell 2 14");
 				
-<<<<<<< HEAD
 			rdbtnFinalizado = new JRadioButton("Finalizado");
 			rdbtnFinalizado.setSelected(false);
 			rdbtnFinalizado.addMouseListener(new MouseAdapter() {
@@ -227,7 +223,6 @@ public class ABMSprints extends JPanel {
 			lblFechaDeIni = new JLabel("Fecha de Ini:");
 			lblFechaDeIni.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			add(lblFechaDeIni, "cell 0 20 2 1");
-=======
 				rdbtnFinalizado = new JRadioButton("Finalizado");
 				rdbtnFinalizado.setSelected(false);
 				rdbtnFinalizado.addMouseListener(new MouseAdapter() {
@@ -268,7 +263,6 @@ public class ABMSprints extends JPanel {
 			
 			
 			
->>>>>>> 0bed7b656b89fd514bd1adafd6393efc37d7df54
 			
 			dateChooser_Fini = new JDateChooser();
 			add(dateChooser_Fini, "cell 2 20 2 1,growx,aligny center");

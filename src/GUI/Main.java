@@ -27,12 +27,7 @@ public class Main {
 	public static void main(String[] args) throws SprintNoValido {
 		// TODO Auto-generated method stub
 		Proyecto proy=Proyecto.getInstance();
-		//bl.cargaListaTareas();
-		proy.cargarTareas();
-		
-
-		
-		try {
+		/*try {
 			proy.agregarDependencias("HIS002","TAR003");
 			proy.agregarDependencias("HIS005","HIS004");
 			proy.agregarDependencias("HIS006","HIS004");
@@ -132,13 +127,13 @@ public class Main {
 		Grafico g = new Grafico();
 		//g.graficar(proy.getSprintEnCurso());
 		proy.mostrarTareas();
-		System.out.println(proy.getListaEstados("SPR002","INPROGRESS").toString());
+		System.out.println(proy.getListaEstados("SPR002","INPROGRESS").toString());*/
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					Sprint s= new Sprint("hola","mundoo");
 					//s.addDay();
-					//Proyecto.getInstance().cargaListas();
+					Proyecto.getInstance().cargaListas();
 					//Proyecto.getInstance().Leer("LSprints.ser");
 					//Proyecto.getInstance().Leer("LTareas.ser");
 					InterfazGrafica window = InterfazGrafica.getInstance();
