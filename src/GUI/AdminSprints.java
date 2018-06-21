@@ -385,21 +385,6 @@ public class AdminSprints extends JPanel {
 		
 		
 		cargaDatos();
-		
-		/*if(Proyecto.getInstance().getSprintEnCurso()!=null){
-			Sprint s=Proyecto.getInstance().getSprintEnCurso();
-			table_TD.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TODO")));
-			table_IP.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"INPROGRESS")));
-			table_PTB.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"PENDINGTOBUILD")));
-			table_RTT.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"READYTOTEST")));
-			table_T.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TESTING")));
-			table_D.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"DONE")));
-		}*/
-		
-		
-		
-		
-		
 
 		
 		btnToDoSiguiente = new JButton("Siguiente \u00BB");
@@ -517,7 +502,6 @@ public class AdminSprints extends JPanel {
 		btnFinalizaSprint = new JButton("Finaliza Sprint");
 		btnFinalizaSprint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//Proyecto.getInstance().getSprintEnCurso().finalizar();
 				if(Proyecto.getInstance().finalizaSprint(Proyecto.getInstance().getSprintEnCurso().getClave())){
 					lblTodoACT.setText("ToDoACT");
 					lblInprogressACT.setText("InProgress");
