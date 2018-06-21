@@ -111,7 +111,14 @@ public final class Proyecto {
 			if(sp.getClave().compareTo(clave)<=0){
 				if(sp.getClave().equals(clave)){
 					if(sp.getEstado()==EstadoSprint.PLANIFICADO){
+<<<<<<< HEAD
 						Proyecto.getInstance()
+=======
+	/*					for(Tarea p: c.getListaT()){                               TRABAJAR CON LAS TAREAS
+							blog.getListaTB().add(p);
+						}*/
+						Proyecto.getInstance();
+>>>>>>> 0bed7b656b89fd514bd1adafd6393efc37d7df54
 						LSprints.remove(sp);
 						bandera = false;
 					}

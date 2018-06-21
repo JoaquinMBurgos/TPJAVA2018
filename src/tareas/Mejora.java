@@ -21,6 +21,10 @@ public class Mejora extends Tarea implements Serializable{
 		super(id, nombre, descripcion, complejidad);
 		// TODO Auto-generated constructor stub
 	}
+	/**
+	 * 
+	 * @return la estimacion para una tarea
+	 */
 	public double calculaEstimacion(){
 		int estimacion= getEstimacion();
 		int complejidad= getComplejidad();
@@ -33,6 +37,7 @@ public class Mejora extends Tarea implements Serializable{
 		else
 			JOptionPane.showMessageDialog(null, "Mejora puede tener una sola dependencia");
 	}
+	
 	public int estimacion(){
 		Tarea t=null;
 		if(!getLdependencias().isEmpty()){

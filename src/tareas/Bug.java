@@ -15,7 +15,9 @@ import clases.TareaNoValida;
 import estadosTareas.Estado;
 
 /**
- * @author tomi_
+ * 
+ * @author jose
+ * 
  *
  */
 public class Bug extends Tarea implements Serializable{

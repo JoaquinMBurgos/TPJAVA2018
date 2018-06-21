@@ -105,7 +105,10 @@ public class ABMSprints extends JPanel {
 	private JDateChooser dateChooser_Ffin;
 	private JLabel lblFechaDeFin;
 	private JLabel lblFechaDeIni;
+<<<<<<< HEAD
 	private JDateChooser dateChooser_Fini;
+=======
+>>>>>>> 0bed7b656b89fd514bd1adafd6393efc37d7df54
 
 	/**
 	 * Create the panel.
@@ -198,6 +201,7 @@ public class ABMSprints extends JPanel {
 			});
 			add(rdbtnPlanificado, "cell 2 14");
 				
+<<<<<<< HEAD
 			rdbtnFinalizado = new JRadioButton("Finalizado");
 			rdbtnFinalizado.setSelected(false);
 			rdbtnFinalizado.addMouseListener(new MouseAdapter() {
@@ -223,6 +227,48 @@ public class ABMSprints extends JPanel {
 			lblFechaDeIni = new JLabel("Fecha de Ini:");
 			lblFechaDeIni.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			add(lblFechaDeIni, "cell 0 20 2 1");
+=======
+				rdbtnFinalizado = new JRadioButton("Finalizado");
+				rdbtnFinalizado.setSelected(false);
+				rdbtnFinalizado.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent arg0) {
+						rdbtnPlanificado.setSelected(false);
+						rdbtnEnCurso.setSelected(false);
+						rdbtnFinalizado.setSelected(true);
+					}
+				});
+				add(rdbtnFinalizado, "cell 2 18,aligny top");
+							
+				rdbtnEnCurso = new JRadioButton("En Curso");
+				rdbtnEnCurso.setSelected(false);
+				rdbtnEnCurso.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent arg0) {
+						rdbtnPlanificado.setSelected(false);
+						rdbtnEnCurso.setSelected(true);
+						rdbtnFinalizado.setSelected(false);
+					}
+				});	
+				add(rdbtnEnCurso, "cell 2 16");
+			
+			lblFechaDeIni = new JLabel("Fecha de Ini:");
+			lblFechaDeIni.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			add(lblFechaDeIni, "cell 0 20 2 1");
+			
+			JDateChooser dateChooser_Fini = new JDateChooser();
+			add(dateChooser_Fini, "cell 2 20 2 1,growx,aligny center");
+		
+			lblFechaDeFin = new JLabel("Fecha de Fin:");
+			lblFechaDeFin.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			add(lblFechaDeFin, "cell 0 22 2 1");
+				
+			dateChooser_Ffin = new JDateChooser();
+			add(dateChooser_Ffin, "cell 2 22 2 1,growx,aligny center");
+
+				
+			
+			
+			
+>>>>>>> 0bed7b656b89fd514bd1adafd6393efc37d7df54
 			
 			dateChooser_Fini = new JDateChooser();
 			add(dateChooser_Fini, "cell 2 20 2 1,growx,aligny center");
@@ -315,6 +361,20 @@ public class ABMSprints extends JPanel {
 					}
 				}
 			});
+			
+			
+			btnIniciar = new JButton("Inicia Sprint");
+			btnIniciar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try {
+						Proyecto.getInstance().cambiarEstadoSprint(table.getValueAt(table.getSelectedRow(), 0).toString(), "ENCURSO");
+						table.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
+					} catch (SprintNoValido e) {
+						JOptionPane.showMessageDialog(null, "Ya hay un Sprint en curso.", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			});
+			add(btnIniciar, "cell 1 24 3 1,alignx center,aligny center");		
 			btnSQuitaTarea.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			add(btnSQuitaTarea, "cell 7 24,growx,aligny center");
 			
