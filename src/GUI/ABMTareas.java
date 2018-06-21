@@ -89,8 +89,13 @@ public class ABMTareas extends JPanel {
 	private JLabel lblFlujo;
 	private JTextField textField_Flujo;
 	private JButton btnFAgregar;
-	private JButton btnFCancelar;
+	private JButton btnFEliminar;
 	private JButton btnFlujopasos;
+	private JLabel lbl_tACT;
+	private JLabel lbl_sdfACT;
+	private JLabel lbl_tdACT;
+	private JSeparator separator;
+	private JSeparator separator_1;
 	
 
 	/**
@@ -98,43 +103,193 @@ public class ABMTareas extends JPanel {
 	 */
 	public ABMTareas() {
 		
-		setLayout(new MigLayout("", "[50][53.00][5][53,grow][5][70.00][131.00][603.00,grow][][603.00,grow]", "[24px:24px][10.00][][15.00][][][15][][15][][15][][15][138.00,grow][15][][3.00][48.00][19.00][][9.00][pref!][43.00][139.00,grow][55.00][]"));
+		setLayout(new MigLayout("", "[50][53.00][5][53,grow][5][70.00][131.00][603.00,grow][][603.00,grow]", "[24px:24px][10.00][][15.00][][][15][][15][][15][][15][138.00,grow][15][][3.00][28.00][19.00][][][pref!][33.00][139.00,grow][][][]"));
 		
-		tmenuBar = new JMenuBar();
-		tmenuBar.setMargin(new Insets(0, 15, 0, 15));
-			mntmTAdmSprints = new JMenuItem("Administración");
-			mntmTAdmSprints.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {	
-					InterfazGrafica.getInstance().abrirAdminSprints();}});
-			tmenuBar.add(mntmTAdmSprints);
-			mntmTSprints = new JMenuItem("Sprints");
-			mntmTSprints.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {	
-					InterfazGrafica.getInstance().abrirABMSprint();}});
-			tmenuBar.add(mntmTSprints);
-			mntmTTareas = new JMenuItem("Tareas");
-			mntmTTareas.setSelected(true);
-			mntmTTareas.setBackground(Color.LIGHT_GRAY);
-			mntmTTareas.setFont(new Font("Segoe UI", Font.BOLD, 13));
-			tmenuBar.add(mntmTTareas);
-			mntmTBacklog = new JMenuItem("Backlog");
-			mntmTBacklog.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {	
-					InterfazGrafica.getInstance().abrirBacklog();}});
-			tmenuBar.add(mntmTBacklog);
-			mntmTHistorico = new JMenuItem("Historico");
-			mntmTHistorico.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {	
-					InterfazGrafica.getInstance().abrirHistorico();}});
-			tmenuBar.add(mntmTHistorico);
-			mntmTReportes = new JMenuItem("Reportes");
-			mntmTReportes.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {	
-					InterfazGrafica.getInstance().abrirReportes();}});
-			tmenuBar.add(mntmTReportes);
-		add(tmenuBar, "cell 0 0 10 1,growx,aligny top");
+			tmenuBar = new JMenuBar();
+			tmenuBar.setMargin(new Insets(0, 15, 0, 15));
+				mntmTAdmSprints = new JMenuItem("Administración");
+				mntmTAdmSprints.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {	
+						InterfazGrafica.getInstance().abrirAdminSprints();}});
+				tmenuBar.add(mntmTAdmSprints);
+				mntmTSprints = new JMenuItem("Sprints");
+				mntmTSprints.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {	
+						InterfazGrafica.getInstance().abrirABMSprint();}});
+				tmenuBar.add(mntmTSprints);
+				mntmTTareas = new JMenuItem("Tareas");
+				mntmTTareas.setSelected(true);
+				mntmTTareas.setBackground(Color.LIGHT_GRAY);
+				mntmTTareas.setFont(new Font("Segoe UI", Font.BOLD, 13));
+				tmenuBar.add(mntmTTareas);
+				mntmTBacklog = new JMenuItem("Backlog");
+				mntmTBacklog.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {	
+						InterfazGrafica.getInstance().abrirBacklog();}});
+				tmenuBar.add(mntmTBacklog);
+				mntmTHistorico = new JMenuItem("Historico");
+				mntmTHistorico.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {	
+						InterfazGrafica.getInstance().abrirHistorico();}});
+				tmenuBar.add(mntmTHistorico);
+				mntmTReportes = new JMenuItem("Reportes");
+				mntmTReportes.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {	
+						InterfazGrafica.getInstance().abrirReportes();}});
+				tmenuBar.add(mntmTReportes);
+			add(tmenuBar, "cell 0 0 10 1,growx,aligny top");
 		
+			
+			
+		try {
+			lbl_tACT = new JLabel((table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0)).toString());
+		}
+		catch(NullPointerException npe) {
+			lbl_tACT = new JLabel("tACT");				
+		}
 		
+		separator_1 = new JSeparator();
+		separator_1.setForeground(Color.BLACK);
+		add(separator_1, "cell 1 20 5 1,growx,aligny center");
+		separator_1.setVisible(false);
+		
+		btnTQuitarSD = new JButton("\u00BB");
+		btnTQuitarSD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(lbl_tACT.getText() != "tACT" && lbl_sdfACT.getText() != "sdfACT") {
+						String id = lbl_tACT.getText();
+						if(modo == 'd'){	
+							Tarea tar = Proyecto.getInstance().getBlog().getTarea(id); 
+							if(tar!=null)
+								Proyecto.getInstance().getBlog().bajaDependencia(id, lbl_tACT.getText());
+							else{
+								Sprint s = Proyecto.getInstance().getTareaEnSprint(id); 
+								s.bajaDependencia(id,lbl_tACT.getText());
+							}
+							table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinDependencias(id)));
+							table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));
+							lbl_sdfACT.setText("sdfACT");
+						}
+						else{ //SUBTAREA
+							Tarea tar = Proyecto.getInstance().getBlog().getTarea(id); 
+							if(tar!=null)
+								Proyecto.getInstance().getBlog().bajaSubTarea(id, lbl_tACT.getText());
+							else{
+								Sprint s = Proyecto.getInstance().getTareaEnSprint(id); 
+								s.bajaSubTarea(id,lbl_tACT.getText());
+							}
+							table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getSubTareas(id)));
+							table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getListaSubtareas()));
+							lbl_sdfACT.setText("sdfACT");
+								
+							}
+						}
+					}
+			});
+		
+					btnTAgregarSD = new JButton("\u00AB");
+					btnTAgregarSD.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							if(!lbl_tACT.getText().equals("tACT") && !lbl_tdACT.getText().equals("tdACT") ) {
+								String id = lbl_tACT.getText();
+								if(modo == 'd'){
+									Tarea tar = Proyecto.getInstance().getBlog().getTarea(id); 
+									if(tar!=null)
+										try {
+											Proyecto.getInstance().agregarDependencias(id, lbl_tdACT.getText());
+										} catch (TareaNoValida e1) {
+											JOptionPane.showMessageDialog(null, "No se puede realizar esta accion");
+										}
+									else{
+										Sprint s = Proyecto.getInstance().getTareaEnSprint(id); 
+										try {
+											s.agregaDependencia(id,lbl_tdACT.getText());
+										} catch (TareaNoValida e1) {
+											JOptionPane.showMessageDialog(null, "No se puede realizar esta accion");
+										}
+									}
+									table_TSD.setModel(new TareasTM(Proyecto.getInstance().getTareaBacklogYSprints(id).getLdependencias()));
+									table_Tareas.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprints()));
+									table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinDependencias(id)));
+									lbl_tdACT.setText("tdACT");
+									
+								}
+								else{ //SUBTAREA
+									Tarea tar = Proyecto.getInstance().getBlog().getTarea(id); 
+									if(tar!=null)
+										try {
+											Proyecto.getInstance().agregaSubT(id, lbl_tdACT.getText());
+										} catch (TareaNoValida e1) {
+											JOptionPane.showMessageDialog(null, "Las subtareas solo pueden ser de tipo tarea y no tienen que tener complejidad");
+										}
+									else{
+										Sprint s = Proyecto.getInstance().getTareaEnSprint(id); 
+										try {
+											s.agregaSubTarea(id,lbl_tdACT.getText());
+										} catch (TareaNoValida e1) {
+											JOptionPane.showMessageDialog(null, "No se puede realizar esta accion");
+										}
+									}
+									table_TSD.setModel(new TareasTM(Proyecto.getInstance().getTareaBacklogYSprints(id).getListaSubtareas()));
+									table_Tareas.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprints()));
+									table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinSubTareas(id)));
+									lbl_tdACT.setText("tdACT");
+								}
+							}
+						}
+					});
+					btnTAgregarSD.setFont(new Font("Tahoma", Font.PLAIN, 14));
+					add(btnTAgregarSD, "cell 8 21,growx,aligny center");
+		btnTQuitarSD.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		add(btnTQuitarSD, "cell 8 22,growx,aligny center");
+		//lbl_tACT = new JLabel("tACT");
+		lbl_tACT.setFont(new Font("Tahoma", Font.PLAIN, 5));
+		add(lbl_tACT, "cell 8 23,alignx center");
+		
+		try {
+			lbl_sdfACT = new JLabel((table_TSD.getValueAt(table_TSD.getSelectedRow(), 0)).toString());
+		}
+		catch(NullPointerException npe) {
+			lbl_sdfACT = new JLabel("sdfACT");				
+		}
+		
+		btnFEliminar = new JButton("Eliminar");
+		btnFEliminar.setVisible(false);
+		
+		btnFAgregar = new JButton("Agregar");
+		btnFAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String id = lbl_tACT.getText();
+				Proyecto.getInstance().agregarFlujoPaso(id,textField_Flujo.getText() ,(int) spinner_FPasos.getValue());
+				table_TSD.setModel(new FlujoPasoTM(Proyecto.getInstance().getBlog().getTarea(id).getHashMap()));
+				//System.out.println(Proyecto.getInstance().getBlog().getTarea(table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString()).getHashMap());
+				//System.out.println(id);
+				//System.out.println(table_Tareas.getSelectedRow());
+				//System.out.println(Proyecto.getInstance().getBlog().getTarea(table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString()).getFlujoPasos());
+			}
+		});
+		btnFAgregar.setVisible(false);
+		add(btnFAgregar, "cell 3 24,alignx center,aligny center");
+		add(btnFEliminar, "cell 4 24 2 1,alignx right,aligny center");
+		//lbl_sdfACT = new JLabel("sdfACT");
+		lbl_sdfACT.setFont(new Font("Tahoma", Font.PLAIN, 5));
+		add(lbl_sdfACT, "cell 8 24 1 2,alignx center");
+		
+		try {
+			lbl_tdACT = new JLabel((table_TD.getValueAt(table_TD.getSelectedRow(), 0)).toString());
+		}
+		catch(NullPointerException npe) {
+			lbl_tdACT = new JLabel("tdACT");				
+		}
+		
+		separator = new JSeparator();
+		separator.setForeground(Color.BLACK);
+		add(separator, "cell 1 25 5 1,growx,aligny top");
+		separator.setVisible(false);
+		
+		//lbl_tdACT = new JLabel("tdACT");
+		lbl_tdACT.setFont(new Font("Tahoma", Font.PLAIN, 5));
+		add(lbl_tdACT, "cell 8 26,alignx center");
 			
 			lblTarea = new JLabel("Tarea");
 			lblTarea.setFont(new Font("Tahoma", Font.BOLD, 24));
@@ -149,53 +304,36 @@ public class ABMTareas extends JPanel {
 			table_Tareas.addMouseListener(new MouseListener() {
 				
 				@Override
-				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mousePressed(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mouseExited(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
 				public void mouseClicked(MouseEvent e) {
+					lbl_tACT.setText((table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0)).toString());
+					lbl_sdfACT.setText("sdfACT");
+					lbl_tdACT.setText("tdACT");
 					String tarea = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString().substring(0, 3);
 					switch (tarea) {
 					case "TAR":
 						txtTID.setText("TAR");
 						lblTSubtareasDependenciasFlujos.setText("Sub Tareas");
+						separator_1.setVisible(false);
+						separator.setVisible(false);
 						btnFlujopasos.setVisible(false);
 						lblPasos.setVisible(false);
 						spinner_FPasos.setVisible(false);
 						lblFlujo.setVisible(false);
 						textField_Flujo.setVisible(false);
-						btnFCancelar.setVisible(false);
+						btnFEliminar.setVisible(false);
 						btnFAgregar.setVisible(false);
 						btnTSubtareas.setEnabled(true);
 					case "BUG":
 						txtTID.setText("BUG");
 						lblTSubtareasDependenciasFlujos.setText("Sub Tareas");
+						separator_1.setVisible(false);
+						separator.setVisible(false);
 						btnFlujopasos.setVisible(false);
 						lblPasos.setVisible(false);
 						spinner_FPasos.setVisible(false);
 						lblFlujo.setVisible(false);
 						textField_Flujo.setVisible(false);
-						btnFCancelar.setVisible(false);
+						btnFEliminar.setVisible(false);
 						btnFAgregar.setVisible(false);
 						btnTSubtareas.setEnabled(false);
 						btnTDependencias.doClick();
@@ -203,27 +341,55 @@ public class ABMTareas extends JPanel {
 					case "HIS":
 						txtTID.setText("HIS");
 						lblTSubtareasDependenciasFlujos.setText("Flujo-Pasos");
+						separator_1.setVisible(true);
+						separator.setVisible(true);
 						btnFlujopasos.setVisible(true);
 						lblPasos.setVisible(true);
 						spinner_FPasos.setVisible(true);
 						lblFlujo.setVisible(true);
 						textField_Flujo.setVisible(true);
-						btnFCancelar.setVisible(true);
+						btnFEliminar.setVisible(true);
 						btnFAgregar.setVisible(true);
 						btnTSubtareas.setEnabled(true);
 						break;
 					case "MEJ":
 						txtTID.setText("MEJ");
 						lblTSubtareasDependenciasFlujos.setText("Sub Tareas");
+						separator_1.setVisible(false);
+						separator.setVisible(false);
 						btnFlujopasos.setVisible(false);
 						lblPasos.setVisible(false);
 						spinner_FPasos.setVisible(false);
 						lblFlujo.setVisible(false);
 						textField_Flujo.setVisible(false);
-						btnFCancelar.setVisible(false);
+						btnFEliminar.setVisible(false);
 						btnFAgregar.setVisible(false);
 						btnTSubtareas.setEnabled(true);
 					}
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					
 				}
 		});
 			
@@ -235,7 +401,6 @@ public class ABMTareas extends JPanel {
 			add(lblSTipo, "cell 1 5,alignx center,aligny center");
 			
 			comboBoxTTipo = new JComboBox();
-
 			comboBoxTTipo.addItemListener(new ItemListener() {
 				public void itemStateChanged(ItemEvent arg0) {
 					switch (comboBoxTTipo.getSelectedItem().toString()) {
@@ -247,7 +412,7 @@ public class ABMTareas extends JPanel {
 						spinner_FPasos.setVisible(false);
 						lblFlujo.setVisible(false);
 						textField_Flujo.setVisible(false);
-						btnFCancelar.setVisible(false);
+						btnFEliminar.setVisible(false);
 						btnFAgregar.setVisible(false);
 						break;
 					case "Bug":
@@ -258,7 +423,7 @@ public class ABMTareas extends JPanel {
 						spinner_FPasos.setVisible(false);
 						lblFlujo.setVisible(false);
 						textField_Flujo.setVisible(false);
-						btnFCancelar.setVisible(false);
+						btnFEliminar.setVisible(false);
 						btnFAgregar.setVisible(false);
 						break;
 					case "Historia":
@@ -269,7 +434,7 @@ public class ABMTareas extends JPanel {
 						spinner_FPasos.setVisible(true);
 						lblFlujo.setVisible(true);
 						textField_Flujo.setVisible(true);
-						btnFCancelar.setVisible(true);
+						btnFEliminar.setVisible(true);
 						btnFAgregar.setVisible(true);
 						break;
 					case "Mejora":
@@ -280,7 +445,7 @@ public class ABMTareas extends JPanel {
 						spinner_FPasos.setVisible(false);
 						lblFlujo.setVisible(false);
 						textField_Flujo.setVisible(false);
-						btnFCancelar.setVisible(false);
+						btnFEliminar.setVisible(false);
 						btnFAgregar.setVisible(false);
 					}
 				}
@@ -328,19 +493,26 @@ public class ABMTareas extends JPanel {
 			add(lblTareasDisponibles, "cell 9 15,alignx left");
 			
 			scrollPane_TD = new JScrollPane();
-			add(scrollPane_TD, "cell 9 16 1 10,grow");
+			add(scrollPane_TD, "cell 9 16 1 11,grow");
 			
 			JTable table_TD = new JTable();
+			table_TD.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_tdACT.setText((table_TD.getValueAt(table_TD.getSelectedRow(), 0)).toString());
+				}
+			});
 			scrollPane_TD.setViewportView(table_TD);
 			
-			btnTSubtareas = new JButton("Sub Tareas");
+			btnTSubtareas = new JButton("  Sub Tareas  ");
 			btnTSubtareas.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					modo = 's';
-					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
+					String id = lbl_tACT.getText();
 					lblTSubtareasDependenciasFlujos.setText("Sub Tareas");
+					lbl_sdfACT.setText("sdfACT");
+					lbl_tdACT.setText("tdACT");
 					table_TSD.setModel(new TareasTM(Proyecto.getInstance().getTareaBacklogYSprints(id).getListaSubtareas()));
-					//table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getSubTareas(id)));
 					table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinSubTareas(id)));
 				}
 			});
@@ -350,8 +522,10 @@ public class ABMTareas extends JPanel {
 			btnTDependencias.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					modo = 'd';
-					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
+					String id = lbl_tACT.getText();
 					lblTSubtareasDependenciasFlujos.setText("Dependencias");
+					lbl_sdfACT.setText("sdfACT");
+					lbl_tdACT.setText("tdACT");
 					table_TSD.setModel(new TareasTM(Proyecto.getInstance().getTareaBacklogYSprints(id).getLdependencias()));
 					table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinDependencias(id)));
 					}
@@ -368,104 +542,18 @@ public class ABMTareas extends JPanel {
 					table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
 				}
 			});
-			
-
-			btnTAgregarSD = new JButton("\u00AB");
-			btnTAgregarSD.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
-					
-					if(modo == 'd'){
-						Tarea tar = Proyecto.getInstance().getBlog().getTarea(id); 
-						if(tar!=null)
-							try {
-								Proyecto.getInstance().agregarDependencias(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
-							} catch (TareaNoValida e1) {
-								JOptionPane.showMessageDialog(null, "No se puede realizar esta accion");
-							}
-						else{
-							Sprint s = Proyecto.getInstance().getTareaEnSprint(id); 
-							try {
-								s.agregaDependencia(id,table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
-							} catch (TareaNoValida e1) {
-								JOptionPane.showMessageDialog(null, "No se puede realizar esta accion");
-							}
-						}
-						table_TSD.setModel(new TareasTM(Proyecto.getInstance().getTareaBacklogYSprints(id).getLdependencias()));
-						table_Tareas.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprints()));
-						table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinDependencias(id)));
+			add(btnTAgregar, "cell 1 26,aligny bottom");
 						
-					}
-					else{ //SUBTAREA
-						Tarea tar = Proyecto.getInstance().getBlog().getTarea(id); 
-						if(tar!=null)
-							try {
-								Proyecto.getInstance().agregaSubT(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
-							} catch (TareaNoValida e1) {
-								JOptionPane.showMessageDialog(null, "Las subtareas solo pueden ser de tipo tarea y no tienen que tener complejidad");
-							}
-						else{
-							Sprint s = Proyecto.getInstance().getTareaEnSprint(id); 
-							try {
-								s.agregaSubTarea(id,table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
-							} catch (TareaNoValida e1) {
-								JOptionPane.showMessageDialog(null, "No se puede realizar esta accion");
-							}
-						}
-						table_TSD.setModel(new TareasTM(Proyecto.getInstance().getTareaBacklogYSprints(id).getListaSubtareas()));
-						table_Tareas.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprints()));
-						table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinSubTareas(id)));
-					}
-				}
-			});
-			btnTAgregarSD.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			add(btnTAgregarSD, "cell 8 19,growx,aligny center");
-			
-			btnTQuitarSD = new JButton("\u00BB");
-			btnTQuitarSD.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-				String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
-						if(modo == 'd'){	
-							Tarea tar = Proyecto.getInstance().getBlog().getTarea(id); 
-							if(tar!=null)
-								Proyecto.getInstance().getBlog().bajaDependencia(id, table_TSD.getValueAt(table_TSD.getSelectedRow(), 0).toString());
-							else{
-								Sprint s = Proyecto.getInstance().getTareaEnSprint(id); 
-								s.bajaDependencia(id,table_TSD.getValueAt(table_TSD.getSelectedRow(), 0).toString()); 
-							}
-								
-							//Proyecto.getInstance().eliminarDependencia(id, table_TSD.getValueAt(table_TSD.getSelectedRow(), 0).toString());
-							//table_Tareas.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprints()));
-							table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinDependencias(id)));
-							table_TSD.setModel(new TareasTM(Proyecto.getInstance().getTareaBacklogYSprints(id).getLdependencias()));								
-						}
-						else{ //SUBTAREA
-							Tarea tar = Proyecto.getInstance().getBlog().getTarea(id); 
-							if(tar!=null)
-								Proyecto.getInstance().getBlog().bajaSubTarea(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
-							else{
-								Sprint s = Proyecto.getInstance().getTareaEnSprint(id); 
-								s.bajaSubTarea(id,table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
-							}
-							//Proyecto.getInstance().eliminarSubT(id, table_TSD.getValueAt(table_TSD.getSelectedRow(), 0).toString());
-							table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getSubTareas(id)));
-							table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getListaSubtareas()));
-							//table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
-								
-							}
-						}
-				});
-						
-			btnFlujopasos = new JButton("Flujo-Pasos");
+			btnFlujopasos = new JButton("  Flujo-Pasos  ");
 			btnFlujopasos.setVisible(false);
 			btnFlujopasos.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					lblTSubtareasDependenciasFlujos.setText("Flujo-Pasos");
+					lbl_sdfACT.setText("sdfACT");
+					lbl_tdACT.setText("tdACT");
 				}
 				});
-			add(btnFlujopasos, "cell 1 21 5 1,alignx center,aligny center");
-			btnTQuitarSD.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			add(btnTQuitarSD, "cell 8 21,growx,aligny center");
+			add(btnFlujopasos, "cell 1 21 5 1,alignx center,aligny bottom");
 			
 			lblPasos = new JLabel("Pasos:");
 			lblPasos.setVisible(false);
@@ -484,25 +572,6 @@ public class ABMTareas extends JPanel {
 			textField_Flujo.setVisible(false);
 			add(textField_Flujo, "cell 3 23 3 1,grow");
 			
-			btnFCancelar = new JButton("Cancelar");
-			btnFCancelar.setVisible(false);
-			add(btnFCancelar, "cell 1 24 3 1,alignx right,aligny center");
-			
-			btnFAgregar = new JButton("Agregar");
-			btnFAgregar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					String id=table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
-					Proyecto.getInstance().agregarFlujoPaso(id,textField_Flujo.getText() ,(int) spinner_FPasos.getValue());
-					table_TSD.setModel(new FlujoPasoTM(Proyecto.getInstance().getBlog().getTarea(table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString()).getHashMap()));
-					//System.out.println(Proyecto.getInstance().getBlog().getTarea(table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString()).getHashMap());
-					//System.out.println(id);
-					//System.out.println(table_Tareas.getSelectedRow());
-					//System.out.println(Proyecto.getInstance().getBlog().getTarea(table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString()).getFlujoPasos());
-				}
-			});
-			btnFAgregar.setVisible(false);
-			add(btnFAgregar, "cell 5 24,alignx center,aligny center");
-			add(btnTAgregar, "cell 1 25,aligny bottom");
 			
 			btnTModificar = new JButton("Modificar");
 			btnTModificar.addActionListener(new ActionListener() {
@@ -522,7 +591,7 @@ public class ABMTareas extends JPanel {
 					}
 				}
 			});
-			add(btnTModificar, "cell 3 25,aligny bottom");
+			add(btnTModificar, "cell 3 26,aligny bottom");
 		
 			btnTEliminar = new JButton("Eliminar");
 			btnTEliminar.addActionListener(new ActionListener() {
@@ -531,7 +600,7 @@ public class ABMTareas extends JPanel {
 					table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
 				}
 			});
-			add(btnTEliminar, "cell 5 25,aligny bottom");
+			add(btnTEliminar, "cell 5 26,aligny bottom");
 			
 			
 			lblTSubtareasDependenciasFlujos = new JLabel("Dependencias");
@@ -539,10 +608,18 @@ public class ABMTareas extends JPanel {
 			add(lblTSubtareasDependenciasFlujos, "cell 7 15");
 			
 			scrollPane_TSD = new JScrollPane();
-			add(scrollPane_TSD, "cell 7 16 1 10,grow");
+			add(scrollPane_TSD, "cell 7 16 1 11,grow");
 			
 			table_TSD = new JTable();
+			table_TSD.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_sdfACT.setText((table_TSD.getValueAt(table_TSD.getSelectedRow(), 0)).toString());
+				}
+			});
 			scrollPane_TSD.setViewportView(table_TSD);
+			
+
 
 
 	}

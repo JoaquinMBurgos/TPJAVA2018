@@ -187,50 +187,42 @@ public class ABMSprints extends JPanel {
 			lblSEstado.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			add(lblSEstado, "cell 0 13 4 1");
 			
-				rdbtnPlanificado = new JRadioButton("Planificado");
-				rdbtnPlanificado.setSelected(true);
-				rdbtnPlanificado.addMouseListener(new MouseAdapter() {
-					public void mouseClicked(MouseEvent arg0) {
-						rdbtnPlanificado.setSelected(true);
-						rdbtnEnCurso.setSelected(false);
-						rdbtnFinalizado.setSelected(false);
-					}
-				});
-				add(rdbtnPlanificado, "cell 2 14");
+			rdbtnPlanificado = new JRadioButton("Planificado");
+			rdbtnPlanificado.setSelected(true);
+			rdbtnPlanificado.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent arg0) {
+					rdbtnPlanificado.setSelected(true);
+					rdbtnEnCurso.setSelected(false);
+					rdbtnFinalizado.setSelected(false);
+				}
+			});
+			add(rdbtnPlanificado, "cell 2 14");
 				
-				rdbtnFinalizado = new JRadioButton("Finalizado");
-				rdbtnFinalizado.setSelected(false);
-				add(rdbtnFinalizado, "cell 2 18,aligny top");
-							
-				rdbtnEnCurso = new JRadioButton("En Curso");
-				rdbtnEnCurso.setSelected(false);
-				rdbtnEnCurso.addMouseListener(new MouseAdapter() {
-					public void mouseClicked(MouseEvent arg0) {
-						if(Proyecto.getInstance().getSprintEnCurso() == null && Proyecto.getInstance().getSprint(lblSprintSeleccionado.getText()).getEstado()==EstadoSprint.PLANIFICADO){
-							rdbtnPlanificado.setSelected(false);
-							rdbtnEnCurso.setSelected(true);
-							rdbtnFinalizado.setSelected(false);
-							lblFechaDeIni.setVisible(true);
-							lblFechaDeFin.setVisible(true);
-							dateChooser_Fini.setVisible(true);
-							dateChooser_Ffin.setVisible(true);
-							btnIniciar.setVisible(true);
-						}
-						else{
-							rdbtnPlanificado.setSelected(true);
-							rdbtnEnCurso.setSelected(false);
-							rdbtnFinalizado.setSelected(false);
-						}
+			rdbtnFinalizado = new JRadioButton("Finalizado");
+			rdbtnFinalizado.setSelected(false);
+			rdbtnFinalizado.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent arg0) {
+					rdbtnPlanificado.setSelected(false);
+					rdbtnEnCurso.setSelected(false);
+					rdbtnFinalizado.setSelected(true);
+				}
+			});
+			add(rdbtnFinalizado, "cell 2 18,aligny top");
 						
-						
-					}
-				});	
-				add(rdbtnEnCurso, "cell 2 16");
-			
+			rdbtnEnCurso = new JRadioButton("En Curso");
+			rdbtnEnCurso.setSelected(false);
+			rdbtnEnCurso.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent arg0) {
+					rdbtnPlanificado.setSelected(false);
+					rdbtnEnCurso.setSelected(true);
+					rdbtnFinalizado.setSelected(false);
+				}
+			});	
+			add(rdbtnEnCurso, "cell 2 16");
+		
 			lblFechaDeIni = new JLabel("Fecha de Ini:");
 			lblFechaDeIni.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			add(lblFechaDeIni, "cell 0 20 2 1");
-			lblFechaDeIni.setVisible(false);
 			
 			dateChooser_Fini = new JDateChooser();
 			add(dateChooser_Fini, "cell 2 20 2 1,growx,aligny center");
@@ -323,7 +315,8 @@ public class ABMSprints extends JPanel {
 					}
 				}
 			});
-			
+			btnSQuitaTarea.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			add(btnSQuitaTarea, "cell 7 24,growx,aligny center");
 			
 			btnIniciar = new JButton("Inicia Sprint");
 			btnIniciar.addActionListener(new ActionListener() {
@@ -347,9 +340,7 @@ public class ABMSprints extends JPanel {
 				}
 			});
 			add(btnIniciar, "cell 1 24 3 1,alignx center,aligny center");		
-			btnSQuitaTarea.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			add(btnSQuitaTarea, "cell 7 24,growx,aligny center");
-			btnIniciar.setVisible(false);
+
 
 			
 			
