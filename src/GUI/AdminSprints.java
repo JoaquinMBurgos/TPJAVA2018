@@ -135,30 +135,33 @@ public class AdminSprints extends JPanel {
 			asmenuBar.add(mntmASReportes);
 			add(asmenuBar, "cell 0 0 26 1,growx,aligny top");
 		
+		lblIdSprint = new JLabel("ID Sprint");
+		lblNombreSprint = new JLabel("Nombre Sprint");
+		lblEstadoActual = new JLabel("Estado Actual");
+		lblDuracin_Actual = new JLabel("0");
+		lblAvance_Actual = new JLabel("0");
+		lblDaActual_Actual = new JLabel("0");
+		//lblIdSprint = new JLabel("ID Sprint");
 		
-			
-			
-			
 		if(Proyecto.getInstance().getSprintEnCurso()!=null){
 			Sprint s=Proyecto.getInstance().getSprintEnCurso();
-			lblIdSprint = new JLabel(s.getClave());
-			lblNombreSprint = new JLabel(s.getDescripcion());
-			lblEstadoActual = new JLabel("En curso");
-			lblDuracin_Actual = new JLabel(String.valueOf(s.duracion()));
-			lblAvance_Actual = new JLabel(String.valueOf(s.getAvance()));
-			lblDaActual_Actual = new JLabel(s.getfAvance().toString());
+			lblIdSprint.setText(s.getClave());
+			lblNombreSprint.setText(s.getDescripcion());
+			lblEstadoActual.setText("En curso");
+			lblDuracin_Actual.setText(String.valueOf(s.duracion()));
+			lblAvance_Actual.setText(String.valueOf(s.getAvance()));
+			lblDaActual_Actual.setText(s.getfAvance().toString());
 		}
 		else{
-			lblIdSprint = new JLabel("ID Sprint");
-			lblNombreSprint = new JLabel("Nombre Sprint");
-			lblEstadoActual = new JLabel("Estado Actual");
-			lblDuracin_Actual = new JLabel("0");
-			lblAvance_Actual = new JLabel("0");
-			lblDaActual_Actual = new JLabel("0");
+			lblIdSprint.setText("ID Sprint");
+			lblNombreSprint.setText("Nombre Sprint");
+			lblEstadoActual.setText("Estado Actual");
+			lblDuracin_Actual.setText("0");
+			lblAvance_Actual.setText("0");
+			lblDaActual_Actual.setText("0");
 		}
 		
 		
-		//lblIdSprint = new JLabel("ID Sprint");
 		lblIdSprint.setFont(new Font("Tahoma", Font.BOLD, 16));
 		add(lblIdSprint, "cell 0 2 1 2,alignx center,aligny center");
 		
@@ -564,6 +567,30 @@ public class AdminSprints extends JPanel {
 		add(btnFinalizaSprint, "cell 24 10 2 1,alignx right,aligny center");
 		
 		
+	}
+
+	public void setLblIdSprint(JLabel lblIdSprint) {
+		this.lblIdSprint = lblIdSprint;
+	}
+
+	public void setLblNombreSprint(JLabel lblNombreSprint) {
+		this.lblNombreSprint = lblNombreSprint;
+	}
+
+	public void setLblEstado(JLabel lblEstado) {
+		this.lblEstado = lblEstado;
+	}
+
+	public void setLblDaActual_Actual(JLabel lblDaActual_Actual) {
+		this.lblDaActual_Actual = lblDaActual_Actual;
+	}
+
+	public void setLblDuracin_Actual(JLabel lblDuracin_Actual) {
+		this.lblDuracin_Actual = lblDuracin_Actual;
+	}
+
+	public void setLblAvance_Actual(JLabel lblAvance_Actual) {
+		this.lblAvance_Actual = lblAvance_Actual;
 	}
 
 	public void vaciaTabla(DefaultTableModel dtm){

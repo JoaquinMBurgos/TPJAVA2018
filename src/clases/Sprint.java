@@ -149,6 +149,7 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 		fAvance=fInicio;
 		avance=1;
 		duracion=(int) (1+(fInicio.until(fFin, ChronoUnit.DAYS)));
+		estado=EstadoSprint.ENCURSO;
 		//Cantidad de dias de duracion y avance no se saca automaticamente?
 		}
 	

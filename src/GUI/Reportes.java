@@ -40,7 +40,7 @@ public class Reportes extends JPanel {
 	private JTable table2;
 	private JScrollPane scrollPane_3;
 	private JTable table3;
-	private JLabel lblNewLabel;
+	private JLabel lblEstimacionTareasNoCompletadas;
 	private JLabel label;
 	private JLabel lblEstimacionTareasCompletadas;
 	private JLabel label_2;
@@ -96,6 +96,12 @@ public class Reportes extends JPanel {
 				btnRankingSprings.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						table1.setModel(new SprintsTM(Proyecto.getInstance().RankingEstimacion()));
+						scrollPane_2.setVisible(false);
+						scrollPane_3.setVisible(false);
+						lblEstimacionTareasCompletadas.setVisible(false);
+						lblEstimacionTareasNoCompletadas.setVisible(false);
+						label.setVisible(false);
+						label_2.setVisible(false);
 						//table2.setVisible(false);
 						//table3.setVisible(false);
 					}
@@ -106,17 +112,26 @@ public class Reportes extends JPanel {
 				btnReporteSprint.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						table1.setModel(new SprintsTM(Proyecto.getInstance().getSprintsFinalizados()));
+						scrollPane_2.setVisible(true);
+						scrollPane_3.setVisible(true);
+						lblEstimacionTareasCompletadas.setVisible(true);
+						lblEstimacionTareasNoCompletadas.setVisible(true);
+						label.setVisible(true);
+						label_2.setVisible(true);
 					}
 				});
 				
 				lblEstimacionTareasCompletadas = new JLabel("Estimacion Tareas Completadas: ");
 				lblEstimacionTareasCompletadas.setFont(new Font("Tahoma", Font.BOLD, 12));
 				add(lblEstimacionTareasCompletadas, "cell 4 3,alignx right,aligny center");
+				lblEstimacionTareasCompletadas.setVisible(false);
 				
+
 				label_2 = new JLabel("0");
 				label_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				add(label_2, "cell 5 3,alignx left,aligny center");
 				add(btnReporteSprint, "cell 1 5,growx,aligny center");
+				label_2.setVisible(false);
 				
 				btnReporteBurndown = new JButton("Reporte Burndown");
 				add(btnReporteBurndown, "cell 1 7,growx,aligny center");
@@ -165,22 +180,26 @@ public class Reportes extends JPanel {
 				
 				scrollPane_2 = new JScrollPane();
 				add(scrollPane_2, "cell 4 4 2 5,grow");
+				scrollPane_2.setVisible(false);
 				
 				table2=new JTable();
 				scrollPane_2.setViewportView(table2);
 				//table2.setVisible(false);
 				
-				lblNewLabel = new JLabel("Estimacion Tareas No Completadas: ");
-				lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
-				add(lblNewLabel, "cell 4 9,alignx right,aligny center");
+				lblEstimacionTareasNoCompletadas = new JLabel("Estimacion Tareas No Completadas: ");
+				lblEstimacionTareasNoCompletadas.setFont(new Font("Tahoma", Font.BOLD, 12));
+				add(lblEstimacionTareasNoCompletadas, "cell 4 9,alignx right,aligny center");
+				lblEstimacionTareasNoCompletadas.setVisible(false);
 				
 				label = new JLabel("0");
 				label.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				add(label, "cell 5 9,alignx left,aligny center");
+				label.setVisible(false);
 				
 				scrollPane_3 = new JScrollPane();
 				add(scrollPane_3, "cell 4 10 2 1,grow");
-				
+				scrollPane_3.setVisible(false);
+
 				table3 = new JTable();
 				scrollPane_3.setViewportView(table3);
 				//table3.setVisible(false);

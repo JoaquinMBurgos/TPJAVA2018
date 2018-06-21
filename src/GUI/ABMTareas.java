@@ -412,7 +412,7 @@ public class ABMTareas extends JPanel {
 								JOptionPane.showMessageDialog(null, "No se puede realizar esta accion");
 							}
 						}
-						table_TSD.setModel(new TareasTM(Proyecto.getInstance().getTareaBacklogYSprints(id).getLdependencias()));
+						table_TSD.setModel(new TareasTM(Proyecto.getInstance().getTareaBacklogYSprints(id).getListaSubtareas()));
 						table_Tareas.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprints()));
 						table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinSubTareas(id)));
 					}
