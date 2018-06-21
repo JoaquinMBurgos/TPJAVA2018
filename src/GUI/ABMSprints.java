@@ -361,22 +361,9 @@ public class ABMSprints extends JPanel {
 					}
 				}
 			});
-			
-			
-			btnIniciar = new JButton("Inicia Sprint");
-			btnIniciar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					try {
-						Proyecto.getInstance().cambiarEstadoSprint(table.getValueAt(table.getSelectedRow(), 0).toString(), "ENCURSO");
-						table.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
-					} catch (SprintNoValido e) {
-						JOptionPane.showMessageDialog(null, "Ya hay un Sprint en curso.", "Error", JOptionPane.ERROR_MESSAGE);
-					}
-				}
-			});
-			add(btnIniciar, "cell 1 24 3 1,alignx center,aligny center");		
 			btnSQuitaTarea.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			add(btnSQuitaTarea, "cell 7 24,growx,aligny center");
+					
 			
 			btnIniciar = new JButton("Inicia Sprint");
 			btnIniciar.addActionListener(new ActionListener() {
@@ -400,12 +387,6 @@ public class ABMSprints extends JPanel {
 				}
 			});
 			add(btnIniciar, "cell 1 24 3 1,alignx center,aligny center");		
-
-
-			
-			
-			
-			
 						
 			scrollPane_STareas = new JScrollPane();
 			add(scrollPane_STareas, "cell 5 21 2 9,grow");
