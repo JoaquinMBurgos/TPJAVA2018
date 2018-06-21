@@ -450,6 +450,7 @@ public class ABMSprints extends JPanel {
 					
 					try{
 						Proyecto.getInstance().bajaSprint(table.getModel().getValueAt(table.getSelectedRow(), 0).toString());
+						System.out.println(Proyecto.getInstance().getBlog().getLTareasP());
 						}
 						catch(ArrayIndexOutOfBoundsException e1){
 							JOptionPane.showMessageDialog(null, "Debe existir seleccionar un Sprint a eliminar.", "Error", JOptionPane.ERROR_MESSAGE);

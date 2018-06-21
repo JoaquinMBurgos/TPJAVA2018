@@ -292,7 +292,10 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 			if(t.getId().equals(id))
 				bandera=true;
 		}
-		return t;
+		if(bandera)
+			return t;
+		else
+			return null;
 	}
 	
 	/**
@@ -398,10 +401,10 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 	 * @param idDep id de la dependencia que se va a agregar 
 	 */
 	public void agregaDependencia(String idT,String idDep) throws TareaNoValida{
-		Tarea t=null; //tarea a la que hay que agregarle la dependencia
+		Tarea t=getTarea(idT); //tarea a la que hay que agregarle la dependencia
 		Tarea tDep=null;//dependencia que hay que agregar
-		t=getTarea(idT);
-		tDep=getTarea(idDep);
+		tDep=Proyecto.getInstance().getTareaBacklogYSprints(idDep);
+		//tDep=getTarea(idDep);
 		t.agregarDep(tDep);
 	}
 	
@@ -423,10 +426,8 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 	 * agrega una tarea sobre otra como sub tarea 
 	 */
 	public void agregaSubTarea(String idT, String idSubT) throws TareaNoValida{
-		Tarea t=null; 
-		Tarea subT=null;
-		t=getTarea(idT);
-		subT=getTarea(idSubT);
+		Tarea t=getTarea(idT);
+		Tarea subT=Proyecto.getInstance().getTareaBacklogYSprints(idSubT);
 		t.agregarSubT(subT);
 	}
 	/**
@@ -435,8 +436,7 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 	 * @param idSubT
 	 */
 	public void bajaSubTarea(String idT, String idSubT){
-		Tarea t=null; 
-		t = getTarea(idT);
+		Tarea t = getTarea(idT);
 		t.bajaSubT(idSubT);
 	}
 	

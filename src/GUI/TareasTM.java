@@ -20,7 +20,7 @@ public class TareasTM extends AbstractTableModel{
 
 	@Override
 	public int getColumnCount() {
-		return 4;
+		return 6;
 	}
 
 	@Override
@@ -48,6 +48,12 @@ public class TareasTM extends AbstractTableModel{
 			break;
 		case 3:
 			ob = tar.getEstado();
+			break;
+		case 4:
+			ob = tar.getComplejidad();
+			break;
+		case 5:
+			ob = tar.getfFin();
 		}
 		return ob;
 	}

@@ -47,16 +47,16 @@ public class Backlog {
 		Tarea tar;
 		switch (tipo){
 			case "Bug":
-				tar = new Bug(id,nombre,desc,est,finalizacion,comp);
+				tar = new Bug(id,nombre,desc,comp);
 				break;
 			case "Historia":
-				tar = new Historia(id,nombre,desc,est,finalizacion,comp);
+				tar = new Historia(id,nombre,desc,comp);
 				break;
 			case "Mejora":
-				tar = new Mejora(id,nombre,desc,est,finalizacion,comp);
+				tar = new Mejora(id,nombre,desc,comp);
 				break;
 			case "Tarea":
-				tar = new Tarea(id,nombre,desc,est,finalizacion,comp);
+				tar = new Tarea(id,nombre,desc,comp);
 				break;
 			default:
 				tar = null;
@@ -202,20 +202,20 @@ public class Backlog {
 				fp=sl.next();
 				switch(id.substring(0,3)){
 				case"TAR":{
-					t=new Tarea(id,nombre,descripcion,est,fechaFinalizacion,comp);
+					t=new Tarea(id,nombre,descripcion,comp);
 					break;
 				}
 				case"HIS":{
-					t=new Historia(id,nombre,descripcion,est,fechaFinalizacion,comp);
+					t=new Historia(id,nombre,descripcion,comp);
 					//t.agregarFlujoPaso(fp);
 					break;
 				}
 				case"MEJ":{
-					t=new Mejora(id,nombre,descripcion,est,fechaFinalizacion,comp);
+					t=new Mejora(id,nombre,descripcion,comp);
 					break;
 				}
 				case "BUG":{
-					t=new Bug(id,nombre,descripcion,est,fechaFinalizacion,comp);
+					t=new Bug(id,nombre,descripcion,comp);
 					break;
 				}
 				}
@@ -289,28 +289,9 @@ public class Backlog {
 	 * @param idDep id de la dependencia que se va a agregar 
 	 */
 	public void agregaDependencia(String idT,String idDep) throws TareaNoValida{
-		Iterator<Tarea>it=LTareasP.iterator();
-		Tarea t=null; //tarea a la que hay que agregarle la dependencia
-		Tarea tDep=null;//dependencia que hay que agregar
-		boolean bandera=true;
-		/*while(it.hasNext() && bandera){
-			t=it.next();
-			if(t.getId().equals(idT)){
-				bandera=false;
-			}
-		}*/
-		t=getTarea(idT);
-		tDep=getTarea(idDep);
+		Tarea t=getTarea(idT); //tarea a la que hay que agregarle la dependencia
+		Tarea tDep=Proyecto.getInstance().getTareaBacklogYSprints(idDep);//dependencia que hay que agregar
 		t.agregarDep(tDep);
-		/*Iterator<Tarea>it2=LTareasP.iterator();
-		bandera=true;
-		while(it2.hasNext() && bandera){
-			tDep=it2.next();
-			if(tDep.getId().equals(idDep)){
-				t.agregarDep(tDep);
-				bandera=false;
-			}
-		}*/
 	}
 	/**
 	 * Elimina una dependencia de una tarea
@@ -331,17 +312,6 @@ public class Backlog {
 		t=getTarea(idT);
 		//dep=getTarea(idDep);
 		t.bajaDependencia(idDep);
-		//t.bajaDependencia(idDep);
-		/*Iterator<Tarea>it2=LTareasP.iterator();
-		boolean bandera=true;
-		while(it2.hasNext() && bandera){
-			subT=it2.next();
-			if(subT.getId().equals(idDep)){
-				t.bajaDependencia(idDep);
-				bandera=false;
-			}
-		}*/
-		//t.getLdependencias().remove(subT);
 	}
 	
 	
@@ -364,7 +334,7 @@ public class Backlog {
 	 */
 	public void agregaSubTarea(String idT, String idSubT) throws TareaNoValida{
 		Tarea t = getTarea(idT);
-		Tarea subT = getTarea(idSubT);
+		Tarea subT = Proyecto.getInstance().getTareaBacklogYSprints(idSubT);
 		t.agregarSubT(subT);
 	}
 	/**

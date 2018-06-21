@@ -17,8 +17,8 @@ import estadosTareas.Estado;
  */
 public class Mejora extends Tarea implements Serializable{
 	
-	public Mejora(String id, String nombre, String descripcion,EstadoTarea est, LocalDate finalizacion, int complejidad) {
-		super(id, nombre, descripcion,est, finalizacion, complejidad);
+	public Mejora(String id, String nombre, String descripcion,int complejidad) {
+		super(id, nombre, descripcion, complejidad);
 		// TODO Auto-generated constructor stub
 	}
 	public double calculaEstimacion(){

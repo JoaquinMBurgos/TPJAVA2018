@@ -100,15 +100,17 @@ public final class Proyecto {
 	public void bajaSprint(String clave) throws SprintNoValido{
 		boolean bandera = true;
 		Iterator<Sprint> it = LSprints.iterator();
-		Sprint sp = null;
-		while(bandera && it.hasNext()){
+		Sprint sp = getSprint(clave);
+		if(sp.getEstado()==EstadoSprint.PLANIFICADO){
+			for(Tarea tar:sp.getListaT())
+				blog.agregarTarea(tar);
+			LSprints.remove(sp);
+		}
+		/*while(bandera && it.hasNext()){
 			sp = it.next();
 			if(sp.getClave().compareTo(clave)<=0){
 				if(sp.getClave().equals(clave)){
 					if(sp.getEstado()==EstadoSprint.PLANIFICADO){
-	/*					for(Tarea p: c.getListaT()){                               TRABAJAR CON LAS TAREAS
-							blog.getListaTB().add(p);
-						}*/
 						Proyecto.getInstance()
 						LSprints.remove(sp);
 						bandera = false;
@@ -117,7 +119,7 @@ public final class Proyecto {
 						throw new SprintNoValido();
 				}
 			}
-		}
+		}*/
 	}
 	
 	/**
@@ -379,11 +381,13 @@ public final class Proyecto {
 		for(Sprint sp : LSprints){
 			if(sp.getEstado()!=EstadoSprint.FINALIZADO)
 				for (Tarea tar : sp.getListaT()){
-					lista.add(tar);
+					if(tar.getComplejidad()==0)
+						lista.add(tar);
 				}
 		}
 		for (Tarea tar : blog.getLTareasP()){
-			lista.add(tar);
+			if(tar.getComplejidad()==0)
+				lista.add(tar);
 		}
 		TreeSet<Tarea> lista1 =getTareaBacklogYSprints(id).getListaSubtareas();
 		for(Tarea tar:lista1)
@@ -732,7 +736,10 @@ public final class Proyecto {
 					bandera = true;
 			}
 		}
-		return sp;
+		if(bandera)
+			return sp;
+		else
+			return null;
 	}
 	
 	

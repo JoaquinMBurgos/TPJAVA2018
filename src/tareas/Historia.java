@@ -23,28 +23,10 @@ import estadosTareas.Estado;
  *
  */
 public class Historia extends Tarea implements Serializable{
-	private ArrayList<DuplaFlujoPaso> ListaDuplafp ;
 	private HashMap<String, Integer> flujoPasos = new HashMap<String, Integer>();
 	
-	public Historia(String id, String nombre, String descripcion,EstadoTarea est, LocalDate finalizacion, int complejidad) {
-		super(id, nombre, descripcion, est,finalizacion, complejidad);
-		ListaDuplafp = new ArrayList<DuplaFlujoPaso>();
-		
-		// TODO Auto-generated constructor stub
-	}
-	
-	public int calculaEstimacion(){
-		int promEstimacion=0;
-		int estimacion=0;
-		if(getLdependencias().first() != null)	
-			for(Tarea t:getLdependencias()){
-				promEstimacion += t.getEstimacion();
-			}
-			promEstimacion/= getLdependencias().size();
-			
-			estimacion = (int) (getLdependencias().first().getComplejidad()*0.1 + 0.9);
-		return getComplejidad() + estimacion  ;
-
+	public Historia(String id, String nombre, String descripcion,int complejidad) {
+		super(id, nombre, descripcion,complejidad);
 	}
 	
 	public int estimacionPromedioDependencias(){
@@ -95,6 +77,7 @@ public class Historia extends Tarea implements Serializable{
 		flujoPasos.put(descripcion, pasos);
 	}
 	
+	@Deprecated
 	public void muestra(){
 		super.muestra();
 		if(!flujoPasos.isEmpty()){
@@ -106,11 +89,10 @@ public class Historia extends Tarea implements Serializable{
 			}
 		}
 	}
-
-	public HashMap<String, Integer> getFlujoPasos() {
-		return (HashMap<String, Integer>) flujoPasos;
-	}
 	
+	/**
+	 * Convertir hashmap a arraylist
+	 */
 	public ArrayList<Entry<String,Integer>>getHashMap(){
 		//Getting the Set of entries
 		Set<Entry<String, Integer>> entrySet = flujoPasos.entrySet();

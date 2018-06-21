@@ -31,13 +31,12 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 	private TreeSet<Tarea> Ldependencias;
 	private TreeSet<Tarea> LSubtareas;
 	
-	public Tarea(String id, String nombre, String descripcion,EstadoTarea e, LocalDate finalizacion,
-			int complejidad) {
+	public Tarea(String id, String nombre, String descripcion,int complejidad) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
-		this.fFin = finalizacion;
+		//this.fFin = finalizacion;
 		estado = EstadoTarea.TODO;
 		this.complejidad = complejidad;
 		Lhist =new ArrayList<Historial>();
@@ -74,17 +73,6 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 			}
 		}
 	}
-	/**
-	 * 
-	 * @param clave
-	 * elimina un nodo del treeset que concida con la clave enviada 
-	 */
-	public void bSprintTarea(String clave , Tarea tare) {
-		for(Tarea c:LSTareas ){
-				LSTareas.remove(c); 
-		}
-	}
-	
 	
 	public void modTarea( String nombre, String descripcion, LocalDate finalizacion, EstadoTarea estado,int complejidad) {
 		this.nombre = nombre;

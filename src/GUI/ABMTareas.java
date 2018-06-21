@@ -339,9 +339,9 @@ public class ABMTareas extends JPanel {
 					modo = 's';
 					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
 					lblTSubtareasDependenciasFlujos.setText("Sub Tareas");
-					table_TSD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinSubTareas(id)));
+					table_TSD.setModel(new TareasTM(Proyecto.getInstance().getTareaBacklogYSprints(id).getListaSubtareas()));
 					//table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getSubTareas(id)));
-					table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getSubTareas(id)));
+					table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinSubTareas(id)));
 				}
 			});
 			add(btnTSubtareas, "cell 1 17 5 1,alignx center,aligny bottom");
@@ -428,19 +428,16 @@ public class ABMTareas extends JPanel {
 						if(modo == 'd'){	
 							Tarea tar = Proyecto.getInstance().getBlog().getTarea(id); 
 							if(tar!=null)
-								Proyecto.getInstance().getBlog().bajaDependencia(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
+								Proyecto.getInstance().getBlog().bajaDependencia(id, table_TSD.getValueAt(table_TSD.getSelectedRow(), 0).toString());
 							else{
 								Sprint s = Proyecto.getInstance().getTareaEnSprint(id); 
-								s.bajaDependencia(id,table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString()); 
+								s.bajaDependencia(id,table_TSD.getValueAt(table_TSD.getSelectedRow(), 0).toString()); 
 							}
 								
 							//Proyecto.getInstance().eliminarDependencia(id, table_TSD.getValueAt(table_TSD.getSelectedRow(), 0).toString());
 							//table_Tareas.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprints()));
 							table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinDependencias(id)));
-							table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));								
-							//System.out.println(Proyecto.getInstance().getBlog().getDependencias(id));
-							//Proyecto.getInstance().mostrarTareas();
-							//System.out.println(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias());
+							table_TSD.setModel(new TareasTM(Proyecto.getInstance().getTareaBacklogYSprints(id).getLdependencias()));								
 						}
 						else{ //SUBTAREA
 							Tarea tar = Proyecto.getInstance().getBlog().getTarea(id); 
