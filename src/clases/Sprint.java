@@ -391,5 +391,10 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 		}
 		return suma;
 	}
+
+	public Tarea agregaDependencia() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

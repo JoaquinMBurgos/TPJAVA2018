@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.TreeSet;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.plaf.OptionPaneUI;
 import javax.swing.table.DefaultTableModel;
@@ -34,7 +35,6 @@ import java.time.temporal.ChronoUnit;
  *
  */
 public final class Proyecto {
-	private LocalDate today = LocalDate.now();
 	private Backlog blog = new Backlog();
 	private TreeSet<Sprint> LSprints = new TreeSet<Sprint>();
 	
@@ -58,24 +58,6 @@ public final class Proyecto {
 	 */
 	public Backlog getBlog() {
 		return blog;
-	}
-	
-	/**
-	 * Adelanta un dia para procesar los cambios de los Sprints y Tareas
-	 */
-	public void diaSig(){
-		today= today.plus(1, ChronoUnit.DAYS);
-		for(Sprint c:LSprints){
-			if(c.getFechaFin().compareTo(today)==1);{
-				c.setEstadoSprint(EstadoSprint.FINALIZADO);
-					for(Tarea b:c.getListaT()){
-						System.out.println(b.getDescripcion());  //faltan las otras descripciones ... 
-					
-						
-					}
-			}
-		}
-		
 	}
 	
 	/**
@@ -127,6 +109,7 @@ public final class Proyecto {
 	/*					for(Tarea p: c.getListaT()){                               TRABAJAR CON LAS TAREAS
 							blog.getListaTB().add(p);
 						}*/
+						Proyecto.getInstance()
 						LSprints.remove(sp);
 						bandera = false;
 					}
@@ -212,7 +195,7 @@ public final class Proyecto {
 	 * @param idT Id de Tarea a la que agregarle una dependencia.
 	 * @param idDep Id de la Tarea que sera agregada como dependencia.
 	 */
-	public void agregarDependencias(String idT,String idDep){
+	public void agregarDependencias(String idT,String idDep) throws TareaNoValida{
 		blog.agregaDependencia(idT, idDep);
 	}
 	
@@ -331,9 +314,13 @@ public final class Proyecto {
 	public void bajaTareaSprint(String idSprint,String idTarea){
 		Iterator<Sprint>it=LSprints.iterator();
 		Sprint sp=getSprint(idSprint);
-		Tarea tar=sp.getTarea(idTarea);
-		blog.agregarTarea(tar);
-		sp.bajaTarea(idTarea);
+		if(sp.getEstado()!=EstadoSprint.FINALIZADO){
+			Tarea tar=sp.getTarea(idTarea);
+			blog.agregarTarea(tar);
+			sp.bajaTarea(idTarea);
+		}
+		else
+			JOptionPane.showMessageDialog(null, "No se pueden eliminar tareas de un sprint finalizado");
 	}
 	
 	/**
@@ -351,17 +338,54 @@ public final class Proyecto {
 	 * @return lista de todas las tareas que se encuentran en Sprints y BackLog
 	 */
 	
-	public TreeSet<Tarea> TareasEnSprint(String id){
+	public TreeSet<Tarea> tareasBacklogYSprints(){
 		TreeSet<Tarea> lista = new TreeSet<Tarea>();
 		for(Sprint sp : LSprints){
-			for (Tarea tar : sp.getListaT()){
-				lista.add(tar);
-			}
+			if(sp.getEstado()!=EstadoSprint.FINALIZADO)
+				for (Tarea tar : sp.getListaT()){
+					lista.add(tar);
+				}
 		}
 		for (Tarea tar : blog.getLTareasP()){
 			lista.add(tar);
 		}
-		TreeSet<Tarea> lista1 =blog.getTarea(id).getLdependencias();
+		/*TreeSet<Tarea> lista1 =blog.getTarea(id).getLdependencias();
+		for(Tarea tar:lista1)
+			lista.remove(tar);*/
+		return lista;
+		
+	}
+	
+	public TreeSet<Tarea> tareasBacklogYSprintsSinDependencias(String id){
+		TreeSet<Tarea> lista = new TreeSet<Tarea>();
+		for(Sprint sp : LSprints){
+			if(sp.getEstado()!=EstadoSprint.FINALIZADO)
+				for (Tarea tar : sp.getListaT()){
+					lista.add(tar);
+				}
+		}
+		for (Tarea tar : blog.getLTareasP()){
+			lista.add(tar);
+		}
+		TreeSet<Tarea> lista1 = getTareaBacklogYSprints(id).getLdependencias();
+		for(Tarea tar:lista1)
+			lista.remove(tar);
+		return lista;
+		
+	}
+	
+	public TreeSet<Tarea> tareasBacklogYSprintsSinSubTareas(String id){
+		TreeSet<Tarea> lista = new TreeSet<Tarea>();
+		for(Sprint sp : LSprints){
+			if(sp.getEstado()!=EstadoSprint.FINALIZADO)
+				for (Tarea tar : sp.getListaT()){
+					lista.add(tar);
+				}
+		}
+		for (Tarea tar : blog.getLTareasP()){
+			lista.add(tar);
+		}
+		TreeSet<Tarea> lista1 =getTareaBacklogYSprints(id).getListaSubtareas();
 		for(Tarea tar:lista1)
 			lista.remove(tar);
 		return lista;
@@ -398,7 +422,7 @@ public final class Proyecto {
 	 * @param idSprint Id del Sprint a cambiarle el estado.
 	 * @param estado Estado al que se le desea cambiar el Sprint.
 	 */
-	public void cambiarEstadoSprint(String idSprint,String estado){
+	public void cambiarEstadoSprint(String idSprint,String estado) throws SprintNoValido{
 		
 		Iterator<Sprint>it=LSprints.iterator();
 		Sprint sp=null;
@@ -412,7 +436,7 @@ public final class Proyecto {
 		if(bandera)
 			s.cambiarEstado(estado);
 		else
-			System.out.println("Ya hay un sprint en curso");
+			throw new SprintNoValido();
 	}
 	
 	/**
@@ -670,6 +694,29 @@ public final class Proyecto {
 			e.printStackTrace();
 		}
 		blog.setListaTareas();
+	}
+
+	/**
+	 * 
+	 * @param id ID de la Tarea.
+	 * @return
+	 */
+	public Tarea getTareaBacklogYSprints(String id) {
+		Tarea tar = blog.getTarea(id);
+		Iterator<Sprint> its = LSprints.iterator();
+		Sprint sp;
+		boolean bandera;
+		if(tar == null){
+			bandera = false;
+			while(its.hasNext() && !bandera){
+				sp = its.next();
+				if(sp.getEstado() != EstadoSprint.FINALIZADO)
+					tar = sp.getTarea(id);
+				if(tar!=null)
+					bandera = true;
+			}
+		}
+		return tar;
 	}
 	
 	

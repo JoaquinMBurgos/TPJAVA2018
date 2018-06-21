@@ -12,6 +12,7 @@ import java.util.Scanner;
 import java.util.TreeSet;
 
 import clases.Proyecto;
+import clases.TareaNoValida;
 import sun.reflect.generics.tree.Tree;
 import tareas.Bug;
 import tareas.EstadoTarea;
@@ -287,7 +288,7 @@ public class Backlog {
 	 * @param idT id de la tarea a la que se le agrega la dependencia
 	 * @param idDep id de la dependencia que se va a agregar 
 	 */
-	public void agregaDependencia(String idT,String idDep){
+	public void agregaDependencia(String idT,String idDep) throws TareaNoValida{
 		Iterator<Tarea>it=LTareasP.iterator();
 		Tarea t=null; //tarea a la que hay que agregarle la dependencia
 		Tarea tDep=null;//dependencia que hay que agregar

@@ -10,6 +10,9 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
+
+import clases.TareaNoValida;
+
 import java.util.Map.Entry;
 
 import estadosTareas.Estado;
@@ -35,9 +38,7 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.fFin = finalizacion;
-		estado = EstadoTarea.INPROGRESS;
-		//this.estado = e;
-		//this.LSTareas = null;
+		estado = EstadoTarea.TODO;
 		this.complejidad = complejidad;
 		Lhist =new ArrayList<Historial>();
 		Ldependencias=new TreeSet<Tarea>();
@@ -203,7 +204,7 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 		//LSubtareas.remove(tar);
 	}
 	
-	public void agregarDep(Tarea tar){
+	public void agregarDep(Tarea tar) throws TareaNoValida{
 		Ldependencias.add(tar);
 	}
 	
