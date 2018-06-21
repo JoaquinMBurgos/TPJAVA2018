@@ -109,7 +109,7 @@ public final class Proyecto {
 	/*					for(Tarea p: c.getListaT()){                               TRABAJAR CON LAS TAREAS
 							blog.getListaTB().add(p);
 						}*/
-						Proyecto.getInstance()
+						Proyecto.getInstance();
 						LSprints.remove(sp);
 						bandera = false;
 					}

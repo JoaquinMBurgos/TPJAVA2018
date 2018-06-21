@@ -345,6 +345,11 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 	 public ArrayList<Entry<String,Integer>>getHashMap(){
 		 return null;
 	 }
+
+	public void agregaFlujoPaso(String desc, int pasos) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 	/*
