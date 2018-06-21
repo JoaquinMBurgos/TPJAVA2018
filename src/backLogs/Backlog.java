@@ -41,7 +41,7 @@ public class Backlog {
 	 * @param desc descripcion de la tarea a agregar 
 	 * @param finalizacion Fecha de finalizacion de la nueva tarea
 	 * @param comp complejidad de la nueva tarea , esta definida como un numero entrero
-	 * DEPENDE DE SU TIPO BUG , HISTORIA , ETC 
+	 * DEPENDE DE SU TIPO BUG , HISTORIA , ETC.
 	 */
 	public void altaTarea(String tipo, String id, String nombre, String desc,EstadoTarea est, LocalDate finalizacion, int comp){
 		Tarea tar;
