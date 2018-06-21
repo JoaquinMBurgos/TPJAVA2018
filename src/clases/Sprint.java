@@ -269,8 +269,8 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 
 	/**
 	 * 
-	 * @param idT
-	 * @param est
+	 * @param idT id de la tarea a cambiar 
+	 * @param est	estado nuevo de la tarea 
 	 */
 	public void cambiarEstadoTarea(String idT,String est){
 		Tarea t=getTarea(idT);
@@ -379,7 +379,12 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 	public int getDuracion(){
 		return duracion;
 	}
-	
+	/**
+	 * 
+	 * @param estado Estado en el que se encuentren las tareas
+	 * @param day dia en el que se encuentren las tareas
+	 * @return
+	 */
 	public int estimacionEstadoDia(String estado, int day){
 		int suma=0;
 		LocalDate fecha = fInicio.plusDays(day);
@@ -418,8 +423,8 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 	
 	/**
 	 * 
-	 * @param idT
-	 * @param idSubT
+	 * @param idT id de la tarea a la que se le va agregar una sub tarea
+	 * @param idSubT identificador de la tarea incluida dentro de otra tarea . 
 	 * agrega una tarea sobre otra como sub tarea 
 	 */
 	public void agregaSubTarea(String idT, String idSubT) throws TareaNoValida{
@@ -431,8 +436,8 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 	}
 	/**
 	 * Da de baja una tarea que esta dentro de otra 
-	 * @param idT
-	 * @param idSubT
+	 * @param idT id de la tarea a la que se le va eliminar una sub tarea
+	 * @param idSubT identificador de la tarea eliminada 
 	 */
 	public void bajaSubTarea(String idT, String idSubT){
 		Tarea t=null; 
@@ -442,9 +447,9 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 	
 	/**
 	 * 
-	 * @param idT
-	 * @param desc
-	 * @param pasos
+	 * @param idT id de la tarea a la que se le va agregar flujo paso 
+	 * @param desc  desc - descripcion del flujo paso 
+	 * @param pasos pasos - cantidad de pasos del flujo 
 	 * agrega un flujo paso a la tarea 
 	 */
 	public void agregaFP(String idT,String desc,int pasos){

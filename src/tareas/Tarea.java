@@ -44,24 +44,38 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 		Ldependencias=new TreeSet<Tarea>();
 		LSubtareas=new TreeSet<Tarea>();
 	}
+	
+	/**
+	 * @return lista de subtareas . 
+	 */
 	public TreeSet<Tarea> getListaSubtareas() {
 		return LSubtareas;
 	}
+	/**
+	 * 
+	 * @param tare tarea que se va agregar a un backlog
+	 */
 	public void aBacklogTarea(Tarea tare) {
 		LSTareas.add(tare);
 	}
-	
+	/**
+	 * 
+	 * @return retorna lista de dependencias 
+	 */
 	public TreeSet<Tarea> getLdependencias() {
 		return Ldependencias;
 	}
-	
+	/**
+	 * 
+	 * @param ldependencias modifica la lista de dependecias
+	 */
 	public void setLdependencias(TreeSet<Tarea> ldependencias) {
 		Ldependencias = ldependencias;
 	}
 	/**
 	 * 
-	 * @param clave
-	 * @param tare
+	 * @param clave clave de la tarea a modificar
+	 * @param tare	tarea introducida en un backlog que se va a modificar 
 	 * Modifica el valor de la clave del backlog.
 	 * FALTA EL ESTADO :o !!! 
 	 */
@@ -76,7 +90,8 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 	}
 	/**
 	 * 
-	 * @param clave
+	 * @param clave no hace nada -fijar
+	 * tare lista de tareas 
 	 * elimina un nodo del treeset que concida con la clave enviada 
 	 */
 	public void bSprintTarea(String clave , Tarea tare) {
@@ -85,7 +100,14 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param nombre nombre de la tarea que se va a modificar
+	 * @param descripcion descripcion de la tarea que se va a modificar
+	 * @param finalizacion fecha de finalizacion de la tarea que se va a modificar
+	 * @param estado estado de la tarea que se va a modificar
+	 * @param complejidad complejidad de la tarea que se va a modificar
+	 */
 	public void modTarea( String nombre, String descripcion, LocalDate finalizacion, EstadoTarea estado,int complejidad) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -120,7 +142,14 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 	public int getEstimacion() {
 		return estimacion;
 	}
-	
+	/**
+	 * 
+	 * @param nombre nombre de la tarea que se va a modificar
+	 * @param descripcion descripcion de la tarea que se va a modificar
+	 * @param finalizacion fecha de finalizacion de la tarea que se va a modificar
+	 * @param estado estado de la tarea que se va a modificar
+	 * @param complejidad complejidad de la tarea que se va a modificar
+	 */
 	public void TareaMOD(String nombre, String descripcion, LocalDate finalizacion, EstadoTarea estado,int complejidad) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -139,7 +168,7 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 	
 	/**
 	 * Modifica el id de la Tarea.
-	 * @param id
+	 * @param id identificador de la tarea 
 	 */
 
 	public void setId(String id) {
@@ -183,13 +212,22 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 			System.out.println(h.getFecha()+" "+h.getEstado());
 		}		
 	}
+	
+	/**
+	 * 
+	 * @param tar nodo de la tarea 
+	 * @throws TareaNoValida - una exepcion
+	 */
 	public void agregarSubT(Tarea tar) throws TareaNoValida{
 		if(tar.getId().substring(0, 3).equals("TAR") && tar.getComplejidad()==0)
 			LSubtareas.add(tar);
 		else
 			throw new TareaNoValida();
 	}
-	
+	/**
+	 * 
+	 * @param idSubT dentificar de la sub tarea a eliminar . 
+	 */
 	public void bajaSubT(String idSubT){
 		Iterator<Tarea>it=LSubtareas.iterator();
 		Tarea t=null;
@@ -203,11 +241,18 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 		}
 		//LSubtareas.remove(tar);
 	}
-	
+	/**
+	 * 
+	 * @param tar  nodo de una tarea 
+	 * @throws TareaNoValida -exepcion
+	 */
 	public void agregarDep(Tarea tar) throws TareaNoValida{
 		Ldependencias.add(tar);
 	}
-	
+	/**
+	 * 
+	 * @param idDep ide de la dependecia  a eliminar 
+	 */
 	public void bajaDependencia(String idDep){
 		Iterator<Tarea>it=Ldependencias.iterator();
 		Tarea t=null;
@@ -234,7 +279,7 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 	public int compareTo(Tarea arg0) {
 		return this.id.compareTo(arg0.getId());
 	}
-	
+
 	public void muestraDependencias(){
 		Iterator<Tarea>it=Ldependencias.iterator();
 		Tarea t=null;
@@ -259,9 +304,7 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 		}
 	}
 	
-	public void agregaFlujoPaso(String descripcion,int pasos){
-		
-	}
+
 	
 	public void setfFin(LocalDate fFin) {
 		this.fFin = fFin;
@@ -285,6 +328,10 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 		Lhist.add(new Historial(fecha,e));
 	}
 	
+	/**
+	 * 
+	 * @param est est . es el estado a modificar
+	 */
 	public void setEstado(String est ){
 		EstadoTarea e=null;
 		//estado=e.devuelveEstado(est);
