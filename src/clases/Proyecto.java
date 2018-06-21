@@ -404,7 +404,7 @@ public final class Proyecto {
 	 * @param idT Id Tarea a la que se le agregara la Subtarea.
 	 * @param idSubT Id Tarea a agregar como Subtarea.
 	 */
-	public void agregaSubT(String idT,String idSubT){
+	public void agregaSubT(String idT,String idSubT) throws TareaNoValida{
 		blog.agregaSubTarea(idT, idSubT);
 	}
 	
@@ -713,6 +713,22 @@ public final class Proyecto {
 				if(sp.getEstado() != EstadoSprint.FINALIZADO)
 					tar = sp.getTarea(id);
 				if(tar!=null)
+					bandera = true;
+			}
+		}
+		return tar;
+	}
+	
+	public Tarea getTareaEnSprint(String id){
+		Iterator<Sprint> it = LSprints.iterator();
+		boolean bandera = false;
+		Tarea tar = null;
+		Sprint sp;
+		while(it.hasNext() && !bandera){
+			sp = it.next();
+			if(sp.getEstado()!=EstadoSprint.FINALIZADO){
+				tar = sp.getTarea(id);
+				if(tar != null)
 					bandera = true;
 			}
 		}

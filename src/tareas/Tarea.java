@@ -183,11 +183,11 @@ public class Tarea implements Comparable<Tarea>, Serializable {
 			System.out.println(h.getFecha()+" "+h.getEstado());
 		}		
 	}
-	public void agregarSubT(Tarea tar){
+	public void agregarSubT(Tarea tar) throws TareaNoValida{
 		if(tar.getId().substring(0, 3).equals("TAR") && tar.getComplejidad()==0)
 			LSubtareas.add(tar);
 		else
-			System.out.println("Las subtareas solo pueden ser de tipo tarea y no tienen que tener complejidad");
+			throw new TareaNoValida();
 	}
 	
 	public void bajaSubT(String idSubT){

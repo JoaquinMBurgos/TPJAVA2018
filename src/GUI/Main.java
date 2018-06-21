@@ -55,10 +55,14 @@ public class Main {
 		proy.agregarFlujoPaso("HIS002","Actualizar listado",15);
 		proy.agregarFlujoPaso("HIS002","Navegar listado",12);
 		
-		proy.agregaSubT("HIS001", "TAR004");
-		proy.agregaSubT("HIS001", "TAR005");
-		//proy.agregaSubT("HIS001", "TAR001");
-		proy.agregaSubT("HIS002", "TAR006");
+		try {
+			proy.agregaSubT("HIS001", "TAR004");
+			proy.agregaSubT("HIS001", "TAR005");
+			//proy.agregaSubT("HIS001", "TAR001");
+			proy.agregaSubT("HIS002", "TAR006");
+		} catch (TareaNoValida e1) {
+		}
+	
 	
 		proy.altaSprint("SPR001", "Sprint 1");
 		proy.agregarTareasSprint("SPR001","HIS001");

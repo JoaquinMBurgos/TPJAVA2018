@@ -391,10 +391,65 @@ public class Sprint implements Comparable<Sprint>, Serializable{
 		}
 		return suma;
 	}
-
-	public Tarea agregaDependencia() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	/**
+	 * Agrega una dependencia a una tarea
+	 * @param idT id de la tarea a la que se le agrega la dependencia
+	 * @param idDep id de la dependencia que se va a agregar 
+	 */
+	public void agregaDependencia(String idT,String idDep) throws TareaNoValida{
+		Tarea t=null; //tarea a la que hay que agregarle la dependencia
+		Tarea tDep=null;//dependencia que hay que agregar
+		t=getTarea(idT);
+		tDep=getTarea(idDep);
+		t.agregarDep(tDep);
 	}
 	
+	/**
+	 * Elimina una dependencia de una tarea
+	 * @param idT id de la tarea a la que se le elimina la dependencia
+	 * @param idDep id de la dependencia que sera eliminada
+	 */
+	public void bajaDependencia(String idT, String idDep){
+		Tarea t=null; 
+		t=getTarea(idT);
+		t.bajaDependencia(idDep);
+	}
+	
+	/**
+	 * 
+	 * @param idT
+	 * @param idSubT
+	 * agrega una tarea sobre otra como sub tarea 
+	 */
+	public void agregaSubTarea(String idT, String idSubT) throws TareaNoValida{
+		Tarea t=null; 
+		Tarea subT=null;
+		t=getTarea(idT);
+		subT=getTarea(idSubT);
+		t.agregarSubT(subT);
+	}
+	/**
+	 * Da de baja una tarea que esta dentro de otra 
+	 * @param idT
+	 * @param idSubT
+	 */
+	public void bajaSubTarea(String idT, String idSubT){
+		Tarea t=null; 
+		t = getTarea(idT);
+		t.bajaSubT(idSubT);
+	}
+	
+	/**
+	 * 
+	 * @param idT
+	 * @param desc
+	 * @param pasos
+	 * agrega un flujo paso a la tarea 
+	 */
+	public void agregaFP(String idT,String desc,int pasos){
+		Tarea t = getTarea(idT);
+		t.agregaFlujoPaso(desc, pasos);
+
+	}
 }

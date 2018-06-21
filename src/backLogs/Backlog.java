@@ -353,16 +353,8 @@ public class Backlog {
 	 * agrega un flujo paso a la tarea 
 	 */
 	public void agregaFP(String idT,String desc,int pasos){
-		Iterator<Tarea>it=LTareasP.iterator();
-		Tarea t=null; 
-		boolean bandera=true;
-		while(it.hasNext() && bandera){
-			t=it.next();
-			if(t.getId().equals(idT)){
-				t.agregaFlujoPaso(desc, pasos);
-				bandera=false;
-			}
-		}
+		Tarea t = getTarea(idT);
+		t.agregaFlujoPaso(desc, pasos);
 	}
 	/**
 	 * 
@@ -370,29 +362,10 @@ public class Backlog {
 	 * @param idSubT
 	 * agrega una tarea sobre otra como sub tarea 
 	 */
-	public void agregaSubTarea(String idT, String idSubT){
-		Iterator<Tarea>it=LTareasP.iterator();
-		Tarea t=null; 
-		Tarea subT=null;
-		boolean bandera=true;
-		/*while(it.hasNext() && bandera){
-			t=it.next();
-			if(t.getId().equals(idT)){
-				bandera=false;
-			}
-		}*/
-		t=getTarea(idT);
-		subT=getTarea(idSubT);
+	public void agregaSubTarea(String idT, String idSubT) throws TareaNoValida{
+		Tarea t = getTarea(idT);
+		Tarea subT = getTarea(idSubT);
 		t.agregarSubT(subT);
-		/*Iterator<Tarea>it2=LTareasP.iterator();
-		bandera=true;
-		while(it2.hasNext() && bandera){
-			subT=it2.next();
-			if(subT.getId().equals(idSubT)){
-				t.agregarSubT(subT);
-				bandera=false;
-			}
-		}*/
 	}
 	/**
 	 * Da de baja una tarea que esta dentro de otra 
