@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import backLogs.Backlog;
 import clases.Proyecto;
+import clases.Sprint;
 import clases.TareaNoValida;
 
 import javax.swing.JComboBox;
@@ -382,25 +383,35 @@ public class ABMTareas extends JPanel {
 							} catch (TareaNoValida e1) {
 								JOptionPane.showMessageDialog(null, "No se puede realizar esta accion");
 							}
-						else
+						else{
+							Sprint s = Proyecto.getInstance().getTareaEnSprint(id); 
 							try {
-								Proyecto.getInstance().getSprint(id).agregaDependencia(id,table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
+								s.agregaDependencia(id,table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
 							} catch (TareaNoValida e1) {
 								JOptionPane.showMessageDialog(null, "No se puede realizar esta accion");
 							}
+						}
 						table_TSD.setModel(new TareasTM(Proyecto.getInstance().getTareaBacklogYSprints(id).getLdependencias()));
 						table_Tareas.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprints()));
 						table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinDependencias(id)));
 						
 					}
-					else{
-						Tarea tar = Proyecto.getInstance().getTareaEnSprint(id); 
+					else{ //SUBTAREA
+						Tarea tar = Proyecto.getInstance().getBlog().getTarea(id); 
 						if(tar!=null)
 							try {
 								Proyecto.getInstance().agregaSubT(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
 							} catch (TareaNoValida e1) {
 								JOptionPane.showMessageDialog(null, "Las subtareas solo pueden ser de tipo tarea y no tienen que tener complejidad");
 							}
+						else{
+							Sprint s = Proyecto.getInstance().getTareaEnSprint(id); 
+							try {
+								s.agregaSubTarea(id,table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
+							} catch (TareaNoValida e1) {
+								JOptionPane.showMessageDialog(null, "No se puede realizar esta accion");
+							}
+						}
 						table_TSD.setModel(new TareasTM(Proyecto.getInstance().getTareaBacklogYSprints(id).getLdependencias()));
 						table_Tareas.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprints()));
 						table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinSubTareas(id)));

@@ -719,7 +719,7 @@ public final class Proyecto {
 		return tar;
 	}
 	
-	public Tarea getTareaEnSprint(String id){
+	public Sprint getTareaEnSprint(String id){
 		Iterator<Sprint> it = LSprints.iterator();
 		boolean bandera = false;
 		Tarea tar = null;
@@ -732,7 +732,7 @@ public final class Proyecto {
 					bandera = true;
 			}
 		}
-		return tar;
+		return sp;
 	}
 	
 	
