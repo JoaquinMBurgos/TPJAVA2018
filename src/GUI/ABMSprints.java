@@ -210,6 +210,16 @@ public class ABMSprints extends JPanel {
 						
 			
 			btnIniciar = new JButton("Inicia Sprint");
+			btnIniciar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try {
+						Proyecto.getInstance().cambiarEstadoSprint(table.getValueAt(table.getSelectedRow(), 0).toString(), "ENCURSO");
+						table.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
+					} catch (SprintNoValido e) {
+						JOptionPane.showMessageDialog(null, "Ya hay un Sprint en curso.", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			});
 			add(btnIniciar, "cell 1 20 3 1,alignx center,aligny center");		
 			
 			

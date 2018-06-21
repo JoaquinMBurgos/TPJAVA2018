@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import com.sun.org.apache.bcel.internal.generic.LSUB;
 
+import clases.TareaNoValida;
 import estadosTareas.Estado;
 
 /**
@@ -38,11 +39,12 @@ public class Bug extends Tarea implements Serializable{
 		}
 		
 	}
-	public void agregarDep(Tarea tar){
-		if(!getLdependencias().isEmpty())
+	public void agregarDep(Tarea tar) throws TareaNoValida{
+		if(getLdependencias().isEmpty() && !tar.getId().substring(0, 3).equals("BUG"))
 			getLdependencias().add(tar);
-		else
-			JOptionPane.showMessageDialog(null, "Bug puede tener una sola dependencia");
+		else{
+			throw new TareaNoValida();
+		}
 	}
 	public int estimacion(){
 		double estimacion = 0;

@@ -153,6 +153,9 @@ public class Historico extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getSprint(table_Sprint.getValueAt(table_Sprint.getSelectedRow(), 0).toString()).getListaT()));
+					lblIdSprint.setText(Proyecto.getInstance().getSprint(table_Sprint.getValueAt(table_Sprint.getSelectedRow(), 0).toString()).getClave());
+					lblFinicio.setText(Proyecto.getInstance().getSprint(table_Sprint.getValueAt(table_Sprint.getSelectedRow(), 0).toString()).getfInicio().toString());
+					lblFfin.setText(Proyecto.getInstance().getSprint(table_Sprint.getValueAt(table_Sprint.getSelectedRow(), 0).toString()).getFechaFin().toString());
 				}
 			});
 			

@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import backLogs.Backlog;
 import clases.Proyecto;
+import clases.TareaNoValida;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -143,7 +144,7 @@ public class ABMTareas extends JPanel {
 			
 			table_Tareas = new JTable();
 			scrollPane_Tareas.setViewportView(table_Tareas);
-			table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
+			table_Tareas.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprints()));
 			table_Tareas.addMouseListener(new MouseListener() {
 				
 				@Override
@@ -184,7 +185,7 @@ public class ABMTareas extends JPanel {
 						textField_Flujo.setVisible(false);
 						btnFCancelar.setVisible(false);
 						btnFAgregar.setVisible(false);
-						break;
+						btnTSubtareas.setEnabled(true);
 					case "BUG":
 						txtTID.setText("BUG");
 						lblTSubtareasDependenciasFlujos.setText("Sub Tareas");
@@ -195,6 +196,8 @@ public class ABMTareas extends JPanel {
 						textField_Flujo.setVisible(false);
 						btnFCancelar.setVisible(false);
 						btnFAgregar.setVisible(false);
+						btnTSubtareas.setEnabled(false);
+						btnTDependencias.doClick();
 					break;
 					case "HIS":
 						txtTID.setText("HIS");
@@ -206,6 +209,7 @@ public class ABMTareas extends JPanel {
 						textField_Flujo.setVisible(true);
 						btnFCancelar.setVisible(true);
 						btnFAgregar.setVisible(true);
+						btnTSubtareas.setEnabled(true);
 						break;
 					case "MEJ":
 						txtTID.setText("MEJ");
@@ -217,6 +221,7 @@ public class ABMTareas extends JPanel {
 						textField_Flujo.setVisible(false);
 						btnFCancelar.setVisible(false);
 						btnFAgregar.setVisible(false);
+						btnTSubtareas.setEnabled(true);
 					}
 				}
 		});
@@ -333,7 +338,7 @@ public class ABMTareas extends JPanel {
 					modo = 's';
 					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
 					lblTSubtareasDependenciasFlujos.setText("Sub Tareas");
-					table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getListaSubtareas()));
+					table_TSD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinSubTareas(id)));
 					//table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getSubTareas(id)));
 					table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getSubTareas(id)));
 				}
@@ -346,8 +351,8 @@ public class ABMTareas extends JPanel {
 					modo = 'd';
 					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
 					lblTSubtareasDependenciasFlujos.setText("Dependencias");
-					table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));
-					table_TD.setModel(new TareasTM(Proyecto.getInstance().TareasEnSprint(id)));
+					table_TSD.setModel(new TareasTM(Proyecto.getInstance().getTareaBacklogYSprints(id).getLdependencias()));
+					table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinDependencias(id)));
 					}
 			});
 			add(btnTDependencias, "cell 1 19 5 1,alignx center,aligny center");
@@ -369,17 +374,32 @@ public class ABMTareas extends JPanel {
 				public void actionPerformed(ActionEvent arg0) {
 					String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
 					if(modo == 'd'){
-						Proyecto.getInstance().agregarDependencias(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
+						Tarea tar = Proyecto.getInstance().getBlog().getTarea(id); 
+						if(tar!=null)
+							try {
+								Proyecto.getInstance().agregarDependencias(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
+							} catch (TareaNoValida e1) {
+								JOptionPane.showMessageDialog(null, "No se puede realizar esta accion");
+							}
+						else
+							//tar = Proyecto.getInstance().getta
+							Proyecto.getInstance().getSprint(id).agregaDependencia();
+							try {
+								Proyecto.getInstance().getSprint(id).getTarea(id).agregarDep(tar);
+							} catch (TareaNoValida e) {
+								JOptionPane.showMessageDialog(null, "No se puede realizar esta accion");
+							}
+							
 						table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));
-						table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
-						table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getDependencias(id)));
+						table_Tareas.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprints()));
+						table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinDependencias(id)));
 						
 					}
 					else{
 						Proyecto.getInstance().agregaSubT(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
 						table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getListaSubtareas()));
-						table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
-						table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getSubTareas(id)));
+						table_Tareas.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprints()));
+						table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinSubTareas(id)));
 					}
 				}
 			});
@@ -392,8 +412,8 @@ public class ABMTareas extends JPanel {
 				String id = table_Tareas.getValueAt(table_Tareas.getSelectedRow(), 0).toString();
 						if(modo == 'd'){	
 							Proyecto.getInstance().eliminarDependencia(id, table_TSD.getValueAt(table_TSD.getSelectedRow(), 0).toString());
-							//table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
-							table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getDependencias(id)));
+							table_Tareas.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprints()));
+							table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinDependencias(id)));
 							table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));								
 							//System.out.println(Proyecto.getInstance().getBlog().getDependencias(id));
 							//Proyecto.getInstance().mostrarTareas();
