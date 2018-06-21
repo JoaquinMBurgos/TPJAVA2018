@@ -52,8 +52,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
-import java.util.Calendar;
 import javax.swing.JTable;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JSpinnerDateEditor;
+import java.awt.Label;
 
 public class ABMSprints extends JPanel {
 	private JMenuBar smenuBar;	
@@ -94,13 +96,17 @@ public class ABMSprints extends JPanel {
 	private JLabel lblSprintSeleccionado;
 	private JLabel lblTareadelBacklogSelec;
 	private JLabel lblTareadelSprintSelec;
+	private Label label;
+	private JDateChooser dateChooser_Ffin;
+	private JLabel lblFechaDeFin;
+	private JLabel lblFechaDeIni;
 
 	/**
 	 * Create the panel.
 	 */
 	
 	public ABMSprints() {
-		setLayout(new MigLayout("", "[10][53][53][53][10][261,grow][261,grow][57][522,grow]", "[24px:24px][20.00px][24.00][][15][][15][][15][][15][][15][][][10][][10][][15][39.00][15][][15][][15][][46.00,grow][17.00]"));
+		setLayout(new MigLayout("", "[10][53][53,grow][53][10][261,grow][261,grow][57][522,grow]", "[24px:24px][20.00px][24.00][][15][][15][][15][][15][][15][][][10][][10][grow][15][39.00][15][][15][][15][][111][111,grow][17.00]"));
 		
 			smenuBar = new JMenuBar();
 			smenuBar.setMargin(new Insets(0, 15, 0, 15));
@@ -207,22 +213,22 @@ public class ABMSprints extends JPanel {
 					}
 				});	
 				add(rdbtnEnCurso, "cell 2 16");
-						
 			
-			btnIniciar = new JButton("Inicia Sprint");
-			btnIniciar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					try {
-						Proyecto.getInstance().cambiarEstadoSprint(table.getValueAt(table.getSelectedRow(), 0).toString(), "ENCURSO");
-						table.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
-					} catch (SprintNoValido e) {
-						JOptionPane.showMessageDialog(null, "Ya hay un Sprint en curso.", "Error", JOptionPane.ERROR_MESSAGE);
-					}
-				}
-			});
-			add(btnIniciar, "cell 1 20 3 1,alignx center,aligny center");		
+			lblFechaDeIni = new JLabel("Fecha de Ini:");
+			lblFechaDeIni.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			add(lblFechaDeIni, "cell 0 20 2 1");
 			
-			
+			JDateChooser dateChooser_Fini = new JDateChooser();
+			add(dateChooser_Fini, "cell 2 20 2 1,growx,aligny center");
+		
+			lblFechaDeFin = new JLabel("Fecha de Fin:");
+			lblFechaDeFin.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			add(lblFechaDeFin, "cell 0 22 2 1");
+				
+			dateChooser_Ffin = new JDateChooser();
+			add(dateChooser_Ffin, "cell 2 22 2 1,growx,aligny center");
+
+				
 			
 			
 			
@@ -242,14 +248,12 @@ public class ABMSprints extends JPanel {
 			}
 			
 			try {
-				lblTareadelBacklogSelec = new JLabel((table_STareasBacklog.getValueAt(table_STareasBacklog.getSelectedRow(), 0)).toString());
+				lblTareadelBacklogSelec = new JLabel((table_STareasBacklog.getValueAt(table_STareasBacklog.getSelectedRow(), 0)).toString());	
 			}
 			catch(NullPointerException npe) {
 				lblTareadelBacklogSelec = new JLabel("Tarea del Backlog Selecionada");				
 			}
-			
-
-			
+						
 			lblSTareas = new JLabel("Tareas en Sprint -");
 			lblSTareas.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			add(lblSTareas, "cell 5 20,alignx right,aligny center");
@@ -257,16 +261,6 @@ public class ABMSprints extends JPanel {
 			//lblSprintSeleccionado = new JLabel("Sprint Seleccionado");
 			lblSprintSeleccionado.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			add(lblSprintSeleccionado, "cell 6 20,alignx left,aligny center");
-			
-			//lblTareadelSprintSelec = new JLabel("Tarea del Sprint Selecionada");
-			lblTareadelSprintSelec.setFont(new Font("Tahoma", Font.BOLD, 12));
-			add(lblTareadelSprintSelec, "cell 1 22 3 1,alignx center");
-			lblTareadelSprintSelec.setVisible(false);
-	
-			//lblTareadelBacklogSelec = new JLabel("Tarea del Backlog Selecionada");
-			lblTareadelBacklogSelec.setFont(new Font("Tahoma", Font.BOLD, 12));
-			add(lblTareadelBacklogSelec, "cell 1 24 3 1,alignx center");
-			lblTareadelBacklogSelec.setVisible(false);
 
 			
 			lblTareasEnBacklog = new JLabel("Tareas en Backlog");
@@ -295,7 +289,6 @@ public class ABMSprints extends JPanel {
 			});
 			btnSAgregarTarea.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			add(btnSAgregarTarea, "cell 7 22,growx,aligny center");
-			
 
 			
 			btnSQuitaTarea = new JButton("  \u00BB  ");
@@ -316,6 +309,20 @@ public class ABMSprints extends JPanel {
 					}
 				}
 			});
+			
+			
+			btnIniciar = new JButton("Inicia Sprint");
+			btnIniciar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try {
+						Proyecto.getInstance().cambiarEstadoSprint(table.getValueAt(table.getSelectedRow(), 0).toString(), "ENCURSO");
+						table.setModel(new SprintsTM(Proyecto.getInstance().getLSprints()));
+					} catch (SprintNoValido e) {
+						JOptionPane.showMessageDialog(null, "Ya hay un Sprint en curso.", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			});
+			add(btnIniciar, "cell 1 24 3 1,alignx center,aligny center");		
 			btnSQuitaTarea.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			add(btnSQuitaTarea, "cell 7 24,growx,aligny center");
 
@@ -325,7 +332,7 @@ public class ABMSprints extends JPanel {
 			
 						
 			scrollPane_STareas = new JScrollPane();
-			add(scrollPane_STareas, "cell 5 21 2 8,grow");
+			add(scrollPane_STareas, "cell 5 21 2 9,grow");
 			
 			table_STareas = new JTable();
 			table_STareas.addMouseListener(new MouseAdapter() {
@@ -337,7 +344,7 @@ public class ABMSprints extends JPanel {
 			scrollPane_STareas.setViewportView(table_STareas);
 			
 			scrollPane_STareasBacklog = new JScrollPane();
-			add(scrollPane_STareasBacklog, "cell 8 21 1 8,grow");
+			add(scrollPane_STareasBacklog, "cell 8 21 1 9,grow");
 			
 			table_STareasBacklog = new JTable();
 			table_STareasBacklog.addMouseListener(new MouseAdapter() {
@@ -430,8 +437,21 @@ public class ABMSprints extends JPanel {
 					//Proyecto.getInstance().corrersp();
 				}
 			});
+
 			
-			add(btnSAgregar, "cell 1 28,alignx center,aligny center");
+			//lblTareadelSprintSelec = new JLabel("Tarea del Sprint Selecionada");
+			lblTareadelSprintSelec.setFont(new Font("Tahoma", Font.BOLD, 12));
+			add(lblTareadelSprintSelec, "cell 2 27,alignx center");
+			lblTareadelSprintSelec.setVisible(false);
+			
+
+			
+			//lblTareadelBacklogSelec = new JLabel("Tarea del Backlog Selecionada");
+			lblTareadelBacklogSelec.setFont(new Font("Tahoma", Font.BOLD, 12));		
+			add(lblTareadelBacklogSelec, "cell 2 28,alignx center");
+			lblTareadelBacklogSelec.setVisible(false);
+			
+			add(btnSAgregar, "cell 1 29,alignx center,aligny bottom");
 			
 			btnSModificar = new JButton("Modificar");
 			btnSModificar.addActionListener(new ActionListener() {
@@ -442,7 +462,7 @@ public class ABMSprints extends JPanel {
 					JOptionPane.showMessageDialog(null, "Sprint modificado con exito.");
 				}
 			});
-			add(btnSModificar, "cell 2 28,alignx center,aligny center");
+			add(btnSModificar, "cell 2 29,alignx center,aligny bottom");
 			
 			btnSEliminar = new JButton("Eliminar");
 			btnSEliminar.addActionListener(new ActionListener() {
@@ -450,7 +470,6 @@ public class ABMSprints extends JPanel {
 					
 					try{
 						Proyecto.getInstance().bajaSprint(table.getModel().getValueAt(table.getSelectedRow(), 0).toString());
-						System.out.println(Proyecto.getInstance().getBlog().getLTareasP());
 						}
 						catch(ArrayIndexOutOfBoundsException e1){
 							JOptionPane.showMessageDialog(null, "Debe existir seleccionar un Sprint a eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -461,6 +480,6 @@ public class ABMSprints extends JPanel {
 				
 				}
 			});
-			add(btnSEliminar, "cell 3 28,alignx center,aligny center");	
+			add(btnSEliminar, "cell 3 29,alignx center,aligny bottom");	
 	}
 }
