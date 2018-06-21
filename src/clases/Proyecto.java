@@ -723,7 +723,7 @@ public final class Proyecto {
 		Iterator<Sprint> it = LSprints.iterator();
 		boolean bandera = false;
 		Tarea tar = null;
-		Sprint sp;
+		Sprint sp=null;
 		while(it.hasNext() && !bandera){
 			sp = it.next();
 			if(sp.getEstado()!=EstadoSprint.FINALIZADO){

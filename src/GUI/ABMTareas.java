@@ -429,24 +429,28 @@ public class ABMTareas extends JPanel {
 							Tarea tar = Proyecto.getInstance().getBlog().getTarea(id); 
 							if(tar!=null)
 								Proyecto.getInstance().getBlog().bajaDependencia(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
-							else
-								Proyecto.getInstance().getTareaEnSprint(id).bajaDependencia(table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString()); 
+							else{
+								Sprint s = Proyecto.getInstance().getTareaEnSprint(id); 
+								s.bajaDependencia(id,table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString()); 
+							}
 								
 							//Proyecto.getInstance().eliminarDependencia(id, table_TSD.getValueAt(table_TSD.getSelectedRow(), 0).toString());
-							table_Tareas.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprints()));
+							//table_Tareas.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprints()));
 							table_TD.setModel(new TareasTM(Proyecto.getInstance().tareasBacklogYSprintsSinDependencias(id)));
 							table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias()));								
 							//System.out.println(Proyecto.getInstance().getBlog().getDependencias(id));
 							//Proyecto.getInstance().mostrarTareas();
 							//System.out.println(Proyecto.getInstance().getBlog().getTarea(id).getLdependencias());
 						}
-						else{
-							Tarea tar = Proyecto.getInstance().getTareaEnSprint(id); 
+						else{ //SUBTAREA
+							Tarea tar = Proyecto.getInstance().getBlog().getTarea(id); 
 							if(tar!=null)
 								Proyecto.getInstance().getBlog().bajaSubTarea(id, table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
-							else
-								Proyecto.getInstance().getTareaEnSprint(id).bajaSubT(table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
-							Proyecto.getInstance().eliminarSubT(id, table_TSD.getValueAt(table_TSD.getSelectedRow(), 0).toString());
+							else{
+								Sprint s = Proyecto.getInstance().getTareaEnSprint(id); 
+								s.bajaSubTarea(id,table_TD.getValueAt(table_TD.getSelectedRow(), 0).toString());
+							}
+							//Proyecto.getInstance().eliminarSubT(id, table_TSD.getValueAt(table_TSD.getSelectedRow(), 0).toString());
 							table_TD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getSubTareas(id)));
 							table_TSD.setModel(new TareasTM(Proyecto.getInstance().getBlog().getTarea(id).getListaSubtareas()));
 							//table_Tareas.setModel(new TareasTM(Proyecto.getInstance().getBlog().getLTareasP()));
