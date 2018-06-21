@@ -143,25 +143,6 @@ public class AdminSprints extends JPanel {
 		lblDaActual_Actual = new JLabel("0");
 		//lblIdSprint = new JLabel("ID Sprint");
 		
-		if(Proyecto.getInstance().getSprintEnCurso()!=null){
-			Sprint s=Proyecto.getInstance().getSprintEnCurso();
-			lblIdSprint.setText(s.getClave());
-			lblNombreSprint.setText(s.getDescripcion());
-			lblEstadoActual.setText("En curso");
-			lblDuracin_Actual.setText(String.valueOf(s.duracion()));
-			lblAvance_Actual.setText(String.valueOf(s.getAvance()));
-			lblDaActual_Actual.setText(s.getfAvance().toString());
-		}
-		else{
-			lblIdSprint.setText("ID Sprint");
-			lblNombreSprint.setText("Nombre Sprint");
-			lblEstadoActual.setText("Estado Actual");
-			lblDuracin_Actual.setText("0");
-			lblAvance_Actual.setText("0");
-			lblDaActual_Actual.setText("0");
-		}
-		
-		
 		lblIdSprint.setFont(new Font("Tahoma", Font.BOLD, 16));
 		add(lblIdSprint, "cell 0 2 1 2,alignx center,aligny center");
 		
@@ -403,9 +384,9 @@ public class AdminSprints extends JPanel {
 		
 		
 		
+		cargaDatos();
 		
-		
-		if(Proyecto.getInstance().getSprintEnCurso()!=null){
+		/*if(Proyecto.getInstance().getSprintEnCurso()!=null){
 			Sprint s=Proyecto.getInstance().getSprintEnCurso();
 			table_TD.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TODO")));
 			table_IP.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"INPROGRESS")));
@@ -413,7 +394,7 @@ public class AdminSprints extends JPanel {
 			table_RTT.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"READYTOTEST")));
 			table_T.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TESTING")));
 			table_D.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"DONE")));
-		}
+		}*/
 		
 		
 		
@@ -557,7 +538,8 @@ public class AdminSprints extends JPanel {
 					lblDaActual_Actual.setText("0");
 					Proyecto.getInstance().pasaTareasaBacklog();
 					Proyecto.getInstance().getSprintEnCurso().finalizar();
-					
+					vaciaTablas();
+					InterfazGrafica.getInstance().abrirABMSprint();
 				}
 				else
 					JOptionPane.showMessageDialog(null, "El sprint no finalizo");
@@ -592,20 +574,50 @@ public class AdminSprints extends JPanel {
 	public void setLblAvance_Actual(JLabel lblAvance_Actual) {
 		this.lblAvance_Actual = lblAvance_Actual;
 	}
-
-	public void vaciaTabla(DefaultTableModel dtm){
-		while(0<dtm.getRowCount())
-			dtm.removeRow(0);
+	
+	
+	public void cargaDatos(){
+		
+			if(Proyecto.getInstance().getSprintEnCurso()!=null){
+				Sprint s=Proyecto.getInstance().getSprintEnCurso();
+				lblIdSprint.setText(s.getClave());
+				lblNombreSprint.setText(s.getDescripcion());
+				lblEstadoActual.setText("En curso");
+				lblDuracin_Actual.setText(String.valueOf(s.duracion()));
+				lblAvance_Actual.setText(String.valueOf(s.getAvance()));
+				lblDaActual_Actual.setText(s.getfAvance().toString());
+				scrollPane_Done.setVisible(true);
+				scrollPane_Inprogress.setVisible(true);
+				scrollPane_Pendingtobuild.setVisible(true);
+				scrollPane_Readytotest.setVisible(true);
+				scrollPane_Testing.setVisible(true);
+				scrollPane_ToDo.setVisible(true);
+				table_TD.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TODO")));
+				table_IP.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"INPROGRESS")));
+				table_PTB.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"PENDINGTOBUILD")));
+				table_RTT.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"READYTOTEST")));
+				table_T.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"TESTING")));
+				table_D.setModel(new TareasSprintEnCursoTM(Proyecto.getInstance().getListaEstados(s.getClave(),"DONE")));
+			}
+			else{
+				lblIdSprint.setText("ID Sprint");
+				lblNombreSprint.setText("Nombre Sprint");
+				lblEstadoActual.setText("Estado Actual");
+				lblDuracin_Actual.setText("0");
+				lblAvance_Actual.setText("0");
+				lblDaActual_Actual.setText("0");
+				vaciaTablas();
+			}
 	}
 	
-	
-	/*public void cargarTablas(){
-		try{
-			tableTareas.setModel(new TareasSprintTM(Proyecto.getInstance().getTareasSprintEnCurso()));
-		}catch(NullPointerException e){
-			JOptionPane.showMessageDialog(null, "Deben cargarse Sprints que administrar.");
-		}
-	}*/
+	public void vaciaTablas(){
+		scrollPane_Done.setVisible(false);
+		scrollPane_Inprogress.setVisible(false);
+		scrollPane_Pendingtobuild.setVisible(false);
+		scrollPane_Readytotest.setVisible(false);
+		scrollPane_Testing.setVisible(false);
+		scrollPane_ToDo.setVisible(false);
+	}
 	
 	
 }

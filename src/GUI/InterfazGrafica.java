@@ -165,5 +165,9 @@ public final class InterfazGrafica {
 	
 	}
 
+	public void cargaDatosAdmin() {
+		admins.cargaDatos();
+	}
+
 
 }

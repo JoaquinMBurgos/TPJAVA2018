@@ -342,6 +342,7 @@ public class ABMSprints extends JPanel {
 					/*} catch (SprintNoValido e) {
 						JOptionPane.showMessageDialog(null, "Ya hay un Sprint en curso.", "Error", JOptionPane.ERROR_MESSAGE);
 					}*/
+						InterfazGrafica.getInstance().cargaDatosAdmin();
 						InterfazGrafica.getInstance().abrirAdminSprints();
 				}
 			});
